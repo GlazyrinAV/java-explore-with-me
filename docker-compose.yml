@@ -7,7 +7,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - stats-service_url=http://stats-service:9091
+      - stats-service.url=http://stats-service:9091
     depends_on:
       - stats-service
     networks:
@@ -20,7 +20,7 @@ services:
     ports:
       - "9091:9091"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats-db
+      - SPRING.DATASOURCE.URL=jdbc:postgresql://stats-db:5432/stats-db
     depends_on:
       - stats-db
     networks:
