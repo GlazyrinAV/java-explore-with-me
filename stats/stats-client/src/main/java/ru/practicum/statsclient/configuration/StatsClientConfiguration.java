@@ -10,7 +10,7 @@ import ru.practicum.statsclient.client.StatsClient;
 @Configuration
 public class StatsClientConfiguration {
 
-    @Value("${stats-server.url}")
+    @Value("${stats-service.url}")
     private String serverUrl;
 
     @Bean
