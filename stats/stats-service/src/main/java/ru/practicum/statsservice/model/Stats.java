@@ -21,7 +21,7 @@ public class Stats {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "app_name")
+    @Column(name = "app")
     private String app;
 
     @Column(name = "uri")

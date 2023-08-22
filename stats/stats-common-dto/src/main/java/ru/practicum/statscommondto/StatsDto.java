@@ -1,4 +1,4 @@
-package ru.practicum.statscommondto.model.dto;
+package ru.practicum.statscommondto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

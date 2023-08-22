@@ -2,9 +2,12 @@ package ru.practicum.statsclient.client;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.statscommondto.model.dto.StatsDto;
+import ru.practicum.statscommondto.StatsDto;
 
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 public class StatsClient extends BaseClient {
@@ -17,14 +20,18 @@ public class StatsClient extends BaseClient {
         return post("/hit", dto);
     }
 
-    public ResponseEntity<Object> findStats(LocalDateTime start, LocalDateTime end, String uri, Boolean unique) {
-        Map<String, Object> parameters = Map.of(
-                "start", start,
-                "end", end,
-                "uri", uri,
-                "unique", unique
-        );
-        return get("/stats", parameters);
+    public ResponseEntity<Object> findStats(LocalDateTime start, LocalDateTime end, String[] uris, boolean unique) {
+        String path = "/stats?start={start}&end={end}&unique={unique}";
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("start", URLEncoder.encode(start.toString(), Charset.defaultCharset()));
+        parameters.put("end", URLEncoder.encode(end.toString(), Charset.defaultCharset()));
+        parameters.put("unique", unique);
+        if (uris != null) {
+            parameters.put("uris", uris);
+            path = path + "&uris={uris}";
+        }
+
+        return get(path, parameters);
     }
 
 }

@@ -2,13 +2,13 @@ package ru.practicum.statsclient.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.statsclient.client.StatsClient;
-import ru.practicum.statscommondto.model.dto.StatsDto;
+import ru.practicum.statscommondto.StatsDto;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -22,18 +22,16 @@ public class StatsController {
     public final StatsClient statsClient;
 
     @PostMapping("/hit")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> saveStats(@Valid @RequestBody StatsDto dto) {
         return statsClient.saveStats(dto);
     }
 
     @GetMapping("/stats")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> findStats(@RequestParam LocalDateTime start,
-                                           @RequestParam LocalDateTime end,
-                                           @RequestParam (required = false) String uri,
-                                           @RequestParam (required = false) Boolean unique) {
-        return statsClient.findStats(start, end, uri, unique);
+    public ResponseEntity<Object> findStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                                           @RequestParam (required = false) String[] uris,
+                                           @RequestParam (required = false, defaultValue = "false") boolean unique) {
+        return statsClient.findStats(start, end, uris, unique);
     }
 
 }

@@ -1,14 +1,15 @@
 package ru.practicum.statsservice.service;
 
-import ru.practicum.statscommondto.model.dto.ViewStats;
-import ru.practicum.statscommondto.model.dto.StatsDto;
+import ru.practicum.statscommondto.ViewStatsDto;
+import ru.practicum.statscommondto.StatsDto;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public interface StatsService {
 
     void saveStats(StatsDto dto);
 
-    ViewStats findStats(LocalDateTime start, LocalDateTime end, String uri, Boolean unique);
+    Collection<ViewStatsDto> findStats(LocalDateTime start, LocalDateTime end, String[] uris, boolean unique);
 
 }

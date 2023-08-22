@@ -3,15 +3,17 @@ package ru.practicum.statsservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.statscommondto.model.dto.StatsDto;
-import ru.practicum.statscommondto.model.dto.ViewStats;
+import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statscommondto.ViewStatsDto;
 import ru.practicum.statsservice.service.StatsService;
 
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class StatsController {
@@ -26,11 +28,13 @@ public class StatsController {
 
     @GetMapping("/stats")
     @ResponseStatus(HttpStatus.OK)
-    public ViewStats findStats(@RequestParam LocalDateTime start,
-                               @RequestParam LocalDateTime end,
-                               @RequestParam(required = false) String uri,
-                               @RequestParam(required = false) Boolean unique) {
-        return service.findStats(start, end, uri, unique);
+    public Collection<ViewStatsDto> findStats(@RequestParam String start,
+                                              @RequestParam String end,
+                                              @RequestParam(required = false) String[] uris,
+                                              @RequestParam(required = false, defaultValue = "false") boolean unique) {
+        LocalDateTime startDto = LocalDateTime.parse(URLDecoder.decode(start, Charset.defaultCharset()));
+        LocalDateTime endDto = LocalDateTime.parse(URLDecoder.decode(end, Charset.defaultCharset()));
+        return service.findStats(startDto, endDto, uris, unique);
     }
 
 }

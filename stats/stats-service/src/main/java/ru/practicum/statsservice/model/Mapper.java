@@ -2,8 +2,7 @@ package ru.practicum.statsservice.model;
 
 import lombok.Builder;
 import org.springframework.stereotype.Component;
-import ru.practicum.statscommondto.model.dto.StatsDto;
-import ru.practicum.statscommondto.model.dto.ViewStats;
+import ru.practicum.statscommondto.StatsDto;
 
 @Builder
 @Component
@@ -15,13 +14,6 @@ public class Mapper {
                 .ip(dto.getIp())
                 .uri(dto.getUri())
                 .timeStamp(dto.getTimeStamp())
-                .build();
-    }
-
-    public ViewStats toDto(Stats stats) {
-        return ViewStats.builder()
-                .app(stats.getApp())
-                .uri(stats.getUri())
                 .build();
     }
 
