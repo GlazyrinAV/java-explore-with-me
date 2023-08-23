@@ -26,7 +26,8 @@ public class StatsClientConfiguration {
         return new StatsClient(restTemplate);
     }
 
-    private static final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+    @Value("yyyy-MM-dd HH:mm:ss")
+    private String dateTimeFormat;
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
