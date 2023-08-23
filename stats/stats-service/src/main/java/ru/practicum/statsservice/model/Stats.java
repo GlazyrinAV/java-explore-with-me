@@ -31,7 +31,6 @@ public class Stats {
     private String ip;
 
     @Column(name = "timestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("timestamp")
     private LocalDateTime timeStamp;
 

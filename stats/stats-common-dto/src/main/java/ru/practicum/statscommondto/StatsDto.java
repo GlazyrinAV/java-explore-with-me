@@ -25,7 +25,6 @@ public class StatsDto {
     private String ip;
 
     @PastOrPresent
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("timestamp")
     private LocalDateTime timeStamp;
 
