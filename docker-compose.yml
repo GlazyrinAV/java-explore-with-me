@@ -9,15 +9,15 @@ services:
       - "5081:5081"
     environment:
       - TZ=Europe/Moscow
-      - stats_service_url=http://stats-service:9091
+      - stats_service_url=http://stats-server:9091
       - DEBUG_SERVER_JAVA_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5081
     depends_on:
-      - stats-service
+      - stats-server
 
-  stats-service:
+  stats-server:
     build: stats/stats-service
     image: stats-service
-    container_name: stats-service
+    container_name: stats-server
     ports:
       - "9091:9091"
       - "5082:5082"
