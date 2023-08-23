@@ -6,10 +6,8 @@ services:
     container_name: stats-client
     ports:
       - "9090:9090"
-      - "5081:5081"
     environment:
       - stats_service_url=http://stats-server:9091
-      - DEBUG_SERVER_JAVA_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5081
     depends_on:
       - stats-server
 
@@ -17,11 +15,8 @@ services:
     build: stats/stats-service
     image: stats-service
     container_name: stats-server
-    ports:
-      - "5082:5082"
     environment:
       - SPRING.DATASOURCE.URL=jdbc:postgresql://stats-db:5432/stats-db
-      - DEBUG_SERVER_JAVA_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5082
     depends_on:
       - stats-db
 
@@ -42,14 +37,3 @@ services:
 
   ewm-db:
     image: postgres:14-alpine
-
-  pgadmin:
-    image: dpage/pgadmin4
-    ports:
-      - "5080:80"
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=pass
-      - PGADMIN_LISTEN_PORT=80
-    depends_on:
-      - stats-db
