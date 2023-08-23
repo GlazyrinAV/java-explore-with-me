@@ -24,7 +24,8 @@
 
 	<modules>
 		<module>stats</module>
-	</modules>
+        <module>ewm</module>
+    </modules>
 
 	<build>
 		<pluginManagement>
