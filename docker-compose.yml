@@ -39,6 +39,9 @@ services:
       - POSTGRES_DB=stats-db
       - POSTGRES_PASSWORD=root
       - POSTGRES_USER=root
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     networks:
      default:
 
