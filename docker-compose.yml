@@ -6,13 +6,13 @@ services:
     container_name: stats-client
     ports:
       - "9090:9090"
+      - "5081:5081"
     environment:
       - TZ=Europe/Moscow
-      - stats-service.url=http://stats-service:9091
+      - stats_service_url=http://stats-service:9091
+      - DEBUG_SERVER_JAVA_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5081
     depends_on:
       - stats-service
-    networks:
-      default:
 
   stats-service:
     build: stats/stats-service
@@ -20,13 +20,13 @@ services:
     container_name: stats-service
     ports:
       - "9091:9091"
+      - "5082:5082"
     environment:
       - TZ=Europe/Moscow
       - SPRING.DATASOURCE.URL=jdbc:postgresql://stats-db:5432/stats-db
+      - DEBUG_SERVER_JAVA_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5082
     depends_on:
       - stats-db
-    networks:
-      default:
 
   stats-db:
     image: postgres:14-alpine
@@ -42,8 +42,6 @@ services:
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-    networks:
-     default:
 
 #  ewm-service:
 #    ports:
@@ -52,5 +50,14 @@ services:
 #  ewm-db:
 #    image: postgres:14-alpine
 
-networks:
-  default:
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pass
+      - PGADMIN_LISTEN_PORT=80
+    depends_on:
+      - stats-db
