@@ -5,20 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Collection;
-
-@Data
 @Builder
-@RequiredArgsConstructor
+@Data
 @AllArgsConstructor
-public class CompilationDto {
+@RequiredArgsConstructor
+public class LocationDto {
 
     private int id;
 
-    private String title;
+    private double lat;
 
-    private boolean pinned;
-
-    private Collection<EventDto> events;
+    private double lon;
 
 }

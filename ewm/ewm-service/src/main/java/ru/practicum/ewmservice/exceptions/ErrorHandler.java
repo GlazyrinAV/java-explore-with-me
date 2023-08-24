@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
+import ru.practicum.ewmcommondto.exceptions.CompilationNotFound;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
 
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {
 
-    @ExceptionHandler({CategoryNotFound.class, EventNotFound.class})
+    @ExceptionHandler({CategoryNotFound.class, EventNotFound.class, CompilationNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse entityNotFound(RuntimeException exception) {
         return sendErrorResponse(exception.getMessage());

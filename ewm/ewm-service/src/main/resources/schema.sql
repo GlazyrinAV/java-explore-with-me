@@ -1,59 +1,62 @@
-drop table if exists event, users, category, state, event, locations;
+drop table if exists event, users, category, event, locations, compilation;
 
 create table if not exists users
 (
-    id    integer
-        primary key GENERATED ALWAYS AS IDENTITY,
+    id    integer generated always as identity
+        primary key,
     name  varchar(255) not null,
     email varchar(255) not null unique
 );
 
 create table if not exists category
 (
-    id   integer
-        primary key GENERATED ALWAYS AS IDENTITY,
-    name varchar not null unique
-);
-
-create table if not exists state
-(
-    id         integer
-        primary key GENERATED ALWAYS AS IDENTITY,
-    state_name integer not null unique
+    id   integer generated always as identity
+        primary key,
+    name varchar(255) not null unique
 );
 
 create table if not exists locations
 (
-    id  integer
-        primary key GENERATED ALWAYS AS IDENTITY,
+    id  integer generated always as identity
+        primary key,
     lat double precision not null,
     lon double precision not null
 );
 
 create table if not exists event
 (
-    id                 integer
-        primary key GENERATED ALWAYS AS IDENTITY,
-    title              varchar   not null,
-    annotation         varchar   not null,
-    initiator_id       integer   not null
+    id                 integer generated always as identity
+        primary key,
+    title              varchar(255) not null,
+    annotation         varchar(255) not null,
+    initiator_id       integer      not null
         constraint event_users_id_fk
             references users,
     confirmed_requests integer,
-    category_id        integer   not null
+    category_id        integer      not null
         constraint event_category_id_fk
             references category,
     created_on         timestamp,
-    description        varchar,
-    event_date         timestamp not null,
-    location_id        integer   not null
+    description        varchar(255),
+    event_date         timestamp    not null,
+    location_id        integer      not null
         constraint event_locations_id_fk
             references locations,
-    paid               boolean   not null,
+    paid               boolean      not null,
     participant_limit  integer,
     published_on       timestamp,
     request_moderation boolean,
-    state_id           integer
-        constraint event_state_id_fk
-            references state
+    state              varchar(255) not null,
+    views              integer
+);
+
+create table if not exists compilation
+(
+    id       integer generated always as identity
+        primary key,
+    title    varchar(255) not null,
+    pinned   boolean      not null,
+    event_id integer      not null
+        constraint compilation_event_id_fk
+            references public.event
 );

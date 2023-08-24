@@ -28,7 +28,7 @@ public class Event {
     private String annotation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "initiatior_id")
+    @JoinColumn(name = "initiator_id")
     private User initiator;
 
     @Column(name = "confirmed_requests")
@@ -63,8 +63,10 @@ public class Event {
     @Column(name = "request_moderation")
     private boolean requestModeration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "state_id")
+    @Column(name = "state")
     private State state;
+
+    @Column(name = "views")
+    private Integer views;
 
 }

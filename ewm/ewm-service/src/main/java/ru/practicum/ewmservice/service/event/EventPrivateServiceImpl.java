@@ -29,6 +29,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     @Override
     public EventDto findById(int userId, int eventId) {
+        repository.increaseViews(eventId);
         return null;
     }
 
