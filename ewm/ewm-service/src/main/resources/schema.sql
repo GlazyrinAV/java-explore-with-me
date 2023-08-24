@@ -1,4 +1,4 @@
-drop table if exists event, users, category, event, locations, compilation;
+drop table if exists event, users, category, event, locations, compilation, participation_requests;
 
 create table if not exists users
 (
@@ -59,4 +59,18 @@ create table if not exists compilation
     event_id integer      not null
         constraint compilation_event_id_fk
             references public.event
+);
+
+create table if not exists participation_requests
+(
+    id        integer generated always as identity
+        primary key,
+    event_id  integer                  not null
+        constraint participation_requests_event_id_fk
+            references public.event,
+    requester integer                  not null
+        constraint participation_requests_users_id_fk
+            references public.users,
+    created   timestamp with time zone not null,
+    status    varchar(10)              not null
 );
