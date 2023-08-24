@@ -55,6 +55,5 @@ create table if not exists event
     request_moderation boolean,
     state_id           integer
         constraint event_state_id_fk
-            references state,
-    views              integer
+            references state
 );

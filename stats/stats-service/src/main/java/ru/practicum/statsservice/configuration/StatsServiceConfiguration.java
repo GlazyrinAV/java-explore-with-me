@@ -1,4 +1,4 @@
-package ru.practicum.statsservice.config;
+package ru.practicum.statsservice.configuration;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.format.DateTimeFormatter;
 
 @Configuration
-public class StatsServiceConfig {
+public class StatsServiceConfiguration {
 
     @Value("yyyy-MM-dd HH:mm:ss")
     private String dateTimeFormat;
