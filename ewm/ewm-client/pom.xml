@@ -6,7 +6,6 @@
         <groupId>ru.practicum</groupId>
         <artifactId>ewm</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>ewm-client</artifactId>
@@ -15,7 +14,7 @@
     <description>ewm-client</description>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>

@@ -43,6 +43,8 @@ public class EventDto {
 
     private String state;
 
+    private String stateAction;
+
     private Integer views;
 
 }

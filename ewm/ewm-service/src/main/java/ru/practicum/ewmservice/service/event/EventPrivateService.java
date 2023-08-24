@@ -1,7 +1,6 @@
 package ru.practicum.ewmservice.service.event;
 
-import ru.practicum.ewmcommondto.model.EventDto;
-import ru.practicum.ewmcommondto.model.EventRequestDto;
+import ru.practicum.ewmcommondto.model.*;
 
 import java.util.Collection;
 
@@ -13,10 +12,10 @@ public interface EventPrivateService {
 
     EventDto findById(int userId, int eventId);
 
-    Collection<EventRequestDto> findRequests(int userId, int eventId);
+    Collection<ParticipationRequestDto> findRequests(int userId, int eventId);
 
     EventDto update(EventDto dto, int userId, int eventId);
 
-    Collection<EventRequestDto> updateRequests(EventDto dto, int userId, int eventId);
+    EventRequestStatusUpdateResult updateRequests(EventRequestStatusUpdateRequest dto, int userId, int eventId);
 
 }

@@ -56,7 +56,7 @@ create table if not exists compilation
         primary key,
     title    varchar(255) not null,
     pinned   boolean      not null,
-    event_id integer      not null
+    event_id integer
         constraint compilation_event_id_fk
             references public.event
 );

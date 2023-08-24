@@ -28,8 +28,8 @@ public class Compilation {
     @Column(name = "pinned")
     private boolean pinned;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "event_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
     private Collection<Event> events;
 
 }

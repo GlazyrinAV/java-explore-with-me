@@ -20,7 +20,7 @@ public class ParticipationRequestsMapper {
                 .build();
     }
 
-    private ParticipationRequestDto toDto(ParticipationRequest request) {
+    public ParticipationRequestDto toDto(ParticipationRequest request) {
         return ParticipationRequestDto.builder()
                 .id(request.getId())
                 .event(eventMapper.toDto(request.getEvent()))
