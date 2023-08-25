@@ -19,8 +19,12 @@ public class CategoryPublicClient extends BaseClient {
         return get("/{catId}", parameters);
     }
 
-    public ResponseEntity<Object> findAll() {
-        return get("", null);
+    public ResponseEntity<Object> findAll(int from, int size) {
+        Map<String, Object> parameters = Map.of(
+                "from", from,
+                "size", size
+        );
+        return get("?from={from}&size={size}", parameters);
     }
 
 }

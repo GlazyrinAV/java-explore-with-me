@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface CategoryPublicService {
 
-    Collection<CategoryDto> findAll();
+    Collection<CategoryDto> findAll(int from, int size);
 
     CategoryDto findById(@PathVariable int catId);
 

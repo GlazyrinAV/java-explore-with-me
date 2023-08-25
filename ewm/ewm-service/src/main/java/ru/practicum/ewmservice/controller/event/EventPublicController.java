@@ -20,8 +20,16 @@ public class EventPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<EventDto> findAll() {
-        return service.findAll();
+    public Collection<EventDto> findAll(@RequestParam(defaultValue = "0") int from,
+                                        @RequestParam(defaultValue = "10") int size,
+                                        @RequestParam(required = false) String text,
+                                        @RequestParam(required = false) Integer[] categories,
+                                        @RequestParam(required = false) Boolean paid,
+                                        @RequestParam(required = false) String rangeStart,
+                                        @RequestParam(required = false) String rangeEnd,
+                                        @RequestParam(defaultValue = "false") boolean onlyAvailable,
+                                        @RequestParam(required = false) String sort) {
+        return service.findAll(from, size, text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort);
     }
 
     @GetMapping("/{id}")

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewmclient.client.event.EventPublicClient;
+import ru.practicum.ewmclient.client.stats.StatsClient;
 
 @Configuration
 public class EventPublicClientConfiguration {
@@ -17,11 +18,11 @@ public class EventPublicClientConfiguration {
     private String api;
 
     @Bean
-    public EventPublicClient eventPublicClient(RestTemplateBuilder builder) {
+    public EventPublicClient eventPublicClient(RestTemplateBuilder builder, StatsClient client) {
         var restTemplate = builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + api))
                 .build();
-        return new EventPublicClient(restTemplate);
+        return new EventPublicClient(restTemplate, client);
     }
 
 }

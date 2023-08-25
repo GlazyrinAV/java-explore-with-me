@@ -20,8 +20,9 @@ public class CategoryPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<CategoryDto> findAll() {
-        return service.findAll();
+    public Collection<CategoryDto> findAll(@RequestParam int from,
+                                           @RequestParam int size) {
+        return service.findAll(from, size);
     }
 
     @GetMapping("{catId}")

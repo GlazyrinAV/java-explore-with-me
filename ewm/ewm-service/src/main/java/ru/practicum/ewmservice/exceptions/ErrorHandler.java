@@ -3,11 +3,14 @@ package ru.practicum.ewmservice.exceptions;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ewmcommondto.exceptions.*;
+
+import javax.validation.ValidationException;
 
 @RestControllerAdvice
 @Slf4j
@@ -35,6 +38,12 @@ public class ErrorHandler {
     @ExceptionHandler({NoConfirmationNeeded.class})
     @ResponseStatus(HttpStatus.OK)
     public ErrorResponse noConfirmationNeeded(RuntimeException exception) {
+        return sendErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler({ValidationException.class, DataIntegrityViolationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse validationError(RuntimeException exception) {
         return sendErrorResponse(exception.getMessage());
     }
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmcommondto.model.CompilationDto;
 import ru.practicum.ewmcommondto.model.NewCompilationDto;
+import ru.practicum.ewmcommondto.model.UpdateCompilationRequest;
 import ru.practicum.ewmservice.service.compilation.CompilationAdminService;
 
 @RestController
@@ -25,7 +26,7 @@ public class CompilationAdminController {
 
     @PatchMapping("/{compId}")
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto update(@RequestBody NewCompilationDto dto,
+    public CompilationDto update(@RequestBody UpdateCompilationRequest dto,
                                  @PathVariable int compId) {
         return service.update(dto, compId);
     }

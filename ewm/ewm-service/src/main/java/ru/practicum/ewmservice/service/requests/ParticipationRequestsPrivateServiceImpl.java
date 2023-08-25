@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
 import ru.practicum.ewmcommondto.exceptions.ParticipationRequestNotFound;
 import ru.practicum.ewmcommondto.exceptions.UserNotFound;
+import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.ParticipationRequestDto;
-import ru.practicum.ewmservice.model.Event;
-import ru.practicum.ewmservice.model.ParticipationRequest;
-import ru.practicum.ewmservice.model.RequestStatus;
-import ru.practicum.ewmservice.model.User;
+import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.model.mapper.ParticipationRequestsMapper;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.ParticipationRequestsRepository;
@@ -35,12 +33,30 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
     public ParticipationRequestDto save(int usersId, int eventId) {
         User user = userRepository.findById(usersId).orElseThrow(() -> new UserNotFound(usersId));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));
+        if (!event.getState().equals(EventState.PUBLISHED)) {
+            throw new WrongParameter("Нельзя участвовать в неопубликованном событии.");
+        }
+        if (event.getInitiator().equals(user)) {
+            throw new WrongParameter("Инициатор события не может добавить запрос на участие в своём событии.");
+        }
+        if (repository.existsByEventIdAndRequesterId(usersId, eventId)) {
+            throw new WrongParameter("Нельзя добавить повторный запрос.");
+        }
+        if (event.isRequestModeration() && event.getParticipantLimit() == event.getConfirmedRequests()) {
+            throw new WrongParameter("У события достигнут лимит запросов на участие.");
+        }
+
         ParticipationRequest request = ParticipationRequest.builder()
                 .requester(user)
                 .event(event)
                 .created(LocalDateTime.now())
-                .status(RequestStatus.PENDING)
                 .build();
+        if (event.isRequestModeration()) {
+            request.setStatus(RequestStatus.PENDING);
+        } else {
+            request.setStatus(RequestStatus.CONFIRMED);
+        }
+
         return mapper.toDto(repository.save(request));
     }
 
@@ -54,6 +70,13 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
     public ParticipationRequestDto cancel(int usersId, int requestId) {
         userRepository.findById(usersId).orElseThrow(() -> new UserNotFound(usersId));
         ParticipationRequest request = repository.findById(requestId).orElseThrow(() -> new ParticipationRequestNotFound(requestId));
+        if (request.getRequester().getId() != usersId) {
+            throw new WrongParameter("Данный пользователь не создавал данный запрос.");
+        }
+
+        if (request.getStatus().equals(RequestStatus.CONFIRMED)) {
+            eventRepository.decreaseConfirmedRequests(request.getEvent().getId());
+        }
         request.setStatus(RequestStatus.REJECTED);
         return mapper.toDto(repository.save(request));
     }

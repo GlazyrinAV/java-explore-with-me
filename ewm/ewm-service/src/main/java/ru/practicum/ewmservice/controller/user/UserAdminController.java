@@ -26,8 +26,10 @@ public class UserAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<UserDto> findAll() {
-        return service.findAll();
+    public Collection<UserDto> findAll(@RequestParam int from,
+                                       @RequestParam int size,
+                                       @RequestParam Integer[] ids) {
+        return service.findAll(from, size, ids);
     }
 
     @DeleteMapping("/{userId}")

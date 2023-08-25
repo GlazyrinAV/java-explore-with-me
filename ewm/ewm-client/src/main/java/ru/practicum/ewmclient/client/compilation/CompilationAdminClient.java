@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmcommondto.model.NewCompilationDto;
+import ru.practicum.ewmcommondto.model.UpdateCompilationRequest;
 
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class CompilationAdminClient extends BaseClient {
         return post("", null, dto);
     }
 
-    public ResponseEntity<Object> update(NewCompilationDto dto, int compId) {
+    public ResponseEntity<Object> update(UpdateCompilationRequest dto, int compId) {
         Map<String, Object> parameters = Map.of(
                 "compId", compId
         );

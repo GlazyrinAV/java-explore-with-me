@@ -2,7 +2,10 @@ package ru.practicum.ewmservice.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmcommondto.exceptions.UserNotFound;
 import ru.practicum.ewmcommondto.model.UserDto;
 import ru.practicum.ewmservice.model.mapper.UserMapper;
 import ru.practicum.ewmservice.repository.UserRepository;
@@ -23,11 +26,13 @@ public class UserAdminServiceImpl implements UserAdminService {
         return mapper.toDto(userRepository.save(mapper.fromDto(dto)));
     }
 
-    public Collection<UserDto> findAll() {
-        return userRepository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+    public Collection<UserDto> findAll(int from, int size, Integer[] ids) {
+        Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
+        return userRepository.findAllAdminWithCriteria(page, ids).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     public void remove(int userId) {
+        userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         userRepository.deleteById(userId);
     }
 

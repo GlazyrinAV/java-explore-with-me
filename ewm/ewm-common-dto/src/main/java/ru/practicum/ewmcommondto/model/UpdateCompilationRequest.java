@@ -15,7 +15,7 @@ public class UpdateCompilationRequest {
 
     Collection<Integer> events;
 
-    boolean pinned;
+    Boolean pinned;
 
     String title;
 

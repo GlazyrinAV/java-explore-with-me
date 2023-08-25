@@ -3,6 +3,8 @@ package ru.practicum.ewmservice.service.categories;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
 import ru.practicum.ewmcommondto.model.CategoryDto;
@@ -23,8 +25,9 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
 
 
     @Override
-    public Collection<CategoryDto> findAll() {
-        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+    public Collection<CategoryDto> findAll(int from, int size) {
+        Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
+        return repository.findAll(page).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override

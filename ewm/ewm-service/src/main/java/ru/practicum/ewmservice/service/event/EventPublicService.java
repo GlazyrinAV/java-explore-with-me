@@ -6,7 +6,15 @@ import java.util.Collection;
 
 public interface EventPublicService {
 
-    Collection<EventDto> findAll();
+    Collection<EventDto> findAll(int from,
+                                 int size,
+                                 String text,
+                                 Integer[] categories,
+                                 Boolean paid,
+                                 String rangeStart,
+                                 String rangeEnd,
+                                 Boolean onlyAvailable,
+                                 String sort);
 
     EventDto findById(int id);
 

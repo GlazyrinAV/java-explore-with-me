@@ -12,10 +12,7 @@ import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.model.mapper.EventMapper;
 import ru.practicum.ewmservice.model.mapper.LocationMapper;
 import ru.practicum.ewmservice.model.mapper.ParticipationRequestsMapper;
-import ru.practicum.ewmservice.repository.CategoryRepository;
-import ru.practicum.ewmservice.repository.EventRepository;
-import ru.practicum.ewmservice.repository.ParticipationRequestsRepository;
-import ru.practicum.ewmservice.repository.UserRepository;
+import ru.practicum.ewmservice.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -33,6 +30,8 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     private final ParticipationRequestsRepository requestsRepository;
 
     private final CategoryRepository categoryRepository;
+
+    private final LocationRepository locationRepository;
 
     private final EventMapper mapper;
 
@@ -102,13 +101,21 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             event.setEventDate(dto.getEventDate());
         }
         if (dto.getLocation() != null) {
-            event.setLocation(locationMapper.fromDto(dto.getLocation()));
+            Location location = locationRepository.findByLatAndLon(dto.getLocation().getLat(), dto.getLocation().getLon());
+            if (location == null) {
+                location = locationRepository.save(locationMapper.fromDto(dto.getLocation()));
+            }
+            event.setLocation(location);
         }
-        event.setPaid(dto.getPaid());
+        if (dto.getPaid() != null) {
+            event.setPaid(dto.getPaid());
+        }
         if (dto.getParticipantLimit() != null) {
             event.setParticipantLimit(dto.getParticipantLimit());
         }
-        event.setRequestModeration(dto.getRequestModeration());
+        if (dto.getRequestModeration() != null) {
+            event.setRequestModeration(dto.getRequestModeration());
+        }
         if (dto.getTitle() != null && !dto.getTitle().isBlank()) {
             event.setTitle(dto.getTitle());
         }
@@ -153,12 +160,19 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         EventRequestStatusUpdateResult result = new EventRequestStatusUpdateResult();
         int confirmedRequests = event.getConfirmedRequests();
         for (int requestId : requestIds) {
-            if (event.getParticipantLimit() == confirmedRequests) {
-                throw new WrongParameter("Достигнут лимит по заявкам.");
-            }
             ParticipationRequest request = requestsRepository.findById(requestId)
                     .orElseThrow(() -> new ParticipationRequestNotFound(requestId));
+
+            if (event.getParticipantLimit() == confirmedRequests) {
+                request.setStatus(RequestStatus.REJECTED);
+                requestsRepository.save(request);
+                result.getRejectedRequests().add(requestsMapper.toDto(request));
+                confirmedRequests++;
+                continue;
+            }
+
             request.setStatus(RequestStatus.CONFIRMED);
+            requestsRepository.save(request);
             result.getConfirmedRequests().add(requestsMapper.toDto(request));
             repository.increaseConfirmedRequests(event.getId());
             confirmedRequests++;

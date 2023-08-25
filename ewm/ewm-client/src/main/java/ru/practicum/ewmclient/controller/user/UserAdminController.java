@@ -10,6 +10,7 @@ import ru.practicum.ewmclient.client.user.UserAdminClient;
 import ru.practicum.ewmcommondto.model.UserDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/admin/users")
@@ -26,8 +27,10 @@ public class UserAdminController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAll() {
-        return client.findAll();
+    public ResponseEntity<Object> findAll(@Positive @RequestParam(defaultValue = "0") int from,
+                                          @Positive @RequestParam(defaultValue = "10") int size,
+                                          @RequestParam(required = false) Integer[] ids) {
+        return client.findAll(from, size, ids);
     }
 
     @DeleteMapping("/{userId}")
