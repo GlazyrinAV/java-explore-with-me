@@ -11,7 +11,7 @@ import ru.practicum.ewmservice.service.compilation.CompilationPublicService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("compilations")
+@RequestMapping("/compilations")
 @RequiredArgsConstructor
 @Slf4j
 public class CompilationPublicController {
