@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
+import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.CategoryDto;
 import ru.practicum.ewmservice.model.Category;
 import ru.practicum.ewmservice.model.mapper.CategoryMapper;
 import ru.practicum.ewmservice.repository.CategoryRepository;
+import ru.practicum.ewmservice.repository.EventRepository;
 
 @Service
 @Slf4j
@@ -15,6 +17,8 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     private final CategoryRepository repository;
+
+    private final EventRepository eventRepository;
 
     public final CategoryMapper mapper;
 
@@ -34,7 +38,11 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     @Override
     public void remove(int catId) {
-        repository.findById(catId);
+        repository.findById(catId).orElseThrow(() -> new CategoryNotFound(catId));
+        if (!eventRepository.findByCategoryId(catId).isEmpty()) {
+            throw new WrongParameter("Существуют события, связанные с категорией");
+        }
+        repository.deleteById(catId);
     }
 
 }

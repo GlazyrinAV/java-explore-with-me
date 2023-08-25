@@ -2,6 +2,8 @@ package ru.practicum.ewmservice.service.compilation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmcommondto.exceptions.CompilationNotFound;
 import ru.practicum.ewmcommondto.model.CompilationDto;
@@ -21,8 +23,9 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     private final CompilationMapper mapper;
 
     @Override
-    public Collection<CompilationDto> findAll() {
-        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+    public Collection<CompilationDto> findAll(boolean pinned, int from, int size) {
+        Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
+        return repository.findAll(page).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override

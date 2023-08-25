@@ -20,15 +20,17 @@ public class EventPrivateController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EventDto save(@RequestBody EventDto dto,
+    public EventDto save(@RequestBody NewEventDto dto,
                          @PathVariable int userId) {
         return service.save(dto, userId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<EventDto> findAllByUserId(@PathVariable int userId) {
-        return service.findAllByUserId(userId);
+    public Collection<EventDto> findAllByUserId(@PathVariable int userId,
+                                                @RequestParam int from,
+                                                @RequestParam int size) {
+        return service.findAllByUserId(userId, from, size);
     }
 
     @GetMapping("/{eventId}")
@@ -47,7 +49,7 @@ public class EventPrivateController {
 
     @PatchMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventDto update(@RequestBody EventDto dto,
+    public EventDto update(@RequestBody UpdateEventUserRequest dto,
                            @PathVariable int userId,
                            @PathVariable int eventId) {
         return service.update(dto, userId, eventId);
@@ -56,8 +58,8 @@ public class EventPrivateController {
     @PatchMapping("/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult updateRequests(@RequestBody EventRequestStatusUpdateRequest dto,
-                                                                     @PathVariable int userId,
-                                                                     @PathVariable int eventId) {
+                                                         @PathVariable int userId,
+                                                         @PathVariable int eventId) {
         return service.updateRequests(dto, userId, eventId);
     }
 

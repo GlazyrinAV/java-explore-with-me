@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 
+import java.util.Map;
+
 public class EventPublicClient extends BaseClient {
 
     public EventPublicClient(RestTemplate rest) {
@@ -12,11 +14,14 @@ public class EventPublicClient extends BaseClient {
     }
 
     public ResponseEntity<Object> findAll() {
-        return null;
+        return get("", null);
     }
 
     public ResponseEntity<Object> findById(@PathVariable int id) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "id", id
+        );
+        return get("/{id}", parameters);
     }
 
 }

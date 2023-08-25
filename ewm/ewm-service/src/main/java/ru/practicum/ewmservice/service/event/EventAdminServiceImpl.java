@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
-import ru.practicum.ewmcommondto.exceptions.WrongParametr;
+import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.EventDto;
 import ru.practicum.ewmservice.model.Event;
 import ru.practicum.ewmservice.model.EventState;
@@ -67,7 +67,7 @@ public class EventAdminServiceImpl implements EventAdminService {
             } else if (StateAction.valueOf(dto.getStateAction()).equals(StateAction.REJECT_EVENT)){
                 event.setState(EventState.CANCELED);
             } else {
-                throw new WrongParametr("Указано недопустимое состояние.");
+                throw new WrongParameter("Указано недопустимое состояние.");
             }
         }
         return mapper.toDto(repository.save(event));

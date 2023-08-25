@@ -11,7 +11,7 @@ import ru.practicum.ewmservice.service.requests.ParticipationRequestsPrivateServ
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/users/{usersId}/requests")
+@RequestMapping("/users/{userId}/requests")
 @RequiredArgsConstructor
 @Slf4j
 public class ParticipationRequestsPrivateController {
@@ -20,22 +20,22 @@ public class ParticipationRequestsPrivateController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipationRequestDto save(@PathVariable int usersId,
+    public ParticipationRequestDto save(@PathVariable int userId,
                                         @RequestParam int eventId) {
-        return service.save(usersId, eventId);
+        return service.save(userId, eventId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<ParticipationRequestDto> findAll(@PathVariable int usersId) {
-        return service.findAll(usersId);
+    public Collection<ParticipationRequestDto> findAll(@PathVariable int userId) {
+        return service.findAll(userId);
     }
 
     @PatchMapping("/{requestId}/cancel")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipationRequestDto cancel(@PathVariable int usersId,
+    public ParticipationRequestDto cancel(@PathVariable int userId,
                                           @PathVariable int requestId) {
-        return service.cancel(usersId, requestId);
+        return service.cancel(userId, requestId);
     }
 
 }

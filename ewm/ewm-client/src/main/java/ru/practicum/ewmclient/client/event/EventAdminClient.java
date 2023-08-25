@@ -5,6 +5,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmcommondto.model.EventDto;
 
+import java.util.Map;
+
 public class EventAdminClient extends BaseClient {
 
     public EventAdminClient(RestTemplate rest) {
@@ -12,11 +14,14 @@ public class EventAdminClient extends BaseClient {
     }
 
     public ResponseEntity<Object> findAll() {
-        return null;
+        return get("", null);
     }
 
     public ResponseEntity<Object> update(EventDto dto, int id) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "eventId", id
+        );
+        return patch("/{eventId}", parameters, dto);
     }
 
 }

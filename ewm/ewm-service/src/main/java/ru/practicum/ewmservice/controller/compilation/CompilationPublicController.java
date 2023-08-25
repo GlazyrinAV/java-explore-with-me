@@ -20,8 +20,10 @@ public class CompilationPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<CompilationDto> findAll() {
-        return service.findAll();
+    public Collection<CompilationDto> findAll(@RequestParam boolean pinned,
+                                              @RequestParam int  from,
+                                              @RequestParam int size) {
+        return service.findAll(pinned, from, size);
     }
 
     @GetMapping("/{compId}")

@@ -7,10 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventPrivateClient;
-import ru.practicum.ewmcommondto.model.EventDto;
+import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmcommondto.model.NewEventDto;
+import ru.practicum.ewmcommondto.model.UpdateEventUserRequest;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/users/{userId}/events")
@@ -22,39 +27,47 @@ public class EventPrivateController {
     private final EventPrivateClient client;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid EventDto dto,
+    public ResponseEntity<Object> save(@RequestBody @Valid NewEventDto dto,
                                        @PathVariable int userId) {
+        if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
+        }
         return client.save(dto, userId);
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAllByUserId(@PathVariable int userId) {
-        return client.findAllByUserId(userId);
+    public ResponseEntity<Object> findAllByUserId(@PathVariable int userId,
+                                                  @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                  @Positive @RequestParam(defaultValue = "10") int size) {
+        return client.findAllByUserId(userId, from, size);
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Object> findById(@PathVariable int userId,
-                             @PathVariable int eventId) {
+    public ResponseEntity<Object> findById(@Positive @PathVariable int userId,
+                                           @Positive @PathVariable int eventId) {
         return client.findById(userId, eventId);
     }
 
     @GetMapping("/{eventId}/requests")
-    public ResponseEntity<Object> findRequests(@PathVariable int userId,
-                                               @PathVariable int eventId) {
+    public ResponseEntity<Object> findRequests(@Positive @PathVariable int userId,
+                                               @Positive @PathVariable int eventId) {
         return client.findRequests(userId, eventId);
     }
 
     @PatchMapping("/{eventId}")
-    public ResponseEntity<Object> update(@RequestBody EventDto dto,
-                                         @PathVariable int userId,
-                                         @PathVariable int eventId) {
+    public ResponseEntity<Object> update(@RequestBody UpdateEventUserRequest dto,
+                                         @Positive @PathVariable int userId,
+                                         @Positive @PathVariable int eventId) {
+        if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
+        }
         return client.update(dto, userId, eventId);
     }
 
     @PatchMapping("/{eventId}/requests")
-    public ResponseEntity<Object> updateRequests(@RequestBody EventRequestStatusUpdateRequest dto,
-                                                 @PathVariable int userId,
-                                                 @PathVariable int eventId) {
+    public ResponseEntity<Object> updateRequests(@RequestBody @Valid EventRequestStatusUpdateRequest dto,
+                                                 @Positive @PathVariable int userId,
+                                                 @Positive @PathVariable int eventId) {
         return client.updateRequests(dto, userId, eventId);
     }
 

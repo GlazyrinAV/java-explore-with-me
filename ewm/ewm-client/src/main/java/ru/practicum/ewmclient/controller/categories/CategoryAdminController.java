@@ -9,6 +9,7 @@ import ru.practicum.ewmclient.client.categories.CategoryAdminClient;
 import ru.practicum.ewmcommondto.model.CategoryDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/admin/categories")
@@ -26,12 +27,12 @@ public class CategoryAdminController {
 
     @PatchMapping("/{catId}")
     public ResponseEntity<Object> update(@RequestBody CategoryDto dto,
-                              @PathVariable int catId) {
+                                         @PathVariable int catId) {
         return client.update(dto, catId);
     }
 
     @DeleteMapping("/{catId}")
-    public ResponseEntity<Object> remove(@PathVariable int catId) {
+    public ResponseEntity<Object> remove(@Positive @PathVariable int catId) {
         return client.remove(catId);
     }
 

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Builder
@@ -13,8 +15,10 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class EventRequestStatusUpdateRequest {
 
+    @NotNull
     Collection<Integer> requestIds;
 
+    @NotBlank
     String status;
 
 }

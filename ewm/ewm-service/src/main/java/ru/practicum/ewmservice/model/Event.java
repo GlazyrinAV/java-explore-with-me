@@ -32,7 +32,7 @@ public class Event {
     private User initiator;
 
     @Column(name = "confirmed_requests")
-    private Integer confirmedRequests;
+    private int confirmedRequests;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -55,7 +55,7 @@ public class Event {
     private boolean paid;
 
     @Column(name = "participant_limit")
-    private Integer participantLimit;
+    private int participantLimit;
 
     @Column(name = "published_on")
     private LocalDateTime publishedOn;

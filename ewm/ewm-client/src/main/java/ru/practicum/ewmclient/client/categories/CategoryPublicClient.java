@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 
+import java.util.Map;
+
 public class CategoryPublicClient extends BaseClient {
 
     public CategoryPublicClient(RestTemplate rest) {
@@ -11,11 +13,14 @@ public class CategoryPublicClient extends BaseClient {
     }
 
     public ResponseEntity<Object> findById(int catId) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "catId", catId
+        );
+        return get("/{catId}", parameters);
     }
 
     public ResponseEntity<Object> findAll() {
-        return null;
+        return get("", null);
     }
 
 }

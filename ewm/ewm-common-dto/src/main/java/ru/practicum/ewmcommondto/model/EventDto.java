@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Builder
@@ -15,22 +18,29 @@ public class EventDto {
 
     private int id;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String annotation;
 
     private UserDto initiator;
 
     private Integer confirmedRequests;
 
+    @NotNull
     private CategoryDto category;
 
     private LocalDateTime createdOn;
 
+    @NotBlank
     private String description;
 
+    @Future
+    @NotNull
     private LocalDateTime eventDate;
 
+    @NotNull
     private LocationDto location;
 
     private boolean paid;

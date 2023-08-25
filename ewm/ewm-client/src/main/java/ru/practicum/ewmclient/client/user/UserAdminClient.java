@@ -5,6 +5,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmcommondto.model.UserDto;
 
+import java.util.Map;
+
 public class UserAdminClient extends BaseClient {
 
     public UserAdminClient(RestTemplate rest) {
@@ -12,15 +14,18 @@ public class UserAdminClient extends BaseClient {
     }
 
     public ResponseEntity<Object> save(UserDto dto) {
-        return null;
+        return post("", null, dto);
     }
 
     public ResponseEntity<Object> findAll() {
-        return null;
+        return get("", null);
     }
 
     public ResponseEntity<Object> remove(int userId) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "userId", userId
+        );
+        return delete("/{userId}", parameters);
     }
 
 }

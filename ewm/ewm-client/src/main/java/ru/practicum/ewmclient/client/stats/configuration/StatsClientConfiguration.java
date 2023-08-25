@@ -1,27 +1,27 @@
-package ru.practicum.ewmclient.client.categories.configuration;
+package ru.practicum.ewmclient.client.stats.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.practicum.ewmclient.client.categories.CategoryAdminClient;
+import ru.practicum.ewmclient.client.stats.StatsClient;
 
 @Configuration
-public class CategoryAdminClientConfiguration {
+public class StatsClientConfiguration {
 
-    @Value("${ewm-service.url}")
+    @Value("${stats-client.url}")
     private String serverUrl;
 
-    @Value("/admin/categories")
+    @Value("/hit")
     private String api;
 
     @Bean
-    public CategoryAdminClient categoryAdminClient(RestTemplateBuilder builder) {
+    public StatsClient statsClient(RestTemplateBuilder builder) {
         var restTemplate = builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + api))
                 .build();
-        return new CategoryAdminClient(restTemplate);
+        return new StatsClient(restTemplate);
     }
 
 }

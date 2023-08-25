@@ -20,9 +20,21 @@ public class ErrorHandler {
         return sendErrorResponse(exception.getMessage());
     }
 
-    @ExceptionHandler({WrongParametr.class})
+    @ExceptionHandler({WrongParameter.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse wrongParametr(RuntimeException exception) {
+    public ErrorResponse wrongParameter(RuntimeException exception) {
+        return sendErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler({BadParameter.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse badParameter(RuntimeException exception) {
+        return sendErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler({NoConfirmationNeeded.class})
+    @ResponseStatus(HttpStatus.OK)
+    public ErrorResponse noConfirmationNeeded(RuntimeException exception) {
         return sendErrorResponse(exception.getMessage());
     }
 

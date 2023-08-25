@@ -5,6 +5,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmcommondto.model.NewCompilationDto;
 
+import java.util.Map;
+
 public class CompilationAdminClient extends BaseClient {
 
     public CompilationAdminClient(RestTemplate rest) {
@@ -12,15 +14,21 @@ public class CompilationAdminClient extends BaseClient {
     }
 
     public ResponseEntity<Object> save(NewCompilationDto dto) {
-        return null;
+        return post("", null, dto);
     }
 
     public ResponseEntity<Object> update(NewCompilationDto dto, int compId) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "compId", compId
+        );
+        return patch("/{compId}", parameters, dto);
     }
 
     public ResponseEntity<Object> remove(int compId) {
-        return null;
+        Map<String, Object> parameters = Map.of(
+                "compId", compId
+        );
+        return delete("/{compId}", parameters);
     }
 
 }

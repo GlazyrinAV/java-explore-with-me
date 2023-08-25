@@ -27,27 +27,35 @@ create table if not exists event
 (
     id                 integer generated always as identity
         primary key,
-    title              varchar(255) not null,
-    annotation         varchar(255) not null,
-    initiator_id       integer      not null
+    title              varchar(255)          not null
+        constraint check_title
+            check (length((title)::text) >= 3),
+    annotation         varchar(255)          not null
+        constraint check_annotation
+            check (length((annotation)::text) >= 20),
+    initiator_id       integer               not null
         constraint event_users_id_fk
-            references users,
-    confirmed_requests integer,
-    category_id        integer      not null
+            references public.users,
+    confirmed_requests integer default 0,
+    category_id        integer               not null
         constraint event_category_id_fk
-            references category,
+            references public.category,
     created_on         timestamp,
-    description        varchar(255),
-    event_date         timestamp    not null,
-    location_id        integer      not null
+    description        varchar(255)
+        constraint check_description
+            check (length((description)::text) >= 20),
+    event_date         timestamp             not null,
+    location_id        integer               not null
         constraint event_locations_id_fk
-            references locations,
-    paid               boolean      not null,
-    participant_limit  integer,
+            references public.locations,
+    paid               boolean default false not null,
+    participant_limit  integer default 0,
     published_on       timestamp,
-    request_moderation boolean,
-    state              varchar(255) not null,
-    views              integer
+    request_moderation boolean default true,
+    state              varchar(255)          not null,
+    views              integer default 0,
+    constraint check_limit
+        check (participant_limit >= confirmed_requests)
 );
 
 create table if not exists compilation
