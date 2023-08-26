@@ -5,22 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class ParticipationRequestDto {
+public class StatsDto {
 
-    private int id;
+    private String app;
 
-    private Integer event;
+    private String uri;
 
-    private LocalDateTime created;
-
-    private Integer requester;
-
-    private String status;
+    private Integer hits;
 
 }

@@ -5,6 +5,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmcommondto.model.UserDto;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class UserAdminClient extends BaseClient {
         return post("", null, dto);
     }
 
-    public ResponseEntity<Object> findAll(int from, int size, Integer[] ids) {
+    public ResponseEntity<Object> findAll(int from, int size, Collection<Integer> ids) {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("from", from);
         parameters.put("size", size);

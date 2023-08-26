@@ -28,8 +28,8 @@ public class EventPrivateController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Collection<EventDto> findAllByUserId(@PathVariable int userId,
-                                                @RequestParam int from,
-                                                @RequestParam int size) {
+                                                @RequestParam(defaultValue = "0") int from,
+                                                @RequestParam(defaultValue = "10") int size) {
         return service.findAllByUserId(userId, from, size);
     }
 

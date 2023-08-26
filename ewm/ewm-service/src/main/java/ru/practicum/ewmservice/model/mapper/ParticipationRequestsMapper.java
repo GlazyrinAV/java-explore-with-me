@@ -9,22 +9,11 @@ import ru.practicum.ewmservice.model.ParticipationRequest;
 @RequiredArgsConstructor
 public class ParticipationRequestsMapper {
 
-    private final UserMapper userMapper;
-
-    private final EventMapper eventMapper;
-
-    public ParticipationRequest fromDto(ParticipationRequestDto dto) {
-        return ParticipationRequest.builder()
-                .event(eventMapper.fromDto(dto.getEvent()))
-                .requester(userMapper.fromDto(dto.getRequester()))
-                .build();
-    }
-
     public ParticipationRequestDto toDto(ParticipationRequest request) {
         return ParticipationRequestDto.builder()
                 .id(request.getId())
-                .event(eventMapper.toDto(request.getEvent()))
-                .requester(userMapper.toDto(request.getRequester()))
+                .event(request.getEvent().getId())
+                .requester(request.getRequester().getId())
                 .created(request.getCreated())
                 .status(request.getStatus().name())
                 .build();

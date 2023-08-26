@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.compilation.CompilationPublicClient;
-import ru.practicum.ewmcommondto.exceptions.BadParameter;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -22,10 +21,10 @@ public class CompilationPublicController {
     private final CompilationPublicClient client;
 
     @GetMapping
-    public ResponseEntity<Object> findAll(@RequestParam String pinned,
+    public ResponseEntity<Object> findAll(@RequestParam(required = false) String pinned,
                                           @PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                           @Positive @RequestParam(defaultValue = "10") int size) {
-        boolean pinnedDto = isPinnedCorrect(pinned);
+        Boolean pinnedDto = convertPinned(pinned);
         return client.findAll(pinnedDto, from, size);
     }
 
@@ -34,13 +33,13 @@ public class CompilationPublicController {
         return client.findById(compId);
     }
 
-    private boolean isPinnedCorrect(String pinned) {
-        if (pinned.equalsIgnoreCase("true")) {
+    private Boolean convertPinned(String pinned) {
+        if (pinned == null) {
+            return null;
+        } else if (pinned.equalsIgnoreCase("true")) {
             return true;
-        } else if (pinned.equalsIgnoreCase("false")) {
-            return false;
         } else {
-            throw new BadParameter("Неправильно указан параметр pinned.");
+            return false;
         }
     }
 

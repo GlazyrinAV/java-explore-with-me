@@ -26,9 +26,9 @@ public class UserAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<UserDto> findAll(@RequestParam int from,
-                                       @RequestParam int size,
-                                       @RequestParam Integer[] ids) {
+    public Collection<UserDto> findAll(@RequestParam(defaultValue = "0") int from,
+                                       @RequestParam(defaultValue = "10") int size,
+                                       @RequestParam(required = false) Collection<Integer> ids) {
         return service.findAll(from, size, ids);
     }
 

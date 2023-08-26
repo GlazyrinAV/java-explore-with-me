@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.service.compilation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.CompilationNotFound;
 import ru.practicum.ewmcommondto.model.CompilationDto;
 import ru.practicum.ewmcommondto.model.NewCompilationDto;
@@ -18,6 +19,7 @@ import java.util.Collection;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class CompilationAdminServiceImpl implements CompilationAdminService {
 
     private final CompilationRepository repository;
@@ -29,10 +31,12 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     @Override
     public CompilationDto save(NewCompilationDto dto) {
         Compilation compilation = Compilation.builder()
-                .pinned(dto.isPinned())
                 .title(dto.getTitle())
                 .build();
-        if (!dto.getEvents().isEmpty()) {
+        if (dto.getPinned() != null) {
+            compilation.setPinned(dto.getPinned());
+        }
+        if (dto.getEvents() != null && !dto.getEvents().isEmpty()) {
             Collection<Event> eventsFromDto = eventRepository.findAllWithCriteria(dto.getEvents());
             compilation.setEvents(eventsFromDto);
         }
@@ -42,13 +46,13 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     @Override
     public CompilationDto update(UpdateCompilationRequest dto, int compId) {
         Compilation compilation = repository.findById(compId).orElseThrow(() -> new CompilationNotFound(compId));
-        if (!dto.getTitle().isBlank()) {
+        if (dto.getTitle() != null && !dto.getTitle().isBlank()) {
             compilation.setTitle(dto.getTitle());
         }
         if (dto.getPinned() != null) {
             compilation.setPinned(dto.getPinned());
         }
-        if (!dto.getEvents().isEmpty()) {
+        if (dto.getEvents() != null && !dto.getEvents().isEmpty()) {
             Collection<Event> eventsFromDto = eventRepository.findAllWithCriteria(dto.getEvents());
             compilation.setEvents(eventsFromDto);
         }

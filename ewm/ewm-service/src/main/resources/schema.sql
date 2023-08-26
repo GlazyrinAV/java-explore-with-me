@@ -1,18 +1,25 @@
-drop table if exists event, users, category, event, locations, compilation, participation_requests;
+drop table if exists event, users, category, event, locations, compilation, compilation_events, participation_requests;
 
 create table if not exists users
 (
     id    integer generated always as identity
         primary key,
-    name  varchar(255) not null,
-    email varchar(255) not null unique
+    name  varchar(250) not null
+        constraint check_name
+            check (length((name)::text) > 1),
+    email varchar(254) not null
+        unique
+        constraint check_email
+            check (length((email)::text) > 5)
 );
 
 create table if not exists category
 (
     id   integer generated always as identity
         primary key,
-    name varchar(255) not null unique
+    name varchar(50) not null unique
+        constraint check_name
+            check (length((name)::text) > 0)
 );
 
 create table if not exists locations
@@ -27,10 +34,10 @@ create table if not exists event
 (
     id                 integer generated always as identity
         primary key,
-    title              varchar(255)          not null
+    title              varchar(120)          not null
         constraint check_title
             check (length((title)::text) >= 3),
-    annotation         varchar(255)          not null
+    annotation         varchar(2000)         not null
         constraint check_annotation
             check (length((annotation)::text) >= 20),
     initiator_id       integer               not null
@@ -41,7 +48,7 @@ create table if not exists event
         constraint event_category_id_fk
             references public.category,
     created_on         timestamp,
-    description        varchar(255)
+    description        varchar(7000)
         constraint check_description
             check (length((description)::text) >= 20),
     event_date         timestamp             not null,
@@ -52,21 +59,17 @@ create table if not exists event
     participant_limit  integer default 0,
     published_on       timestamp,
     request_moderation boolean default true,
-    state              varchar(255)          not null,
-    views              integer default 0,
-    constraint check_limit
-        check (participant_limit >= confirmed_requests)
+    state              varchar(255)          not null
 );
 
 create table if not exists compilation
 (
     id       integer generated always as identity
         primary key,
-    title    varchar(255) not null,
-    pinned   boolean      not null,
-    event_id integer
-        constraint compilation_event_id_fk
-            references public.event
+    title    varchar(50) not null
+        constraint check_title
+        check (length((title)::text) > 0),
+    pinned   boolean      not null
 );
 
 create table if not exists participation_requests
@@ -81,4 +84,16 @@ create table if not exists participation_requests
             references public.users,
     created   timestamp with time zone not null,
     status    varchar(10)              not null
+);
+
+create table if not exists compilation_events
+(
+    compilation_id integer not null
+        constraint compilation_events_compilation_id_fk
+            references public.compilation,
+    event_id       integer not null
+        constraint compilation_events_event_id_fk
+            references public.event,
+    constraint compilation_events_pk
+        primary key (event_id, compilation_id)
 );

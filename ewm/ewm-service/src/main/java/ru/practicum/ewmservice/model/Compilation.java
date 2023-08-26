@@ -29,7 +29,9 @@ public class Compilation {
     private boolean pinned;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
+    @JoinTable(name = "compilation_events",
+    joinColumns = @JoinColumn(name = "compilation_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
     private Collection<Event> events;
 
 }

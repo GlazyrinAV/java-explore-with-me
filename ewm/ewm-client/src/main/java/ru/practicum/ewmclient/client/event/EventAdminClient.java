@@ -7,6 +7,7 @@ import ru.practicum.ewmcommondto.model.UpdateEventAdminRequest;
 
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +19,9 @@ public class EventAdminClient extends BaseClient {
 
     public ResponseEntity<Object> findAll(int from,
                                           int size,
-                                          Integer[] users,
-                                          String[] states,
-                                          Integer[] categories,
+                                          Collection<Integer> users,
+                                          Collection<String> states,
+                                          Collection<Integer> categories,
                                           String rangeStart,
                                           String rangeEnd) {
         HashMap<String, Object> parameters = new HashMap<>();

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmcommondto.exceptions.BadParameter;
 import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
 import ru.practicum.ewmcommondto.exceptions.WrongParameter;
@@ -20,6 +22,8 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
 
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class EventAdminServiceImpl implements EventAdminService {
 
     private final EventRepository repository;
@@ -43,12 +48,18 @@ public class EventAdminServiceImpl implements EventAdminService {
     @Override
     public Collection<EventDto> findAll(int from,
                                         int size,
-                                        Integer[] users,
-                                        String[] states,
-                                        Integer[] categories,
+                                        Collection<Integer> users,
+                                        Collection<String> states,
+                                        Collection<Integer> categories,
                                         String rangeStart,
                                         String rangeEnd) {
         Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
+        if (rangeStart != null) {
+            rangeStart = URLDecoder.decode(rangeStart, Charset.defaultCharset());
+        }
+        if (rangeEnd != null) {
+            rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
+        }
         return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
                 .stream().map(mapper::toDto).collect(Collectors.toList());
     }
@@ -56,21 +67,23 @@ public class EventAdminServiceImpl implements EventAdminService {
     @Override
     public EventDto update(UpdateEventAdminRequest dto, int id) {
         Event event = repository.findById(id).orElseThrow(() -> new EventNotFound(id));
-        Optional<StateAction> stateAction = StateAction.from(dto.getStateAction());
-        if (stateAction.isEmpty()) {
-            throw new WrongParameter("Неправильно указан параметр состояния.");
+        if (!event.getEventDate().isAfter(LocalDateTime.now().plusHours(2))) {
+            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
         }
 
-        if (!dto.getAnnotation().isBlank()) {
+        if (dto.getAnnotation() != null && !dto.getAnnotation().isBlank()) {
             event.setAnnotation(dto.getAnnotation());
         }
         if (dto.getCategory() != null) {
             event.setCategory(categoryRepository.findById(dto.getCategory()).orElseThrow(() -> new CategoryNotFound(dto.getCategory())));
         }
-        if (!dto.getDescription().isBlank()) {
+        if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
             event.setDescription(dto.getDescription());
         }
         if (dto.getEventDate() != null) {
+            if (!dto.getEventDate().isAfter(LocalDateTime.now().plusHours(2))) {
+                throw new BadParameter("До новой даты события должно быть не менее чем 2 часа.");
+            }
             event.setEventDate(dto.getEventDate());
         }
         if (dto.getLocation() != null) {
@@ -92,23 +105,29 @@ public class EventAdminServiceImpl implements EventAdminService {
         if (dto.getRequestModeration() != null) {
             event.setRequestModeration(dto.getRequestModeration());
         }
-        if (!dto.getTitle().isBlank()) {
+        if (dto.getTitle() != null && !dto.getTitle().isBlank()) {
             event.setTitle(dto.getTitle());
         }
 
-        if (StateAction.valueOf(dto.getStateAction()).equals(StateAction.PUBLISH_EVENT)) {
-            if (!event.getState().equals(EventState.PENDING)) {
-                throw new WrongParameter("Событие можно публиковать, только если оно в состоянии ожидания публикации.");
+        if (dto.getStateAction() != null) {
+            Optional<StateAction> stateAction = StateAction.from(dto.getStateAction());
+            if (stateAction.isEmpty()) {
+                throw new WrongParameter("Неправильно указан параметр состояния.");
             }
-            event.setState(EventState.PUBLISHED);
-            event.setPublishedOn(LocalDateTime.now());
-        } else if (StateAction.valueOf(dto.getStateAction()).equals(StateAction.REJECT_EVENT)) {
-            if (event.getState().equals(EventState.PUBLISHED)) {
-                throw new WrongParameter("Событие можно отклонить, только если оно еще не опубликовано.");
+            if (stateAction.get().equals(StateAction.PUBLISH_EVENT)) {
+                if (!event.getState().equals(EventState.PENDING)) {
+                    throw new WrongParameter("Событие можно публиковать, только если оно в состоянии ожидания публикации.");
+                }
+                event.setState(EventState.PUBLISHED);
+                event.setPublishedOn(LocalDateTime.now());
+            } else if (stateAction.get().equals(StateAction.REJECT_EVENT)) {
+                if (event.getState().equals(EventState.PUBLISHED)) {
+                    throw new WrongParameter("Событие можно отклонить, только если оно еще не опубликовано.");
+                }
+                event.setState(EventState.CANCELED);
+            } else {
+                throw new WrongParameter("Указано недопустимое состояние.");
             }
-            event.setState(EventState.CANCELED);
-        } else {
-            throw new WrongParameter("Указано недопустимое состояние.");
         }
 
         return mapper.toDto(repository.save(event));

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventPrivateClient;
-import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.EventRequestStatusUpdateRequest;
 import ru.practicum.ewmcommondto.model.NewEventDto;
 import ru.practicum.ewmcommondto.model.UpdateEventUserRequest;
@@ -15,7 +14,6 @@ import ru.practicum.ewmcommondto.model.UpdateEventUserRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/users/{userId}/events")
@@ -29,9 +27,6 @@ public class EventPrivateController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid NewEventDto dto,
                                        @PathVariable int userId) {
-        if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
-            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
-        }
         return client.save(dto, userId);
     }
 
@@ -58,9 +53,6 @@ public class EventPrivateController {
     public ResponseEntity<Object> update(@RequestBody UpdateEventUserRequest dto,
                                          @Positive @PathVariable int userId,
                                          @Positive @PathVariable int eventId) {
-        if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
-            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
-        }
         return client.update(dto, userId, eventId);
     }
 

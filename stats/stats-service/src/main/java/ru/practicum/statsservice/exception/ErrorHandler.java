@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.exceptions;
+package ru.practicum.statsservice.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.ewmcommondto.exceptions.*;
 
 import javax.validation.ValidationException;
 import java.util.Objects;
@@ -17,28 +16,9 @@ import java.util.Objects;
 @Slf4j
 public class ErrorHandler {
 
-    @ExceptionHandler({CategoryNotFound.class, EventNotFound.class, CompilationNotFound.class,
-            UserNotFound.class, ParticipationRequestNotFound.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse entityNotFound(RuntimeException exception) {
-        return sendErrorResponse(exception.getMessage());
-    }
-
-    @ExceptionHandler({WrongParameter.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse wrongParameter(RuntimeException exception) {
-        return sendErrorResponse(exception.getMessage());
-    }
-
     @ExceptionHandler({BadParameter.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse badParameter(RuntimeException exception) {
-        return sendErrorResponse(exception.getMessage());
-    }
-
-    @ExceptionHandler({NoConfirmationNeeded.class})
-    @ResponseStatus(HttpStatus.OK)
-    public ErrorResponse noConfirmationNeeded(RuntimeException exception) {
         return sendErrorResponse(exception.getMessage());
     }
 
@@ -53,7 +33,6 @@ public class ErrorHandler {
     public ErrorResponse validationError(ValidationException exception) {
         return sendErrorResponse(exception.getMessage());
     }
-
 
     private ErrorResponse sendErrorResponse(String description) {
         log.info(description);

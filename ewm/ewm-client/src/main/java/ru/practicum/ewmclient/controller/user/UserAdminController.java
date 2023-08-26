@@ -11,6 +11,8 @@ import ru.practicum.ewmcommondto.model.UserDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/admin/users")
@@ -27,9 +29,9 @@ public class UserAdminController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAll(@Positive @RequestParam(defaultValue = "0") int from,
+    public ResponseEntity<Object> findAll(@PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                           @Positive @RequestParam(defaultValue = "10") int size,
-                                          @RequestParam(required = false) Integer[] ids) {
+                                          @RequestParam(required = false) Collection<Integer> ids) {
         return client.findAll(from, size, ids);
     }
 

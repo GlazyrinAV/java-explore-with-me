@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface CompilationPublicService {
 
-    Collection<CompilationDto> findAll(boolean pinned, int from, int size);
+    Collection<CompilationDto> findAll(Boolean pinned, int from, int size);
 
     CompilationDto findById(int compId);
 

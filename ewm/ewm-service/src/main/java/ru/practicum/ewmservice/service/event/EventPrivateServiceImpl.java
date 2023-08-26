@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.*;
 import ru.practicum.ewmcommondto.model.*;
 import ru.practicum.ewmservice.model.*;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class EventPrivateServiceImpl implements EventPrivateService {
 
     private final EventRepository repository;
@@ -63,7 +65,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         if (!event.getInitiator().equals(user)) {
             throw new WrongParameter("Данный пользователь не является инициатором события.");
         }
-        repository.increaseViews(eventId);
         return mapper.toDto(event);
     }
 
@@ -81,6 +82,9 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     public EventDto update(UpdateEventUserRequest dto, int userId, int eventId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = repository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));
+        if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new WrongParameter("До даты события должно быть не менее чем 2 часа.");
+        }
         if (!event.getInitiator().equals(user)) {
             throw new WrongParameter("Данный пользователь не является инициатором события.");
         }
@@ -98,12 +102,15 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             event.setDescription(dto.getDescription());
         }
         if (dto.getEventDate() != null) {
+            if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+                throw new BadParameter("До новой даты события должно быть не менее чем 2 часа.");
+            }
             event.setEventDate(dto.getEventDate());
         }
         if (dto.getLocation() != null) {
             Location location = locationRepository.findByLatAndLon(dto.getLocation().getLat(), dto.getLocation().getLon());
             if (location == null) {
-                location = locationRepository.save(locationMapper.fromDto(dto.getLocation()));
+                location = locationRepository.saveAndFlush(locationMapper.fromDto(dto.getLocation()));
             }
             event.setLocation(location);
         }

@@ -2,7 +2,6 @@ package ru.practicum.statsclient.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +10,6 @@ import ru.practicum.statsclient.client.StatsClient;
 import ru.practicum.statscommondto.StatsDto;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,11 +25,16 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<Object> findStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+    public ResponseEntity<Object> findStats(@RequestParam String start,
+                                           @RequestParam String end,
                                            @RequestParam (required = false) String[] uris,
                                            @RequestParam (required = false, defaultValue = "false") boolean unique) {
         return statsClient.findStats(start, end, uris, unique);
+    }
+
+    @GetMapping("/stats/{eventId}")
+    public ResponseEntity<Object> findStats(@PathVariable int eventId) {
+        return statsClient.findStatsForEwm(eventId);
     }
 
 }

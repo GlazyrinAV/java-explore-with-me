@@ -8,7 +8,7 @@ public interface UserAdminService {
 
     UserDto save(UserDto dto);
 
-    Collection<UserDto> findAll(int from, int size, Integer[] ids);
+    Collection<UserDto> findAll(int from, int size, Collection<Integer> ids);
 
     void remove(int UserId);
 

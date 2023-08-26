@@ -2,6 +2,7 @@ package ru.practicum.ewmservice.service.requests;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
 import ru.practicum.ewmcommondto.exceptions.ParticipationRequestNotFound;
 import ru.practicum.ewmcommondto.exceptions.UserNotFound;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ParticipationRequestsPrivateServiceImpl implements ParticipationRequestsPrivateService {
 
     private final ParticipationRequestsRepository repository;
@@ -39,10 +41,10 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
         if (event.getInitiator().equals(user)) {
             throw new WrongParameter("Инициатор события не может добавить запрос на участие в своём событии.");
         }
-        if (repository.existsByEventIdAndRequesterId(usersId, eventId)) {
+        if (repository.existsByRequesterIdAndEventId(usersId, eventId)) {
             throw new WrongParameter("Нельзя добавить повторный запрос.");
         }
-        if (event.isRequestModeration() && event.getParticipantLimit() == event.getConfirmedRequests()) {
+        if (event.getParticipantLimit() > 0 && event.getParticipantLimit() == event.getConfirmedRequests()) {
             throw new WrongParameter("У события достигнут лимит запросов на участие.");
         }
 
@@ -51,12 +53,13 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
                 .event(event)
                 .created(LocalDateTime.now())
                 .build();
+
         if (event.isRequestModeration()) {
             request.setStatus(RequestStatus.PENDING);
         } else {
+            eventRepository.increaseConfirmedRequests(eventId);
             request.setStatus(RequestStatus.CONFIRMED);
         }
-
         return mapper.toDto(repository.save(request));
     }
 
@@ -77,7 +80,7 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
         if (request.getStatus().equals(RequestStatus.CONFIRMED)) {
             eventRepository.decreaseConfirmedRequests(request.getEvent().getId());
         }
-        request.setStatus(RequestStatus.REJECTED);
+        request.setStatus(RequestStatus.CANCELED);
         return mapper.toDto(repository.save(request));
     }
 

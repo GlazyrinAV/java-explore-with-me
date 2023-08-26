@@ -23,21 +23,19 @@ public class NewEventDto {
     @NotBlank
     private String description;
 
-    @Future
-    @NotNull
+    @FutureOrPresent
     private LocalDateTime eventDate;
 
     @NotNull
     private LocationDto location;
 
-    private Boolean paid;
+    private Boolean paid = false;
 
-    private Boolean requestModeration;
+    private Boolean requestModeration = true;
 
     @Positive
     private int category;
 
-    @PositiveOrZero
-    private Integer participantLimit;
+    private Integer participantLimit = 0;
 
 }

@@ -9,6 +9,7 @@ import ru.practicum.ewmcommondto.model.NewEventDto;
 import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
+import ru.practicum.ewmservice.service.stats.StatsService;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +25,8 @@ public class EventMapper {
 
     private final LocationRepository locationRepository;
 
+    private final StatsService service;
+
     public Event fromDto(NewEventDto dto) {
         boolean paidDto = false;
         if (dto.getPaid() != null) {
@@ -35,7 +38,7 @@ public class EventMapper {
         }
         Location location = locationRepository.findByLatAndLon(dto.getLocation().getLat(), dto.getLocation().getLon());
         if (location == null) {
-            location = locationRepository.save(locationMapper.fromDto(dto.getLocation()));
+            location = locationRepository.saveAndFlush(locationMapper.fromDto(dto.getLocation()));
         }
         return Event.builder()
                 .annotation(dto.getAnnotation())
@@ -81,7 +84,7 @@ public class EventMapper {
                 .requestModeration(event.isRequestModeration())
                 .state(event.getState().name())
                 .title(event.getTitle())
-                .views(event.getViews())
+                .views(service.getViews(event.getId()))
                 .build();
     }
 
@@ -95,7 +98,7 @@ public class EventMapper {
                 .initiator(userMapper.toDto(event.getInitiator()))
                 .paid(event.isPaid())
                 .title(event.getTitle())
-                .views(event.getViews())
+                .views(service.getViews(event.getId()))
                 .build();
     }
 

@@ -9,9 +9,9 @@ public interface EventAdminService {
 
     Collection<EventDto> findAll(int from,
                                  int size,
-                                 Integer[] users,
-                                 String[] states,
-                                 Integer[] categories,
+                                 Collection<Integer> users,
+                                 Collection<String> states,
+                                 Collection<Integer> categories,
                                  String rangeStart,
                                  String rangeEnd);
 

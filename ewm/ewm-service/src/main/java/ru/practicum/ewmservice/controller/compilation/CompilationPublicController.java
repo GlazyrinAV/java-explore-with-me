@@ -20,9 +20,9 @@ public class CompilationPublicController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<CompilationDto> findAll(@RequestParam boolean pinned,
-                                              @RequestParam int  from,
-                                              @RequestParam int size) {
+    public Collection<CompilationDto> findAll(@RequestParam(required = false) Boolean pinned,
+                                              @RequestParam(defaultValue = "0") int from,
+                                              @RequestParam(defaultValue = "10") int size) {
         return service.findAll(pinned, from, size);
     }
 

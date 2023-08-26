@@ -23,7 +23,7 @@ public class EventPublicController {
     public Collection<EventDto> findAll(@RequestParam(defaultValue = "0") int from,
                                         @RequestParam(defaultValue = "10") int size,
                                         @RequestParam(required = false) String text,
-                                        @RequestParam(required = false) Integer[] categories,
+                                        @RequestParam(required = false) Collection<Integer> categories,
                                         @RequestParam(required = false) Boolean paid,
                                         @RequestParam(required = false) String rangeStart,
                                         @RequestParam(required = false) String rangeEnd,

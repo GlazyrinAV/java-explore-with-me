@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CompilationPublicClient extends BaseClient {
@@ -12,13 +13,16 @@ public class CompilationPublicClient extends BaseClient {
         super(rest);
     }
 
-    public ResponseEntity<Object> findAll(boolean pinned, int from, int size) {
-        Map<String, Object> parameters = Map.of(
-                "pinned", pinned,
-                "from", from,
-                "size", size
-        );
-        return get("?pinned={pinned}&from={from}&size={size}", parameters);
+    public ResponseEntity<Object> findAll(Boolean pinned, int from, int size) {
+        String path = "?from={from}&size={size}";
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("from", from);
+        parameters.put("size", size);
+        if (pinned != null) {
+            path = path + "&pinned={pinned}";
+            parameters.put("pinned", pinned);
+        }
+        return get(path, parameters);
     }
 
     public ResponseEntity<Object> findById(int compId) {

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.CompilationNotFound;
 import ru.practicum.ewmcommondto.model.CompilationDto;
 import ru.practicum.ewmservice.model.mapper.CompilationMapper;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class CompilationPublicServiceImpl implements CompilationPublicService {
 
     private final CompilationRepository repository;
@@ -23,8 +25,11 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     private final CompilationMapper mapper;
 
     @Override
-    public Collection<CompilationDto> findAll(boolean pinned, int from, int size) {
+    public Collection<CompilationDto> findAll(Boolean pinned, int from, int size) {
         Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
+        if (pinned != null) {
+            return repository.findAllByPinned(pinned, page).stream().map(mapper::toDto).collect(Collectors.toList());
+        }
         return repository.findAll(page).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 

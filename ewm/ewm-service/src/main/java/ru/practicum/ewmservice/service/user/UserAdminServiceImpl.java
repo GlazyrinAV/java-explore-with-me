@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.UserNotFound;
+import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.UserDto;
 import ru.practicum.ewmservice.model.mapper.UserMapper;
 import ru.practicum.ewmservice.repository.UserRepository;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class UserAdminServiceImpl implements UserAdminService {
 
     private final UserRepository userRepository;
@@ -23,10 +26,13 @@ public class UserAdminServiceImpl implements UserAdminService {
     private final UserMapper mapper;
 
     public UserDto save(UserDto dto) {
+        if (userRepository.findByName(dto.getName()) != null) {
+            throw new WrongParameter("Пользователь с таким именем уже существует.");
+        }
         return mapper.toDto(userRepository.save(mapper.fromDto(dto)));
     }
 
-    public Collection<UserDto> findAll(int from, int size, Integer[] ids) {
+    public Collection<UserDto> findAll(int from, int size, Collection<Integer> ids) {
         Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
         return userRepository.findAllAdminWithCriteria(page, ids).stream().map(mapper::toDto).collect(Collectors.toList());
     }

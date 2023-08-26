@@ -21,11 +21,11 @@ public class EventAdminController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<EventDto> findAll(@RequestParam int from,
-                                        @RequestParam int size,
-                                        @RequestParam(required = false) Integer[] users,
-                                        @RequestParam(required = false) String[] states,
-                                        @RequestParam(required = false) Integer[] categories,
+    public Collection<EventDto> findAll(@RequestParam(defaultValue = "0") int from,
+                                        @RequestParam(defaultValue = "10") int size,
+                                        @RequestParam(required = false) Collection<Integer> users,
+                                        @RequestParam(required = false) Collection<String> states,
+                                        @RequestParam(required = false) Collection<Integer> categories,
                                         @RequestParam(required = false) String rangeStart,
                                         @RequestParam(required = false) String rangeEnd) {
         return service.findAll(from, size, users, states, categories, rangeStart, rangeEnd);

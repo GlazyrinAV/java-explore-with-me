@@ -12,12 +12,12 @@ public class ParticipationRequestsPrivateClient extends BaseClient {
         super(rest);
     }
 
-    public ResponseEntity<Object> save(int usersId, int eventId) {
+    public ResponseEntity<Object> save(int userId, int eventId) {
         Map<String, Object> parameters = Map.of(
-                "userId", usersId,
+                "userId", userId,
                 "eventId", eventId
         );
-        return post("/?eventId={eventId}", parameters, null);
+        return post("?eventId={eventId}", parameters, null);
     }
 
     public ResponseEntity<Object> findAll(int userId) {
@@ -27,9 +27,9 @@ public class ParticipationRequestsPrivateClient extends BaseClient {
         return get("", parameters);
     }
 
-    public ResponseEntity<Object> cancel(int usersId, int requestId) {
+    public ResponseEntity<Object> cancel(int userId, int requestId) {
         Map<String, Object> parameters = Map.of(
-                "userId", usersId,
+                "userId", userId,
                 "requestId", requestId
         );
         return patch("/{requestId}/cancel", parameters, null);

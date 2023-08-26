@@ -13,7 +13,7 @@ public class ParticipationRequestsPrivateClientConfiguration {
     @Value("${ewm-service.url}")
     private String serverUrl;
 
-    @Value("/users/{usersId}/requests")
+    @Value("/users/{userId}/requests")
     private String api;
 
     @Bean

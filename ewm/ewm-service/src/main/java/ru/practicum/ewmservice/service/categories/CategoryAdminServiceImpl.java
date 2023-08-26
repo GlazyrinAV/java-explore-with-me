@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.service.categories;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
 import ru.practicum.ewmcommondto.exceptions.WrongParameter;
 import ru.practicum.ewmcommondto.model.CategoryDto;
@@ -14,6 +15,7 @@ import ru.practicum.ewmservice.repository.EventRepository;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     private final CategoryRepository repository;
@@ -24,6 +26,9 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     @Override
     public CategoryDto save(CategoryDto dto) {
+        if (repository.findByName(dto.getName()) != null) {
+            throw new WrongParameter("Категория с таким именем уже существует.");
+        }
         return mapper.toDto(repository.save(mapper.fromDto(dto)));
     }
 
@@ -31,6 +36,9 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     public CategoryDto update(CategoryDto dto, int catId) {
         Category categoryFromDb = repository.findById(catId).orElseThrow(() -> new CategoryNotFound(catId));
         if (!dto.getName().isBlank()) {
+            if (repository.findByName(dto.getName()) != null) {
+                throw new WrongParameter("Категория с таким именем уже существует.");
+            }
             categoryFromDb.setName(dto.getName());
         }
         return mapper.toDto(repository.save(categoryFromDb));

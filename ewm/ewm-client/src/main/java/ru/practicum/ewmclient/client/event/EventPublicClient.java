@@ -7,6 +7,7 @@ import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmclient.client.stats.StatsClient;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class EventPublicClient extends BaseClient {
     public ResponseEntity<Object> findAll(int from,
                                           int size,
                                           String text,
-                                          Integer[] categories,
+                                          Collection<Integer> categories,
                                           Boolean paid,
                                           String rangeStart,
                                           String rangeEnd,

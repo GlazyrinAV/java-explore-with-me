@@ -47,7 +47,7 @@ public class Event {
     @Column(name = "event_date")
     private LocalDateTime eventDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private Location location;
 
@@ -66,8 +66,5 @@ public class Event {
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private EventState state;
-
-    @Column(name = "views")
-    private Integer views;
 
 }

@@ -9,7 +9,7 @@ public interface EventPublicService {
     Collection<EventDto> findAll(int from,
                                  int size,
                                  String text,
-                                 Integer[] categories,
+                                 Collection<Integer> categories,
                                  Boolean paid,
                                  String rangeStart,
                                  String rangeEnd,
