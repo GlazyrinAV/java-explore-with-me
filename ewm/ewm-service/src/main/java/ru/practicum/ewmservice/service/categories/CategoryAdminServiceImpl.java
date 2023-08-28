@@ -36,8 +36,10 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     public CategoryDto update(CategoryDto dto, int catId) {
         Category categoryFromDb = repository.findById(catId).orElseThrow(() -> new CategoryNotFound(catId));
         if (!dto.getName().isBlank()) {
-            if (repository.findByName(dto.getName()) != null) {
+            if (repository.findDuplicate(dto.getName(), catId) != null) {
                 throw new WrongParameter("Категория с таким именем уже существует.");
+            } else if (dto.getName().equals(categoryFromDb.getName())) {
+                return mapper.toDto(categoryFromDb);
             }
             categoryFromDb.setName(dto.getName());
         }

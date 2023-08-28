@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmcommondto.exceptions.BadParameter;
 import ru.practicum.ewmcommondto.exceptions.EventNotFound;
 import ru.practicum.ewmcommondto.model.EventDto;
 import ru.practicum.ewmservice.model.Event;
@@ -18,6 +19,8 @@ import ru.practicum.ewmservice.repository.EventRepository;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -54,6 +57,12 @@ public class EventPublicServiceImpl implements EventPublicService {
         }
         if (rangeEnd != null) {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
+        }
+        if (rangeStart != null && rangeEnd != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
+                throw new BadParameter("Дата начала не может быть позже даты конца.");
+            }
         }
         return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
                 .stream().map(mapper::toShortDto).collect(Collectors.toList());

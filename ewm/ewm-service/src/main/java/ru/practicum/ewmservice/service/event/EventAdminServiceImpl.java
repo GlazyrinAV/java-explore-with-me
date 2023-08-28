@@ -25,6 +25,7 @@ import ru.practicum.ewmservice.repository.LocationRepository;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +60,12 @@ public class EventAdminServiceImpl implements EventAdminService {
         }
         if (rangeEnd != null) {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
+        }
+        if (rangeStart != null && rangeEnd != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
+                throw new BadParameter("Дата начала не может быть позже даты конца.");
+            }
         }
         return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
                 .stream().map(mapper::toDto).collect(Collectors.toList());

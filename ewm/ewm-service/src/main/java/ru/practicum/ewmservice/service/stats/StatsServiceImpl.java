@@ -8,6 +8,11 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 @Service
@@ -26,7 +31,6 @@ public class StatsServiceImpl implements StatsService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-
         return headers;
     }
 
@@ -35,13 +39,26 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public int getViews(int eventId) {
         String path = "/stats/" + eventId;
-        ResponseEntity<String> response = restTemplate.exchange(serverUrl + path, HttpMethod.GET, entity, String.class);
         Integer hits = 0;
         try {
+            URL url = new URL(serverUrl + path);
+            URLConnection conn = url.openConnection();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuffer sb = new StringBuffer();
+
+            int BUFFER_SIZE = 1024;
+            char[] buffer = new char[BUFFER_SIZE];
+            int charsRead = 0;
+            while ((charsRead = rd.read(buffer, 0, BUFFER_SIZE)) != -1) {
+                sb.append(buffer, 0, charsRead);
+            }
+
             ObjectMapper mapper = new ObjectMapper();
-            hits = mapper.readValue(response.getBody(), Integer.class);
+            hits = mapper.readValue(sb.toString(), Integer.class);
         } catch (JsonProcessingException e) {
             System.out.println(e.getLocalizedMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         if (hits != null) {
             return hits;

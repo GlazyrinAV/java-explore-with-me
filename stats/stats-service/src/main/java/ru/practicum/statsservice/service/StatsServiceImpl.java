@@ -50,7 +50,12 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public Integer findStatsForEwm(int eventId) {
-        return repository.findStatsForEwm("/events/" + eventId);
+        Integer hits = repository.findStatsForEwm("/events/" + eventId);
+        if (hits != null) {
+            return hits;
+        } else {
+            return 0;
+        }
     }
 
 }

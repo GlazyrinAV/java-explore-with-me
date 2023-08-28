@@ -54,7 +54,7 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
                 .created(LocalDateTime.now())
                 .build();
 
-        if (event.isRequestModeration()) {
+        if (event.isRequestModeration() && event.getParticipantLimit() > 0) {
             request.setStatus(RequestStatus.PENDING);
         } else {
             eventRepository.increaseConfirmedRequests(eventId);
