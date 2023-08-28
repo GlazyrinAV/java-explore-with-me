@@ -18,7 +18,6 @@
     <modules>
         <module>ewm-client</module>
         <module>ewm-service</module>
-        <module>ewm-common-dto</module>
     </modules>
 
 

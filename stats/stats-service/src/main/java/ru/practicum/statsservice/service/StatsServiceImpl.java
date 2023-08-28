@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.statscommondto.StatsDto;
-import ru.practicum.statscommondto.ViewStatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
+import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.exception.BadParameter;
 import ru.practicum.statsservice.model.Mapper;
 import ru.practicum.statsservice.repository.StatsRepository;
@@ -15,6 +15,7 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -53,11 +54,7 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public Integer findStatsForEwm(int eventId) {
         Integer hits = repository.findStatsForEwm("/events/" + eventId);
-        if (hits != null) {
-            return hits;
-        } else {
-            return 0;
-        }
+        return Objects.requireNonNullElse(hits, 0);
     }
 
 }

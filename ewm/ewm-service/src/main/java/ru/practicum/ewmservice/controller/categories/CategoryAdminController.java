@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewmcommondto.model.CategoryDto;
+import ru.practicum.ewmclient.model.CategoryDto;
 import ru.practicum.ewmservice.service.categories.CategoryAdminService;
 
 @RestController

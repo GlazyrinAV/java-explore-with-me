@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewmcommondto.exceptions.UserNotFound;
-import ru.practicum.ewmcommondto.exceptions.WrongParameter;
-import ru.practicum.ewmcommondto.model.UserDto;
+import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;
+import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
+import ru.practicum.ewmclient.model.UserDto;
 import ru.practicum.ewmservice.model.mapper.UserMapper;
 import ru.practicum.ewmservice.repository.UserRepository;
 

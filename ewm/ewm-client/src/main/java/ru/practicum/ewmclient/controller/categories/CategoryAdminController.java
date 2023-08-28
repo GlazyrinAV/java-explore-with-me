@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.categories.CategoryAdminClient;
-import ru.practicum.ewmcommondto.model.CategoryDto;
+import ru.practicum.ewmclient.model.CategoryDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;

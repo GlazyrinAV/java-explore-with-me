@@ -1,7 +1,7 @@
 package ru.practicum.statsservice.service;
 
-import ru.practicum.statscommondto.ViewStatsDto;
-import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statsclient.dto.ViewStatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
 
 import java.util.Collection;
 

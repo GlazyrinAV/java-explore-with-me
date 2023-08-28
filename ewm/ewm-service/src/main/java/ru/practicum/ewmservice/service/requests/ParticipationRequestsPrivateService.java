@@ -1,6 +1,6 @@
 package ru.practicum.ewmservice.service.requests;
 
-import ru.practicum.ewmcommondto.model.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.ParticipationRequestDto;
 
 import java.util.Collection;
 

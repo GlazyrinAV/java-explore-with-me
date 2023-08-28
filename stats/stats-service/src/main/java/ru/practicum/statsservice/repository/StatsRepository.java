@@ -2,7 +2,7 @@ package ru.practicum.statsservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.practicum.statscommondto.ViewStatsDto;
+import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.model.Stats;
 
 import java.util.Collection;

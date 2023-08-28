@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.service.event;
 
-import ru.practicum.ewmcommondto.model.EventDto;
-import ru.practicum.ewmcommondto.model.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.EventDto;
+import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 
 import java.util.Collection;
 

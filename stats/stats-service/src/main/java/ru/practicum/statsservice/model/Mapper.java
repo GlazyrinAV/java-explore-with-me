@@ -2,7 +2,7 @@ package ru.practicum.statsservice.model;
 
 import lombok.Builder;
 import org.springframework.stereotype.Component;
-import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

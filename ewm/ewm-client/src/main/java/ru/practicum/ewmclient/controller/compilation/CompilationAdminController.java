@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.compilation.CompilationAdminClient;
-import ru.practicum.ewmcommondto.model.NewCompilationDto;
-import ru.practicum.ewmcommondto.model.UpdateCompilationRequest;
+import ru.practicum.ewmclient.model.NewCompilationDto;
+import ru.practicum.ewmclient.model.UpdateCompilationRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;

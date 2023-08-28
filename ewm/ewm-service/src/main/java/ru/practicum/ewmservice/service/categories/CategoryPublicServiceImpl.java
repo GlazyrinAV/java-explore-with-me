@@ -7,8 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
-import ru.practicum.ewmcommondto.model.CategoryDto;
+import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
+import ru.practicum.ewmclient.model.CategoryDto;
 import ru.practicum.ewmservice.model.mapper.CategoryMapper;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 

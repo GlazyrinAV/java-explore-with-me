@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewmcommondto.exceptions.CompilationNotFound;
-import ru.practicum.ewmcommondto.model.CompilationDto;
+import ru.practicum.ewmservice.exceptions.exceptions.CompilationNotFound;
+import ru.practicum.ewmclient.model.CompilationDto;
 import ru.practicum.ewmservice.model.mapper.CompilationMapper;
 import ru.practicum.ewmservice.repository.CompilationRepository;
 

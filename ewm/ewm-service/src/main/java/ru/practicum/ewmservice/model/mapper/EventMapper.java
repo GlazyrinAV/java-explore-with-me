@@ -2,10 +2,10 @@ package ru.practicum.ewmservice.model.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmcommondto.exceptions.CategoryNotFound;
-import ru.practicum.ewmcommondto.model.EventDto;
+import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
+import ru.practicum.ewmclient.model.EventDto;
 import ru.practicum.ewmservice.model.Event;
-import ru.practicum.ewmcommondto.model.NewEventDto;
+import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;

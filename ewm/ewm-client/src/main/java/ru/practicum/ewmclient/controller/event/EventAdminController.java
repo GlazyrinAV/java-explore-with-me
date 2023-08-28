@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventAdminClient;
-import ru.practicum.ewmcommondto.model.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;

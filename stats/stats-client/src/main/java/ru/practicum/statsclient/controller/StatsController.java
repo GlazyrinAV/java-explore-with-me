@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.statsclient.client.StatsClient;
-import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
 
 import javax.validation.Valid;
 

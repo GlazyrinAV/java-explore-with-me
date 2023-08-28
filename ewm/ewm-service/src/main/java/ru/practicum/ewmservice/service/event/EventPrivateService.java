@@ -1,6 +1,6 @@
 package ru.practicum.ewmservice.service.event;
 
-import ru.practicum.ewmcommondto.model.*;
+import ru.practicum.ewmclient.model.*;
 
 import java.util.Collection;
 

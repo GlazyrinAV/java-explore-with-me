@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.user.UserAdminClient;
-import ru.practicum.ewmcommondto.model.UserDto;
+import ru.practicum.ewmclient.model.UserDto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;

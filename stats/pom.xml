@@ -23,7 +23,6 @@
     <modules>
         <module>stats-client</module>
         <module>stats-service</module>
-        <module>stats-common-dto</module>
     </modules>
 
     <dependencies>

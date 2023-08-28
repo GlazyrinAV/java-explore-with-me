@@ -2,7 +2,7 @@ package ru.practicum.statsclient.client;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package ru.practicum.ewmservice.service.compilation;
 
-import ru.practicum.ewmcommondto.model.CompilationDto;
+import ru.practicum.ewmclient.model.CompilationDto;
 
 import java.util.Collection;
 

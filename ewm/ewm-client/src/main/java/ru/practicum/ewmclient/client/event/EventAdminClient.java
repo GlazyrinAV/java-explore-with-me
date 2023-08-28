@@ -3,7 +3,7 @@ package ru.practicum.ewmclient.client.event;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmcommondto.model.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 
 import java.net.URLEncoder;
 import java.nio.charset.Charset;

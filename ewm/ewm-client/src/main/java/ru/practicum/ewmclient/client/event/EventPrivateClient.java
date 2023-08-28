@@ -3,9 +3,9 @@ package ru.practicum.ewmclient.client.event;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmcommondto.model.EventRequestStatusUpdateRequest;
-import ru.practicum.ewmcommondto.model.NewEventDto;
-import ru.practicum.ewmcommondto.model.UpdateEventUserRequest;
+import ru.practicum.ewmclient.model.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.NewEventDto;
+import ru.practicum.ewmclient.model.UpdateEventUserRequest;
 
 import java.util.Map;
 

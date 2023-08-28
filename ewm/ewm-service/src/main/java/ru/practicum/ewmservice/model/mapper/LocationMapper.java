@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.model.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmcommondto.model.LocationDto;
+import ru.practicum.ewmclient.model.LocationDto;
 import ru.practicum.ewmservice.model.Location;
 
 @Component
