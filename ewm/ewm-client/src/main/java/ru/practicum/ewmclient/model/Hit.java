@@ -21,6 +21,6 @@ public class Hit {
     private String ip;
 
     @JsonProperty("timestamp")
-    private LocalDateTime timeStamp;
+    private String timeStamp;
 
 }

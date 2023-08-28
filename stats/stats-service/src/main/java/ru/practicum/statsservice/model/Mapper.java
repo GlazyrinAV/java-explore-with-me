@@ -17,7 +17,7 @@ public class Mapper {
                 .app(dto.getApp())
                 .ip(dto.getIp())
                 .uri(dto.getUri())
-                .timeStamp(LocalDateTime.parse(dto.getTimeStamp()))
+                .timeStamp(LocalDateTime.parse(dto.getTimeStamp(), formatter))
                 .build();
     }
 
