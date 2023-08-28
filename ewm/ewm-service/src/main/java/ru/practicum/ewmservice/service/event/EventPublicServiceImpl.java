@@ -44,7 +44,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                                         String rangeEnd,
                                         Boolean onlyAvailable,
                                         String sort) {
-        Pageable page=  PageRequest.of(from == 0 ? 0 : from / size, size);
+        Pageable page =  PageRequest.of(from == 0 ? 0 : from / size, size);
         if (SortType.from(sort).isPresent()) {
             if (sort.equals(SortType.EVENT_DATE.name())) {
                 page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("eventDate"));

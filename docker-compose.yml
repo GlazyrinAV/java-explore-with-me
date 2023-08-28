@@ -34,6 +34,7 @@ services:
     container_name: ewm-service
     environment:
       - SPRING.DATASOURCE.URL=jdbc:postgresql://ewm-db:5432/ewm-db
+      - stats_client_url=http://stats-client:9090
     depends_on:
       - ewm-db
 
@@ -42,6 +43,7 @@ services:
     container_name: ewm-client
     environment:
       - ewm_service_url=http://ewm-service:8081
+      - stats_client_url=http://stats-client:9090
     ports:
       - "8080:8080"
     depends_on:

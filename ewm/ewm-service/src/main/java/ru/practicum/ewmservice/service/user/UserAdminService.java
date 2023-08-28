@@ -10,6 +10,6 @@ public interface UserAdminService {
 
     Collection<UserDto> findAll(int from, int size, Collection<Integer> ids);
 
-    void remove(int UserId);
+    void remove(int userId);
 
 }
