@@ -26,9 +26,9 @@ public class StatsController {
 
     @GetMapping("/stats")
     public ResponseEntity<Object> findStats(@RequestParam String start,
-                                           @RequestParam String end,
-                                           @RequestParam (required = false) String[] uris,
-                                           @RequestParam (required = false, defaultValue = "false") boolean unique) {
+                                            @RequestParam String end,
+                                            @RequestParam(required = false) String[] uris,
+                                            @RequestParam(required = false, defaultValue = "false") boolean unique) {
         return statsClient.findStats(start, end, uris, unique);
     }
 

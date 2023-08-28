@@ -21,7 +21,7 @@ public class StatsDto {
     @NotBlank
     private String ip;
 
-    @JsonProperty("timestamp")
+    @NotBlank
     private String timeStamp;
 
 }

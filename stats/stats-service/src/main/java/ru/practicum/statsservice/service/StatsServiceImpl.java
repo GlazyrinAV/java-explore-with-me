@@ -13,6 +13,7 @@ import ru.practicum.statsservice.repository.StatsRepository;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 @Service
@@ -32,8 +33,9 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public Collection<ViewStatsDto> findStats(String start, String end, Collection<String> uris, boolean unique) {
-        LocalDateTime startDto = LocalDateTime.parse(URLDecoder.decode(start, Charset.defaultCharset()));
-        LocalDateTime endDto = LocalDateTime.parse(URLDecoder.decode(end, Charset.defaultCharset()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDto = LocalDateTime.parse(URLDecoder.decode(start, Charset.defaultCharset()), formatter);
+        LocalDateTime endDto = LocalDateTime.parse(URLDecoder.decode(end, Charset.defaultCharset()), formatter);
         if (startDto.isAfter(endDto)) {
             throw new BadParameter("Дата начала не может быть позже конца.");
         }
