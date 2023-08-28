@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Data
 @AllArgsConstructor
@@ -19,7 +17,7 @@ public class UpdateEventAdminRequest {
 
     private String description;
 
-    private LocalDateTime eventDate;
+    private String eventDate;
 
     private LocationDto location;
 

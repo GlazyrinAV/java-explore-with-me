@@ -16,6 +16,7 @@ import ru.practicum.ewmservice.model.mapper.ParticipationRequestsMapper;
 import ru.practicum.ewmservice.repository.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -41,10 +42,15 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     private final ParticipationRequestsMapper requestsMapper;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @Override
     public EventDto save(NewEventDto dto, int userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = mapper.fromDto(dto);
+        if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new BadParameter("Начало события не ранее чем за 2 часа.");
+        }
         event.setInitiator(user);
         event.setCreatedOn(LocalDateTime.now());
         event.setState(EventState.PENDING);
@@ -102,10 +108,11 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             event.setDescription(dto.getDescription());
         }
         if (dto.getEventDate() != null) {
-            if (dto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            if (LocalDateTime.parse(dto.getEventDate(), formatter).isBefore(LocalDateTime.now().plusHours(2))) {
                 throw new BadParameter("До новой даты события должно быть не менее чем 2 часа.");
             }
-            event.setEventDate(dto.getEventDate());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            event.setEventDate(LocalDateTime.parse(dto.getEventDate(), formatter));
         }
         if (dto.getLocation() != null) {
             Location location = locationRepository.findByLatAndLon(dto.getLocation().getLat(), dto.getLocation().getLon());

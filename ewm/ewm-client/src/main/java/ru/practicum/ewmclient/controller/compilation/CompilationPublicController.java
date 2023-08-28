@@ -36,11 +36,7 @@ public class CompilationPublicController {
     private Boolean convertPinned(String pinned) {
         if (pinned == null) {
             return null;
-        } else if (pinned.equalsIgnoreCase("true")) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return pinned.equalsIgnoreCase("true");
     }
 
 }

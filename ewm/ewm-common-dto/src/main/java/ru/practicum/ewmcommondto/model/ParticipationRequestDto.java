@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @RequiredArgsConstructor
@@ -17,7 +15,7 @@ public class ParticipationRequestDto {
 
     private Integer event;
 
-    private LocalDateTime created;
+    private String created;
 
     private Integer requester;
 

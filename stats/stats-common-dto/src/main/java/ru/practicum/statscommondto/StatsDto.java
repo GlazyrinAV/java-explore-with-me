@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
@@ -23,8 +21,7 @@ public class StatsDto {
     @NotBlank
     private String ip;
 
-    @PastOrPresent
     @JsonProperty("timestamp")
-    private LocalDateTime timeStamp;
+    private String timeStamp;
 
 }

@@ -11,6 +11,9 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
 import ru.practicum.ewmservice.service.stats.StatsService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 @RequiredArgsConstructor
 public class EventMapper {
@@ -26,6 +29,8 @@ public class EventMapper {
     private final LocationRepository locationRepository;
 
     private final StatsService service;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public Event fromDto(NewEventDto dto) {
         boolean paidDto = false;
@@ -44,7 +49,7 @@ public class EventMapper {
                 .annotation(dto.getAnnotation())
                 .category(categoryRepository.findById(dto.getCategory()).orElseThrow(() -> new CategoryNotFound(dto.getCategory())))
                 .description(dto.getDescription())
-                .eventDate(dto.getEventDate())
+                .eventDate(LocalDateTime.parse(dto.getEventDate(), formatter))
                 .paid(paidDto)
                 .location(location)
                 .participantLimit(dto.getParticipantLimit())
@@ -58,7 +63,7 @@ public class EventMapper {
                 .annotation(dto.getAnnotation())
                 .category(categoryMapper.fromDto(dto.getCategory()))
                 .description(dto.getDescription())
-                .eventDate(dto.getEventDate())
+                .eventDate(LocalDateTime.parse(dto.getEventDate(), formatter))
                 .paid(dto.isPaid())
                 .location(locationMapper.fromDto(dto.getLocation()))
                 .participantLimit(dto.getParticipantLimit())
@@ -68,19 +73,23 @@ public class EventMapper {
     }
 
     public EventDto toDto(Event event) {
+        String published = null;
+        if (event.getPublishedOn() != null) {
+            published = event.getPublishedOn().format(formatter);
+        }
         return EventDto.builder()
                 .annotation(event.getAnnotation())
                 .category(categoryMapper.toDto(event.getCategory()))
                 .confirmedRequests(event.getConfirmedRequests())
-                .createdOn(event.getCreatedOn())
+                .createdOn(event.getCreatedOn().format(formatter))
                 .description(event.getDescription())
-                .eventDate(event.getEventDate())
+                .eventDate(event.getEventDate().format(formatter))
                 .id(event.getId())
                 .initiator(userMapper.toDto(event.getInitiator()))
                 .location(locationMapper.toDto(event.getLocation()))
                 .paid(event.isPaid())
                 .participantLimit(event.getParticipantLimit())
-                .publishedOn(event.getPublishedOn())
+                .publishedOn(published)
                 .requestModeration(event.isRequestModeration())
                 .state(event.getState().name())
                 .title(event.getTitle())
@@ -93,7 +102,7 @@ public class EventMapper {
                 .annotation(event.getAnnotation())
                 .category(categoryMapper.toDto(event.getCategory()))
                 .confirmedRequests(event.getConfirmedRequests())
-                .eventDate(event.getEventDate())
+                .eventDate(event.getEventDate().format(formatter))
                 .id(event.getId())
                 .initiator(userMapper.toDto(event.getInitiator()))
                 .paid(event.isPaid())

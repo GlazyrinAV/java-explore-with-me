@@ -46,6 +46,8 @@ public class EventAdminServiceImpl implements EventAdminService {
 
     private final LocationMapper locationMapper;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @Override
     public Collection<EventDto> findAll(int from,
                                         int size,
@@ -88,10 +90,10 @@ public class EventAdminServiceImpl implements EventAdminService {
             event.setDescription(dto.getDescription());
         }
         if (dto.getEventDate() != null) {
-            if (!dto.getEventDate().isAfter(LocalDateTime.now().plusHours(2))) {
+            if (!LocalDateTime.parse(dto.getEventDate(), formatter).isAfter(LocalDateTime.now().plusHours(2))) {
                 throw new BadParameter("До новой даты события должно быть не менее чем 2 часа.");
             }
-            event.setEventDate(dto.getEventDate());
+            event.setEventDate(LocalDateTime.parse(dto.getEventDate(), formatter));
         }
         if (dto.getLocation() != null) {
             event.setLocation(locationMapper.fromDto(dto.getLocation()));

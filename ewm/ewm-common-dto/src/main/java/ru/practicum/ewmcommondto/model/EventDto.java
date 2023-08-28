@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -31,14 +29,13 @@ public class EventDto {
     @NotNull
     private CategoryDto category;
 
-    private LocalDateTime createdOn;
+    private String createdOn;
 
     @NotBlank
     private String description;
 
-    @FutureOrPresent
     @NotNull
-    private LocalDateTime eventDate;
+    private String eventDate;
 
     @NotNull
     private LocationDto location;
@@ -47,7 +44,7 @@ public class EventDto {
 
     private Integer participantLimit;
 
-    private LocalDateTime publishedOn;
+    private String publishedOn;
 
     private boolean requestModeration;
 

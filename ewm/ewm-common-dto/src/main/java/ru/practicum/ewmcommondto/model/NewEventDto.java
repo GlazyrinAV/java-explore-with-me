@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -23,8 +22,7 @@ public class NewEventDto {
     @NotBlank
     private String description;
 
-    @FutureOrPresent
-    private LocalDateTime eventDate;
+    private String eventDate;
 
     @NotNull
     private LocationDto location;
