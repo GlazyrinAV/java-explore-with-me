@@ -1,4 +1,5 @@
-drop table if exists event, users, category, event, locations, compilation, compilation_events, participation_requests;
+drop table if exists event, users, category, event, locations, compilation,
+    compilation_events, participation_requests, marks;
 
 create table if not exists users
 (
@@ -64,12 +65,12 @@ create table if not exists event
 
 create table if not exists compilation
 (
-    id       integer generated always as identity
+    id     integer generated always as identity
         primary key,
-    title    varchar(50) not null
+    title  varchar(50) not null
         constraint check_title
-        check (length((title)::text) > 0),
-    pinned   boolean      not null
+            check (length((title)::text) > 0),
+    pinned boolean     not null
 );
 
 create table if not exists participation_requests
@@ -96,4 +97,19 @@ create table if not exists compilation_events
             references public.event,
     constraint compilation_events_pk
         primary key (event_id, compilation_id)
+);
+
+create table if not exists marks
+(
+    user_id  integer not null
+        constraint marks_event_id_fk
+            references public.event
+        constraint marks_users_id_fk
+            references public.users,
+    event_id integer not null,
+    mark     integer not null
+        constraint check_mark
+            check ((mark > 0) AND (mark < 6)),
+    constraint marks_pk
+        primary key (user_id, event_id)
 );

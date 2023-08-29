@@ -54,4 +54,6 @@ public class EventDto {
 
     private Integer views;
 
+    private Integer mark;
+
 }

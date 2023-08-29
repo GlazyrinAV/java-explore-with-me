@@ -26,4 +26,6 @@ public class UserDto {
     @JsonProperty("email")
     private String email;
 
+    private Integer mark;
+
 }

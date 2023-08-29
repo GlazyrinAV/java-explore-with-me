@@ -9,6 +9,7 @@ import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
+import ru.practicum.ewmservice.repository.MarkRepository;
 import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ public class EventMapper {
     private final CategoryRepository categoryRepository;
 
     private final LocationRepository locationRepository;
+
+    private final MarkRepository markRepository;
 
     private final StatsRequestService service;
 
@@ -94,6 +97,7 @@ public class EventMapper {
                 .state(event.getState().name())
                 .title(event.getTitle())
                 .views(service.getViews(event.getId()))
+                .mark(markRepository.findMarkForEvent(event.getId()))
                 .build();
     }
 
@@ -108,6 +112,7 @@ public class EventMapper {
                 .paid(event.isPaid())
                 .title(event.getTitle())
                 .views(service.getViews(event.getId()))
+                .mark(markRepository.findMarkForEvent(event.getId()))
                 .build();
     }
 
