@@ -68,7 +68,9 @@ public class EventAdminServiceImpl implements EventAdminService {
             }
         }
         return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
-                .stream().map(mapper::toDto).collect(Collectors.toList());
+                .stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

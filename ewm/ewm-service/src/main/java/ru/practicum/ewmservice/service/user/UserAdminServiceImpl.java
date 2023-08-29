@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmclient.model.UserDto;
 import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
-import ru.practicum.ewmclient.model.UserDto;
 import ru.practicum.ewmservice.model.mapper.UserMapper;
 import ru.practicum.ewmservice.repository.UserRepository;
 
@@ -36,7 +36,9 @@ public class UserAdminServiceImpl implements UserAdminService {
     @Override
     public Collection<UserDto> findAll(int from, int size, Collection<Integer> ids) {
         Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
-        return userRepository.findAllAdminWithCriteria(page, ids).stream().map(mapper::toDto).collect(Collectors.toList());
+        return userRepository.findAllAdminWithCriteria(page, ids).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -31,9 +31,6 @@ public class Event {
     @JoinColumn(name = "initiator_id")
     private User initiator;
 
-    @Column(name = "confirmed_requests")
-    private int confirmedRequests;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 
 @Builder
 @Data
@@ -25,5 +26,7 @@ public class UserDto {
     @Email
     @JsonProperty("email")
     private String email;
+
+    private BigDecimal mark;
 
 }

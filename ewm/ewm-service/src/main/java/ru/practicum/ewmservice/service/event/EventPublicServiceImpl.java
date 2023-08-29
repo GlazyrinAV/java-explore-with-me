@@ -16,11 +16,13 @@ import ru.practicum.ewmservice.model.SortType;
 import ru.practicum.ewmservice.model.mapper.EventMapper;
 import ru.practicum.ewmservice.repository.EventRepository;
 
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,14 +46,6 @@ public class EventPublicServiceImpl implements EventPublicService {
                                         String rangeEnd,
                                         Boolean onlyAvailable,
                                         String sort) {
-        Pageable page =  PageRequest.of(from == 0 ? 0 : from / size, size);
-        if (SortType.from(sort).isPresent()) {
-            if (sort.equals(SortType.EVENT_DATE.name())) {
-                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("eventDate"));
-            } else {
-                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("views"));
-            }
-        }
         if (rangeStart != null) {
             rangeStart = URLDecoder.decode(rangeStart, Charset.defaultCharset());
         }
@@ -63,8 +57,20 @@ public class EventPublicServiceImpl implements EventPublicService {
                 throw new BadParameter("Дата начала не может быть позже даты конца.");
             }
         }
+        Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);;
+
+        if (SortType.from(sort).isPresent()) {
+            if (sort.equals(SortType.EVENT_DATE.name())) {
+                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("eventDate"));
+
+            } else {
+                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("views"));
+            }
+            return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+                    .stream().map(mapper::toDto).collect(Collectors.toList());
+        }
         return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
-                .stream().map(mapper::toShortDto).collect(Collectors.toList());
+                .stream().map(mapper::toDto).sorted(new EventComparator()).collect(Collectors.toList());
     }
 
     public EventDto findById(int id) {
@@ -73,6 +79,23 @@ public class EventPublicServiceImpl implements EventPublicService {
             throw new EventNotFound("Событие должно быть опубликовано.");
         }
         return mapper.toDto(event);
+    }
+
+    static class EventComparator implements Comparator<EventDto> {
+
+        @Override
+        public int compare(EventDto o1, EventDto o2) {
+            BigDecimal markO1 = o1.getMark();
+            BigDecimal mark02 = o2.getMark();
+
+            if (markO1 == null && mark02 == null) {
+                return 0;
+            } else if (markO1 == null) {
+                return -1;
+            } else if (mark02 == null) {
+                return 1;
+            } return markO1.subtract(mark02).toBigInteger().intValue();
+        }
     }
 
 }

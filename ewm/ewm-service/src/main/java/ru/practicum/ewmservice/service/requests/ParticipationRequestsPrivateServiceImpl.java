@@ -44,7 +44,8 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
         if (repository.existsByRequesterIdAndEventId(usersId, eventId)) {
             throw new WrongParameter("Нельзя добавить повторный запрос.");
         }
-        if (event.getParticipantLimit() > 0 && event.getParticipantLimit() == event.getConfirmedRequests()) {
+        int confirmedRequests = repository.findConfirmedRequests(eventId);
+        if (event.getParticipantLimit() > 0 && event.getParticipantLimit() == confirmedRequests) {
             throw new WrongParameter("У события достигнут лимит запросов на участие.");
         }
 
@@ -57,7 +58,6 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
         if (event.isRequestModeration() && event.getParticipantLimit() > 0) {
             request.setStatus(RequestStatus.PENDING);
         } else {
-            eventRepository.increaseConfirmedRequests(eventId);
             request.setStatus(RequestStatus.CONFIRMED);
         }
         return mapper.toDto(repository.save(request));
@@ -78,9 +78,6 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
             throw new WrongParameter("Данный пользователь не создавал данный запрос.");
         }
 
-        if (request.getStatus().equals(RequestStatus.CONFIRMED)) {
-            eventRepository.decreaseConfirmedRequests(request.getEvent().getId());
-        }
         request.setStatus(RequestStatus.CANCELED);
         return mapper.toDto(repository.save(request));
     }

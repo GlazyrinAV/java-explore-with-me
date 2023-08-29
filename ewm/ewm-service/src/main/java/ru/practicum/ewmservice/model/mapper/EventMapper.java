@@ -9,8 +9,12 @@ import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
+import ru.practicum.ewmservice.repository.MarkRepository;
+import ru.practicum.ewmservice.repository.ParticipationRequestsRepository;
 import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,6 +31,10 @@ public class EventMapper {
     private final CategoryRepository categoryRepository;
 
     private final LocationRepository locationRepository;
+
+    private final ParticipationRequestsRepository requestsRepository;
+
+    private final MarkRepository markRepository;
 
     private final StatsRequestService service;
 
@@ -77,10 +85,10 @@ public class EventMapper {
         if (event.getPublishedOn() != null) {
             published = event.getPublishedOn().format(formatter);
         }
-        return EventDto.builder()
+        EventDto dto = EventDto.builder()
                 .annotation(event.getAnnotation())
                 .category(categoryMapper.toDto(event.getCategory()))
-                .confirmedRequests(event.getConfirmedRequests())
+                .confirmedRequests(requestsRepository.findConfirmedRequests(event.getId()))
                 .createdOn(event.getCreatedOn().format(formatter))
                 .description(event.getDescription())
                 .eventDate(event.getEventDate().format(formatter))
@@ -95,20 +103,34 @@ public class EventMapper {
                 .title(event.getTitle())
                 .views(service.getViews(event.getId()))
                 .build();
+
+        Double mark = markRepository.findMarkForEvent(event.getId());
+        if (mark != null) {
+            dto.setMark(BigDecimal.valueOf(mark).setScale(1, RoundingMode.UP));
+        }
+
+        return dto;
     }
 
     public EventDto toShortDto(Event event) {
-        return EventDto.builder()
+        EventDto dto = EventDto.builder()
                 .annotation(event.getAnnotation())
                 .category(categoryMapper.toDto(event.getCategory()))
-                .confirmedRequests(event.getConfirmedRequests())
+                .confirmedRequests(requestsRepository.findConfirmedRequests(event.getId()))
                 .eventDate(event.getEventDate().format(formatter))
                 .id(event.getId())
-                .initiator(userMapper.toDto(event.getInitiator()))
+                .initiator(userMapper.toShortDto(event.getInitiator()))
                 .paid(event.isPaid())
                 .title(event.getTitle())
                 .views(service.getViews(event.getId()))
                 .build();
+
+        Double mark = markRepository.findMarkForEvent(event.getId());
+        if (mark != null) {
+            dto.setMark(BigDecimal.valueOf(mark).setScale(1, RoundingMode.UP));
+        }
+
+        return dto;
     }
 
 }

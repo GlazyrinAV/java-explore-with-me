@@ -61,7 +61,9 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     public Collection<EventDto> findAllByUserId(int userId, int from, int size) {
         userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Pageable page = PageRequest.of(from == 0 ? 0 : from / size, size);
-        return repository.findByInitiatorId(userId, page).stream().map(mapper::toDto).collect(Collectors.toList());
+        return repository.findByInitiatorId(userId, page).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -81,7 +83,9 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         if (!event.getInitiator().equals(user)) {
             throw new WrongParameter("Данный пользователь не является инициатором события.");
         }
-        return requestsRepository.findByEventId(eventId).stream().map(requestsMapper::toDto).collect(Collectors.toList());
+        return requestsRepository.findByEventId(eventId).stream()
+                .map(requestsMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -173,23 +177,21 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     private EventRequestStatusUpdateResult confirmRequest(Event event, Collection<Integer> requestIds) {
         EventRequestStatusUpdateResult result = new EventRequestStatusUpdateResult();
-        int confirmedRequests = event.getConfirmedRequests();
+        Integer confirmedRequests = requestsRepository.findConfirmedRequests(event.getId());
         for (int requestId : requestIds) {
             ParticipationRequest request = requestsRepository.findById(requestId)
                     .orElseThrow(() -> new ParticipationRequestNotFound(requestId));
 
-            if (event.getParticipantLimit() == confirmedRequests) {
+            if (event.getParticipantLimit() > 0 && event.getParticipantLimit() == confirmedRequests) {
                 request.setStatus(RequestStatus.REJECTED);
                 requestsRepository.save(request);
                 result.getRejectedRequests().add(requestsMapper.toDto(request));
-                confirmedRequests++;
                 continue;
             }
 
             request.setStatus(RequestStatus.CONFIRMED);
             requestsRepository.save(request);
             result.getConfirmedRequests().add(requestsMapper.toDto(request));
-            repository.increaseConfirmedRequests(event.getId());
             confirmedRequests++;
         }
         return result;
@@ -215,7 +217,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     private void checkEventLimit(Event event) {
-        if (event.getParticipantLimit() == event.getConfirmedRequests()) {
+        if (event.getParticipantLimit() == requestsRepository.findConfirmedRequests(event.getId())) {
             throw new WrongParameter("Достигнут лимит по заявкам.");
         }
     }
