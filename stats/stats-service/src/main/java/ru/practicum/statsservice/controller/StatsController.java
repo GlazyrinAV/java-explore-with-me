@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.statscommondto.StatsDto;
-import ru.practicum.statscommondto.ViewStatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
+import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.service.StatsService;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -30,11 +30,20 @@ public class StatsController {
     @ResponseStatus(HttpStatus.OK)
     public Collection<ViewStatsDto> findStats(@RequestParam String start,
                                               @RequestParam String end,
-                                              @RequestParam(required = false) String[] uris,
+                                              @RequestParam(required = false) Collection<String> uris,
                                               @RequestParam(required = false, defaultValue = "false") boolean unique) {
-        LocalDateTime startDto = LocalDateTime.parse(URLDecoder.decode(start, Charset.defaultCharset()));
-        LocalDateTime endDto = LocalDateTime.parse(URLDecoder.decode(end, Charset.defaultCharset()));
-        return service.findStats(startDto, endDto, uris, unique);
+        String startDto = URLDecoder.decode(start, Charset.defaultCharset());
+        String endDto = URLDecoder.decode(end, Charset.defaultCharset());
+        Collection<String> urisDto = new ArrayList<>();
+        for (String uri : uris) {
+            urisDto.add(URLDecoder.decode(uri, Charset.defaultCharset()));
+        }
+        return service.findStats(startDto, endDto, urisDto, unique);
     }
 
+    @GetMapping("/stats/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer findStatsForEwm(@PathVariable int eventId) {
+        return service.findStatsForEwm(eventId);
+    }
 }

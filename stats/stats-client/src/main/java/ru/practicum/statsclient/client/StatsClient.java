@@ -2,11 +2,8 @@ package ru.practicum.statsclient.client;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.statscommondto.StatsDto;
+import ru.practicum.statsclient.dto.StatsDto;
 
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,11 +17,11 @@ public class StatsClient extends BaseClient {
         return post("/hit", dto);
     }
 
-    public ResponseEntity<Object> findStats(LocalDateTime start, LocalDateTime end, String[] uris, boolean unique) {
+    public ResponseEntity<Object> findStats(String start, String end, String[] uris, boolean unique) {
         String path = "/stats?start={start}&end={end}&unique={unique}";
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("start", URLEncoder.encode(start.toString(), Charset.defaultCharset()));
-        parameters.put("end", URLEncoder.encode(end.toString(), Charset.defaultCharset()));
+        parameters.put("start", start);
+        parameters.put("end", end);
         parameters.put("unique", unique);
         if (uris != null) {
             parameters.put("uris", uris);
@@ -32,6 +29,13 @@ public class StatsClient extends BaseClient {
         }
 
         return get(path, parameters);
+    }
+
+    public ResponseEntity<Object> findStatsForEwm(int eventId) {
+        Map<String, Object> parameters = Map.of(
+                "eventId", eventId
+        );
+        return get("/stats/{eventId}", parameters);
     }
 
 }

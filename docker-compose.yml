@@ -30,10 +30,30 @@ services:
       - POSTGRES_USER=root
 
   ewm-service:
-    image: amazoncorretto:11-alpine-jdk
+    build: ewm/ewm-service
     container_name: ewm-service
+    environment:
+      - SPRING.DATASOURCE.URL=jdbc:postgresql://ewm-db:5432/ewm-db
+      - stats_client_url=http://stats-client:9090
+    depends_on:
+      - ewm-db
+
+  ewm-client:
+    build: ewm/ewm-client
+    container_name: ewm-client
+    environment:
+      - ewm_service_url=http://ewm-service:8081
+      - stats_client_url=http://stats-client:9090
     ports:
       - "8080:8080"
+    depends_on:
+      - ewm-service
 
   ewm-db:
     image: postgres:14-alpine
+    restart: always
+    container_name: ewm-db
+    environment:
+      - POSTGRES_DB=ewm-db
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
