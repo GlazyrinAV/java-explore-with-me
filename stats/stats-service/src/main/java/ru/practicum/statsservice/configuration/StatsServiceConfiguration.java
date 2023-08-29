@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class StatsServiceConfiguration {
 
     @Bean
-    public DateTimeFormatter CreateFormatter() {
+    public DateTimeFormatter createFormatter() {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     }
 
