@@ -20,21 +20,22 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional
 public class StatsServiceImpl implements StatsService {
 
     private final StatsRepository repository;
 
     private final Mapper mapper;
 
+    private final DateTimeFormatter formatter;
+
     @Override
+    @Transactional
     public void saveStats(StatsDto dto) {
         repository.save(mapper.fromDto(dto));
     }
 
     @Override
     public Collection<ViewStatsDto> findStats(String start, String end, Collection<String> uris, boolean unique) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime startDto = LocalDateTime.parse(URLDecoder.decode(start, Charset.defaultCharset()), formatter);
         LocalDateTime endDto = LocalDateTime.parse(URLDecoder.decode(end, Charset.defaultCharset()), formatter);
         if (startDto.isAfter(endDto)) {

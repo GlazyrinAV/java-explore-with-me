@@ -11,8 +11,9 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class Mapper {
 
+    private final DateTimeFormatter formatter;
+
     public Stats fromDto(StatsDto dto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return Stats.builder()
                 .app(dto.getApp())
                 .ip(dto.getIp())

@@ -9,7 +9,7 @@ import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
-import ru.practicum.ewmservice.service.stats.StatsService;
+import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,9 +28,9 @@ public class EventMapper {
 
     private final LocationRepository locationRepository;
 
-    private final StatsService service;
+    private final StatsRequestService service;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter;
 
     public Event fromDto(NewEventDto dto) {
         boolean paidDto = false;

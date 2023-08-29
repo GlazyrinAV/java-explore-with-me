@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class EventAdminServiceImpl implements EventAdminService {
 
     private final EventRepository repository;
@@ -46,7 +45,7 @@ public class EventAdminServiceImpl implements EventAdminService {
 
     private final LocationMapper locationMapper;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter;
 
     @Override
     public Collection<EventDto> findAll(int from,
@@ -64,7 +63,6 @@ public class EventAdminServiceImpl implements EventAdminService {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
         }
         if (rangeStart != null && rangeEnd != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
                 throw new BadParameter("Дата начала не может быть позже даты конца.");
             }
@@ -74,6 +72,7 @@ public class EventAdminServiceImpl implements EventAdminService {
     }
 
     @Override
+    @Transactional
     public EventDto update(UpdateEventAdminRequest dto, int id) {
         Event event = repository.findById(id).orElseThrow(() -> new EventNotFound(id));
         if (!event.getEventDate().isAfter(LocalDateTime.now().plusHours(2))) {

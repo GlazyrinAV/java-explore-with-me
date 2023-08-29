@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.exceptions.exceptions.CompilationNotFound;
 import ru.practicum.ewmclient.model.CompilationDto;
 import ru.practicum.ewmservice.model.mapper.CompilationMapper;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class CompilationPublicServiceImpl implements CompilationPublicService {
 
     private final CompilationRepository repository;

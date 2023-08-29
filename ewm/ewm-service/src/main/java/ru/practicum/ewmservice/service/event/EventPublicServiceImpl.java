@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.exceptions.exceptions.BadParameter;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmclient.model.EventDto;
@@ -27,12 +26,13 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class EventPublicServiceImpl implements EventPublicService {
 
     private final EventRepository repository;
 
     private final EventMapper mapper;
+
+    private final DateTimeFormatter formatter;
 
     @Override
     public Collection<EventDto> findAll(int from,
@@ -59,7 +59,6 @@ public class EventPublicServiceImpl implements EventPublicService {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
         }
         if (rangeStart != null && rangeEnd != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
                 throw new BadParameter("Дата начала не может быть позже даты конца.");
             }

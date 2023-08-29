@@ -1,4 +1,4 @@
-package ru.practicum.ewmservice.service.stats;
+package ru.practicum.ewmservice.service.statsrequest;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class StatsServiceImpl implements StatsService {
+public class StatsRequestServiceImpl implements StatsRequestService {
 
     @Value("${stats-client.url}")
     private String serverUrl;

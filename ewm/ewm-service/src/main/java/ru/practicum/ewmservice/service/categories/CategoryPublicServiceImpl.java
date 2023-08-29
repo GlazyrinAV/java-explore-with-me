@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
 import ru.practicum.ewmclient.model.CategoryDto;
 import ru.practicum.ewmservice.model.mapper.CategoryMapper;
@@ -18,13 +17,11 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class CategoryPublicServiceImpl implements CategoryPublicService {
 
     private final CategoryRepository repository;
 
     private final CategoryMapper mapper;
-
 
     @Override
     public Collection<CategoryDto> findAll(int from, int size) {

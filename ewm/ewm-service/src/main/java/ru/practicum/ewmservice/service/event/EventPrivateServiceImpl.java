@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class EventPrivateServiceImpl implements EventPrivateService {
 
     private final EventRepository repository;
@@ -42,9 +41,10 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     private final ParticipationRequestsMapper requestsMapper;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter;
 
     @Override
+    @Transactional
     public EventDto save(NewEventDto dto, int userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = mapper.fromDto(dto);
@@ -85,6 +85,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional
     public EventDto update(UpdateEventUserRequest dto, int userId, int eventId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = repository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));
@@ -111,7 +112,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             if (LocalDateTime.parse(dto.getEventDate(), formatter).isBefore(LocalDateTime.now().plusHours(2))) {
                 throw new BadParameter("До новой даты события должно быть не менее чем 2 часа.");
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             event.setEventDate(LocalDateTime.parse(dto.getEventDate(), formatter));
         }
         if (dto.getLocation() != null) {
@@ -147,6 +147,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional
     public EventRequestStatusUpdateResult updateRequests(EventRequestStatusUpdateRequest dto, int userId, int eventId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = repository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));

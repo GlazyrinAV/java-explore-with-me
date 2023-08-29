@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ParticipationRequestsPrivateServiceImpl implements ParticipationRequestsPrivateService {
 
     private final ParticipationRequestsRepository repository;
@@ -32,6 +31,7 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
     private final ParticipationRequestsMapper mapper;
 
     @Override
+    @Transactional
     public ParticipationRequestDto save(int usersId, int eventId) {
         User user = userRepository.findById(usersId).orElseThrow(() -> new UserNotFound(usersId));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));
@@ -70,6 +70,7 @@ public class ParticipationRequestsPrivateServiceImpl implements ParticipationReq
     }
 
     @Override
+    @Transactional
     public ParticipationRequestDto cancel(int usersId, int requestId) {
         userRepository.findById(usersId).orElseThrow(() -> new UserNotFound(usersId));
         ParticipationRequest request = repository.findById(requestId).orElseThrow(() -> new ParticipationRequestNotFound(requestId));
