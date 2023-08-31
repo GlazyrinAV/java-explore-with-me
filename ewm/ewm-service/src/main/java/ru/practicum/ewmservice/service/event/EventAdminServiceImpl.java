@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -69,11 +70,12 @@ public class EventAdminServiceImpl implements EventAdminService {
                 throw new BadParameter("Дата начала не может быть позже даты конца.");
             }
         }
-        return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
+        List<EventDto> result = repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
                 .stream()
                 .map(mapper::toDto)
-                .sorted(new EventComparatorByMarks().reversed())
                 .collect(Collectors.toList());
+        result.sort(new EventComparatorByMarks().reversed());
+        return result;
     }
 
     @Override

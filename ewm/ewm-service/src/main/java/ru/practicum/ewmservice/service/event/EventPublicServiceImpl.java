@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,24 +61,29 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         if (SortType.from(sort).isPresent()) {
             if (sort.equals(SortType.EVENT_DATE.name())) {
-                return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+                List<EventDto> result = repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
                         .stream()
                         .map(mapper::toDto)
                         .sorted(Comparator.comparing(EventDto::getEventDate))
                         .collect(Collectors.toList());
+                result.sort(Comparator.comparing(EventDto::getEventDate).reversed());
+                return  result;
                } else {
-                return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+                List<EventDto> result = repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
                         .stream()
                         .map(mapper::toDto)
                         .sorted(Comparator.comparing(EventDto::getViews).reversed())
                         .collect(Collectors.toList());
+                result.sort(Comparator.comparing(EventDto::getViews).reversed());
+                return result;
                 }
         }
-        return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+        List<EventDto> result = repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
                 .stream()
                 .map(mapper::toDto)
-                .sorted(new EventComparatorByMarks().reversed())
                 .collect(Collectors.toList());
+        result.sort(new EventComparatorByMarks().reversed());
+        return result;
     }
 
     public EventDto findById(int id) {
