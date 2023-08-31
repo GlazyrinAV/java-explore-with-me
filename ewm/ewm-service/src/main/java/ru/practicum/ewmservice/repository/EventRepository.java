@@ -25,7 +25,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
             "AND (:states is null or cast(E.state as string ) in (:states)) " +
             "AND (:categories is null or E.category.id in (:categories) ) " +
             "AND (:rangeStart is null or E.eventDate >= cast(:rangeStart as timestamp) ) " +
-            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) " )
+            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) ")
     Page<Event> findAllAdminWithCriteria(Pageable page,
                                          Collection<Integer> users,
                                          Collection<String> states,

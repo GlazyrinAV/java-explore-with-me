@@ -101,7 +101,8 @@ public class EventPublicServiceImpl implements EventPublicService {
                 return -1;
             } else if (mark02 == null) {
                 return 1;
-            } return markO1.subtract(mark02).toBigInteger().intValue();
+            }
+            return markO1.subtract(mark02).toBigInteger().intValue();
         }
     }
 
