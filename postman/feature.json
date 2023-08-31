@@ -1,1026 +1,2435 @@
 {
   "info": {
-    "_postman_id": "9427dc05-2428-4001-9068-b90a78d01fda",
-    "name": "\"Explore with me\" API статистика",
+    "_postman_id": "b20168b9-1248-4be0-a031-54b21dca083f",
+    "name": "EWM-Marks",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "26681728"
   },
   "item": [
     {
-      "name": "Сохранение информации о том, что к эндпоинту был запрос",
-      "event": [
+      "name": "Users",
+      "item": [
         {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "const main = async () => {\r",
-              "    const api = new API(pm);\r",
-              "    const rnd = new RandomUtils();\r",
-              "\r",
-              "    let post;\r",
-              "    try {\r",
-              "        post = rnd.getPost();\r",
-              "    } catch(err) {\r",
-              "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-              "    }\r",
-              "\r",
-              "    pm.request.body.update({\r",
-              "        mode: 'raw',\r",
-              "        raw: JSON.stringify(post),\r",
-              "        options: { raw: { language: 'json' } }\r",
-              "    });\r",
-              "};\r",
-              "\r",
-              "const interval = setInterval(() => {}, 1000);\r",
-              "\r",
-              "setTimeout(async () => \r",
-              "    {\r",
-              "        try {\r",
-              "            await main();\r",
-              "        } catch (e) {\r",
-              "            console.error(e);\r",
-              "        } finally {\r",
-              "            clearInterval(interval);\r",
-              "        }\r",
-              "    },  \r",
-              "    100 \r",
-              ");"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
-              "    pm.response.to.have.status(201);\r",
-              "});\r",
-              ""
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
+          "name": "AddUser1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test user 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test user 'email' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('email');\r",
+                  "});\r",
+                  "pm.test(\"Test user 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/hit",
-          "host": [
-            "{{baseUrl}}"
           ],
-          "path": [
-            "hit"
-          ]
-        },
-        "description": "Сохранение информации о том, что на uri конкретного сервиса был отправлен запрос пользователем. Название сервиса, uri и ip пользователя указаны в теле запроса."
-      },
-      "response": []
-    },
-    {
-      "name": "Получение статистики по посещениям. Обратите внимание: значение даты и времени нужно закодировать (например используя java.net.URLEncoder.encode)(Тест на /events/{id})",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "const main = async () => {\r",
-              "    const api = new API(pm);\r",
-              "    const rnd = new RandomUtils();\r",
-              "\r",
-              "    try {      \r",
-              "        const user = await api.addUser(rnd.getUser());\r",
-              "        const category = await api.addCategory(rnd.getCategory());\r",
-              "        let event = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-              "        event = await api.publishEvent(event.id);\r",
-              "        pm.collectionVariables.set(\"uri\", '/events/' + event.id);\r",
-              "\r",
-              "        pm.sendRequest({\r",
-              "            url : \"http://localhost:8080/events/\" + event.id,\r",
-              "            method : \"GET\",\r",
-              "            header: { \"Content-Type\": \"application/json\" }\r",
-              "        }, (error, response) => {\r",
-              "            pm.sendRequest({\r",
-              "                url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris=/events/\" + event.id.toString() + \"&unique=false\",\r",
-              "                method : \"GET\",\r",
-              "                header: { \"Content-Type\": \"application/json\" }\r",
-              "            }, (error, response) => {\r",
-              "                pm.collectionVariables.set('source', response.json());\r",
-              "                pm.sendRequest({\r",
-              "                    url : \"http://localhost:8080/events/\" + event.id,\r",
-              "                    method : \"GET\",\r",
-              "                    header: { \"Content-Type\": \"application/json\" }\r",
-              "                });\r",
-              "            });\r",
-              "        });\r",
-              "        \r",
-              "    } catch(err) {\r",
-              "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-              "    }\r",
-              "};\r",
-              "\r",
-              "const interval = setInterval(() => {}, 1000);\r",
-              "\r",
-              "setTimeout(async () => \r",
-              "    {\r",
-              "        try {\r",
-              "            await main();\r",
-              "        } catch (e) {\r",
-              "            console.error(e);\r",
-              "        } finally {\r",
-              "            clearInterval(interval);\r",
-              "        }\r",
-              "    },  \r",
-              "    100 \r",
-              ");"
-            ],
-            "type": "text/javascript"
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-              "    pm.response.to.be.ok;    \r",
-              "    pm.response.to.be.withBody;\r",
-              "    pm.response.to.be.json;\r",
-              "});\r",
-              "\r",
-              "const target = pm.response.json()[0];\r",
-              "\r",
-              "pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-              "    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
-              "});\r",
-              "\r",
-              "const source = pm.collectionVariables.get(\"source\")[0];\r",
-              "\r",
-              "\r",
-              "pm.test(\"После выполнения запроса GET /events/{id} должно увеличиться количество хитов.\", function(){\r",
-              "    pm.expect(source.hits + 1).equal(target.hits, 'Количество хитов после выполнения запроса GET /events/{id} должно быть больше на 1.');\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}&unique=false",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
-            {
-              "key": "start",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ivan.petrov@practicummail.ru\",\r\n  \"name\": \"Иван Петров\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            {
-              "key": "end",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+            "url": {
+              "raw": "http://localhost:8080/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "users"
+              ]
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Тест взаимодействия сервисов",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "const main = async () => {\r",
-              "    const api = new API(pm);\r",
-              "    const rnd = new RandomUtils();\r",
-              "\r",
-              "    try {      \r",
-              "        const user = await api.addUser(rnd.getUser());\r",
-              "        const category = await api.addCategory(rnd.getCategory());\r",
-              "        let event1 = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-              "        event1 = await api.publishEvent(event1.id);\r",
-              "        let event2 = await api.addEvent(user.id, rnd.getEvent(category.id));\r",
-              "        event2 = await api.publishEvent(event2.id);\r",
-              "        pm.collectionVariables.set(\"uri\", '/events/' + event1.id + '&uris=/events/' + event2.id);\r",
-              "\r",
-              "        pm.sendRequest({\r",
-              "            url : \"http://localhost:8080/events/\" + event1.id,\r",
-              "            method : \"GET\",\r",
-              "            header: { \"Content-Type\": \"application/json\" }\r",
-              "        }, (error, response) => {\r",
-              "            pm.sendRequest({\r",
-              "            url : \"http://localhost:8080/events/\" + event2.id,\r",
-              "            method : \"GET\",\r",
-              "            header: { \"Content-Type\": \"application/json\" }\r",
-              "            }, (error, response) => {\r",
-              "                pm.sendRequest({\r",
-              "                    url : \"http://localhost:8080/events/\" + event2.id,\r",
-              "                    method : \"GET\",\r",
-              "                    header: { \"Content-Type\": \"application/json\" }\r",
-              "                }, (error, response) => {\r",
-              "                });\r",
-              "            });\r",
-              "        });\r",
-              "        \r",
-              "    } catch(err) {\r",
-              "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-              "    }\r",
-              "};\r",
-              "\r",
-              "const interval = setInterval(() => {}, 1000);\r",
-              "\r",
-              "setTimeout(async () => \r",
-              "    {\r",
-              "        try {\r",
-              "            await main();\r",
-              "        } catch (e) {\r",
-              "            console.error(e);\r",
-              "        } finally {\r",
-              "            clearInterval(interval);\r",
-              "        }\r",
-              "    },  \r",
-              "    100 \r",
-              ");"
-            ],
-            "type": "text/javascript"
-          }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-              "    pm.response.to.be.ok;    \r",
-              "    pm.response.to.be.withBody;\r",
-              "    pm.response.to.be.json;\r",
-              "});\r",
-              "\r",
-              "const target = pm.response.json();\r",
-              "\r",
-              "pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-              "    pm.expect(target[0]).to.have.all.keys('app', 'uri', 'hits');\r",
-              "    pm.expect(target[1]).to.have.all.keys('app', 'uri', 'hits');\r",
-              "});\r",
-              "\r",
-              "pm.test(\"В теле ответа должна соблюдаться сортировка по убыванию количества просмотров\", function(){\r",
-              "    pm.expect(target[0].hits).to.be.above(target[1].hits);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"Проверка соответствия реального количества просмотров событий и сохраненных хитов\", function(){\r",
-              "    pm.expect(target[0].hits).equal(2);\r",
-              "    pm.expect(target[1].hits).equal(1);\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddUser2",
+          "event": [
             {
-              "key": "start",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "end",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "uris",
-              "value": "aliqua o",
-              "description": "Список uri для которых нужно выгрузить статистику",
-              "disabled": true
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-              "disabled": true
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test user 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test user 'email' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('email');\r",
+                  "});\r",
+                  "pm.test(\"Test user 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Получение статистики по посещениям. Обратите внимание: значение даты и времени нужно закодировать (например используя java.net.URLEncoder.encode)(Тест на /events)",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "const main = async () => {\r",
-              "    const api = new API(pm);\r",
-              "    const rnd = new RandomUtils();\r",
-              "\r",
-              "    try {    \r",
-              "        pm.collectionVariables.set(\"uri\", '/events');  \r",
-              "        \r",
-              "        pm.sendRequest({\r",
-              "            url : \"http://localhost:8080/events\",\r",
-              "            method : \"GET\",\r",
-              "            header: { \"Content-Type\": \"application/json\" }\r",
-              "        }, (error, response) => {\r",
-              "            \r",
-              "            pm.sendRequest({\r",
-              "                url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris=/events&unique=false\",\r",
-              "                method : \"GET\",\r",
-              "                header: { \"Content-Type\": \"application/json\" }\r",
-              "            }, (error, response) => {\r",
-              "                pm.collectionVariables.set('source', response.json());\r",
-              "                pm.sendRequest({\r",
-              "                    url : \"http://localhost:8080/events\",\r",
-              "                    method : \"GET\",\r",
-              "                    header: { \"Content-Type\": \"application/json\" }\r",
-              "                });\r",
-              "            });\r",
-              "        });\r",
-              "        \r",
-              "    } catch(err) {\r",
-              "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-              "    }\r",
-              "};\r",
-              "\r",
-              "const interval = setInterval(() => {}, 1000);\r",
-              "\r",
-              "setTimeout(async () => \r",
-              "    {\r",
-              "        try {\r",
-              "            await main();\r",
-              "        } catch (e) {\r",
-              "            console.error(e);\r",
-              "        } finally {\r",
-              "            clearInterval(interval);\r",
-              "        }\r",
-              "    },  \r",
-              "    100 \r",
-              ");"
-            ],
-            "type": "text/javascript"
-          }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"pert.petrov@practicummail.ru\",\r\n  \"name\": \"Петр Петров\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-              "    pm.response.to.be.ok;    \r",
-              "    pm.response.to.be.withBody;\r",
-              "    pm.response.to.be.json;\r",
-              "});\r",
-              "\r",
-              "const target = pm.response.json()[0];\r",
-              "\r",
-              "pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-              "    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
-              "});\r",
-              "\r",
-              "const source = pm.collectionVariables.get(\"source\")[0];\r",
-              "\r",
-              "\r",
-              "pm.test(\"После выполнения запроса GET /events должно увеличиться количество хитов.\", function(){\r",
-              "    pm.expect(source.hits + 1).equal(target.hits, 'Количество хитов после выполнения запроса GET /events должно быть больше на 1.');\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}&unique=false",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddUser3",
+          "event": [
             {
-              "key": "start",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "end",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test user 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test user 'email' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('email');\r",
+                  "});\r",
+                  "pm.test(\"Test user 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Получение статистики по посещениям. (Тест на опциональность и работу параметра unique)",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "const main = async () => {\r",
-              "    const api = new API(pm);\r",
-              "    const rnd = new RandomUtils();\r",
-              "\r",
-              "    try {    \r",
-              "        pm.collectionVariables.set(\"uri\", '/events');  \r",
-              "        \r",
-              "        pm.sendRequest({\r",
-              "            url : \"http://localhost:8080/events\",\r",
-              "            method : \"GET\",\r",
-              "            header: { \"Content-Type\": \"application/json\" }\r",
-              "        }, (error, response) => {\r",
-              "            pm.sendRequest({\r",
-              "                url : \"http://localhost:8080/events\",\r",
-              "                method : \"GET\",\r",
-              "                header: { \"Content-Type\": \"application/json\" }\r",
-              "            }, (error, response) => {\r",
-              "                \r",
-              "                pm.sendRequest({\r",
-              "                    url : \"http://localhost:9090/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris=/events&unique=true\",\r",
-              "                    method : \"GET\",\r",
-              "                    header: { \"Content-Type\": \"application/json\" }\r",
-              "                }, (error, response) => {\r",
-              "                    pm.collectionVariables.set('source', response.json());\r",
-              "                });\r",
-              "            });\r",
-              "        });\r",
-              "    } catch(err) {\r",
-              "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-              "    }\r",
-              "};\r",
-              "\r",
-              "const interval = setInterval(() => {}, 1000);\r",
-              "\r",
-              "setTimeout(async () => \r",
-              "    {\r",
-              "        try {\r",
-              "            await main();\r",
-              "        } catch (e) {\r",
-              "            console.error(e);\r",
-              "        } finally {\r",
-              "            clearInterval(interval);\r",
-              "        }\r",
-              "    },  \r",
-              "    100 \r",
-              ");"
-            ],
-            "type": "text/javascript"
-          }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"alex.petrov@practicummail.ru\",\r\n  \"name\": \"Алексей Петров\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json при запросе без опционального параметра unique\", function () {\r",
-              "    pm.response.to.be.ok;    \r",
-              "    pm.response.to.be.withBody;\r",
-              "    pm.response.to.be.json;\r",
-              "});\r",
-              "\r",
-              "const target = pm.response.json()[0];\r",
-              "\r",
-              "pm.test(\"Посты должны содержать поля: app, uri, hits\", function () {\r",
-              "    pm.expect(target).to.have.all.keys('app', 'uri', 'hits');\r",
-              "});\r",
-              "\r",
-              "const source = pm.collectionVariables.get(\"source\")[0];\r",
-              "\r",
-              "pm.test(\"Количество уникальных просмотров с одного ip должно равняться 1\", function () {\r",
-              "    pm.expect(source.hits == 1);\r",
-              "})\r",
-              "\r",
-              "pm.test(\"Количество просмотров с одного ip должно быть больше 1\", function () {\r",
-              "    pm.expect(target.hits > 1);\r",
-              "})"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2035-05-05 00:00:00&uris={{uri}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddUser4",
+          "event": [
             {
-              "key": "start",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "end",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "uris",
-              "value": "aliqua o",
-              "description": "Список uri для которых нужно выгрузить статистику",
-              "disabled": true
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-              "disabled": true
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test user 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test user 'email' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('email');\r",
+                  "});\r",
+                  "pm.test(\"Test user 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"dima.petrov@practicummail.ru\",\r\n  \"name\": \"Дмитрий Петров\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "Получение статистики по посещениям. (Тест на верную обработку запроса с неверными датами начала и конца диапазона времени)",
-      "event": [
+      "name": "Categories",
+      "item": [
         {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript"
-          }
+          "name": "AddCategory1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has category create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test category'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test category 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Концерты\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 400\", function () {\r",
-              "    pm.response.to.be.badRequest;\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2035-05-05 00:00:00&end=2020-05-05 00:00:00&uris={{uri}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddCategory2",
+          "event": [
             {
-              "key": "start",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "end",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-              "disabled": true
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has category create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test category 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test category 'name' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Выступление\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "Тест на верную обработку запроса без даты начала",
-      "event": [
+      "name": "Events",
+      "item": [
         {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript"
-          }
+          "name": "AddEvent1byUser1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'title' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('title');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'annotation' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('annotation');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'initiator' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('initiator');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'category' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('category');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'description' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('description');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'location' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('location');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'paid' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('paid');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'state' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('state');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'views' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('views');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": 2,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": true,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/1/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1",
+                "events"
+              ]
+            }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 400\", function () {\r",
-              "    pm.response.to.be.badRequest;\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?end=2020-05-05 00:00:00&uris={{uri}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddEvent2byUser2",
+          "event": [
             {
-              "key": "start",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")",
-              "disabled": true
-            },
-            {
-              "key": "end",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-              "disabled": true
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'title' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('title');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'annotation' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('annotation');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'initiator' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('initiator');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'category' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('category');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'description' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('description');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'location' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('location');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'paid' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('paid');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'state' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('state');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'views' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('views');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Тест на верную обработку запроса без даты конца",
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript"
-          }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"Сплав на лодках похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на лодках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на лодках\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/2/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events"
+              ]
+            }
+          },
+          "response": []
         },
         {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Ответ должен содержать код статуса 400\", function () {\r",
-              "    pm.response.to.be.badRequest;\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/stats?start=2035-05-05 00:00:00&uris={{uri}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "stats"
-          ],
-          "query": [
+          "name": "AddEvent3byUser3",
+          "event": [
             {
-              "key": "start",
-              "value": "2035-05-05 00:00:00",
-              "description": "(Required) Дата и время начала диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")"
-            },
-            {
-              "key": "end",
-              "value": "2020-05-05 00:00:00",
-              "description": "(Required) Дата и время конца диапазона за который нужно выгрузить статистику (в формате \"yyyy-MM-dd HH:mm:ss\")",
-              "disabled": true
-            },
-            {
-              "key": "uris",
-              "value": "{{uri}}",
-              "description": "Список uri для которых нужно выгрузить статистику"
-            },
-            {
-              "key": "unique",
-              "value": "false",
-              "description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
-              "disabled": true
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'title' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('title');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'annotation' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('annotation');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'initiator' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('initiator');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'category' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('category');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'description' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('description');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'location' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('location');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'paid' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('paid');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'state' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('state');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'views' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('views');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
             }
-          ]
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"Сплав на плотах похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на плотах похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2024-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": true,\r\n  \"title\": \"Сплав на плотах\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/3/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "3",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PublishEvent1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'title' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('title');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'annotation' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('annotation');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'initiator' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('initiator');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'category' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('category');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'description' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('description');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'location' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('location');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'paid' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('paid');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'state' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('state');\r",
+                  "    pm.expect(jsonData.state).to.eql('PUBLISHED');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'views' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('views');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PublishEvent2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has user create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'title' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('title');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'annotation' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('annotation');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'initiator' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('initiator');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'category' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('category');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'description' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('description');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'location' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('location');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'paid' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('paid');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'state' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('state');\r",
+                  "    pm.expect(jsonData.state).to.eql('PUBLISHED');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'views' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('views');\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/events/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events",
+                "2"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          "API = class {",
-          "    constructor(postman, verbose = false, baseUrl = \"http://localhost:9090\") {",
-          "        this.baseUrl = baseUrl;",
-          "        this.pm = postman;",
-          "        this._verbose = verbose;",
-          "    }",
-          "",
-          "    async addPost(post, verbose=null) {",
-          "        return this.post(\"/hit\", post, \"Ошибка при сохранении информации о запросе к эндпойнту: \", verbose);",
-          "    }",
-          "",
-          "    async addUser(user, verbose=null) {",
-          "        return this.post(\"/admin/users\", user, \"http://localhost:8080\", \"Ошибка при добавлении нового пользователя: \", verbose);",
-          "    }",
-          "",
-          "    async addCategory(category, verbose=null) {",
-          "        return this.post(\"/admin/categories\", category, \"http://localhost:8080\", \"Ошибка при добавлении новой категории: \", verbose);",
-          "    }",
-          "",
-          "    async addEvent(userId, event, verbose=null) {",
-          "        return this.post(\"/users/\" + userId + \"/events\", event, \"http://localhost:8080\", \"Ошибка при добавлении нового события: \", verbose);",
-          "    }",
-          "",
-          "    async publishEvent(eventId, verbose=null) {",
-          "        return this.patch('/admin/events/' + eventId, {stateAction: \"PUBLISH_EVENT\"},\"Ошибка при публикации события\", verbose);",
-          "    }",
-          "",
-          "    async patch(path, body = null, errorText = \"Ошибка при выполнении patch-запроса: \", verbose=null) {",
-          "        return this.sendRequest(\"PATCH\", path, \"http://localhost:8080\", body, errorText);",
-          "    }",
-          "",
-          "    async post(path, body, newBaseUrl=null, errorText = \"Ошибка при выполнении post-запроса: \", verbose=null) {",
-          "        return this.sendRequest(\"POST\", path, newBaseUrl, body, errorText);",
-          "    }",
-          "",
-          "    async sendRequest(method, path, newBaseUrl=null, body=null, errorText = \"Ошибка при выполнении запроса: \", verbose=null) {",
-          "        return new Promise((resolve, reject) => {",
-          "            verbose = verbose == null ? this._verbose : verbose;",
-          "            let request;",
-          "            if (newBaseUrl==null)",
-          "                 request = {",
-          "                    url: this.baseUrl + path,",
-          "                    method: method,",
-          "                    body: body == null ? \"\" : JSON.stringify(body),",
-          "                    header: { \"Content-Type\": \"application/json\" },",
-          "                };",
-          "            else",
-          "                request = {",
-          "                    url: newBaseUrl + path,",
-          "                    method: method,",
-          "                    body: body == null ? \"\" : JSON.stringify(body),",
-          "                    header: { \"Content-Type\": \"application/json\" },",
-          "                };",
-          "",
-          "            if(verbose) {",
-          "                console.log(\"Отправляю запрос: \", request);",
-          "            }",
-          "",
-          "            try {",
-          "                this.pm.sendRequest(request, (error, response) => {",
-          "                    if(error || (response.code >= 400 && response.code <= 599)) {",
-          "                        let err = error ? error : JSON.stringify(response.json());",
-          "                        console.error(\"При выполнении запроса к серверу возникла ошика.\\n\", err,",
-          "                             \"\\nДля отладки проблемы повторите такой же запрос к вашей программе \" + ",
-          "                             \"на локальном компьютере. Данные запроса:\\n\", JSON.stringify(request));",
-          "",
-          "                        reject(new Error(errorText + err));",
-          "                    }",
-          "",
-          "                    if(verbose) {",
-          "                        console.log(\"Результат обработки запроса: код состояния - \", response.code, \", тело: \", response.json());",
-          "                    }",
-          "                    try{",
-          "                        resolve(response.json());",
-          "                    } catch(err){",
-          "                        resolve(response);",
-          "                    }",
-          "                    ",
-          "                });",
-          "            } catch(err) {",
-          "                if(verbose) {",
-          "                    console.error(errorText, err);",
-          "                }",
-          "                return Promise.reject(err);",
-          "            }",
-          "        });",
-          "    }",
-          "};",
-          "",
-          "RandomUtils = class {",
-          "    constructor() {}",
-          "",
-          "    getPost() {",
-          "        return {",
-          "            app: \"ewm-main-service\",",
-          "            uri: \"/events/\" + pm.variables.replaceIn('{{$randomInt}}'),",
-          "            ip: pm.variables.replaceIn('{{$randomIP}}'),",
-          "            timestamp: this.getPastDateTime()",
-          "        }",
-          "    }",
-          "",
-          "     getUser() {",
-          "        return {",
-          "            name: pm.variables.replaceIn('{{$randomFullName}}'),",
-          "            email: pm.variables.replaceIn('{{$randomEmail}}')",
-          "        };",
-          "    }",
-          "",
-          "    getCategory() {",
-          "        return {",
-          "            name: pm.variables.replaceIn('{{$randomWord}}') + Math.floor(Math.random() * 100).toString()",
-          "        };",
-          "    }",
-          "",
-          "    getEvent(categoryId) {",
-          "        return {",
-          "            annotation: pm.variables.replaceIn('{{$randomLoremParagraph}}'),",
-          "            category: categoryId,",
-          "            description: pm.variables.replaceIn('{{$randomLoremParagraphs}}'),",
-          "            eventDate: this.getFutureDateTime(),",
-          "            location: {",
-          "                lat: parseFloat(pm.variables.replaceIn('{{$randomLatitude}}')),",
-          "                lon: parseFloat(pm.variables.replaceIn('{{$randomLongitude}}')),",
-          "            },",
-          "            paid: pm.variables.replaceIn('{{$randomBoolean}}'),",
-          "            participantLimit: pm.variables.replaceIn('{{$randomInt}}'),",
-          "            requestModeration: pm.variables.replaceIn('{{$randomBoolean}}'),",
-          "            title: pm.variables.replaceIn('{{$randomLoremSentence}}'),",
-          "        }",
-          "    }",
-          "    ",
-          "    getCompilation(...eventIds) { ",
-          "        return { ",
-          "            title: pm.variables.replaceIn('{{$randomLoremSentence}}'), ",
-          "            pinned: pm.variables.replaceIn('{{$randomBoolean}}'), ",
-          "            events: eventIds ",
-          "        }; ",
-          "    }",
-          "",
-          "    getPastDateTime(hourShift = 5, minuteShift=0, yearShift=0) {",
-          "        let moment = require('moment');",
-          "",
-          "        let m = moment();",
-          "        m.subtract(hourShift, 'hour');",
-          "        m.subtract(minuteShift, 'minute');",
-          "        m.subtract(yearShift, 'year');",
-          "",
-          "        return m.format('YYYY-MM-DD HH:mm:ss');",
-          "    }",
-          "",
-          "    getFutureDateTime(hourShift = 5, minuteShift=0, yearShift=0) {",
-          "        let moment = require('moment');",
-          "",
-          "        let m = moment();",
-          "        m.add(hourShift, 'hour');",
-          "        m.add(minuteShift, 'minute');",
-          "        m.add(yearShift, 'year');",
-          "",
-          "        return m.format('YYYY-MM-DD HH:mm:ss');",
-          "    }",
-          "}"
-        ]
-      }
+      ]
     },
     {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:9090",
-      "type": "string"
+      "name": "Requests",
+      "item": [
+        {
+          "name": "RequestUser2Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has request create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test request 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test request 'event' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('event');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'created' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('created');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'requester' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requester');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'status' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('status');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/requests?eventId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RequestUser3Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has request create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test request 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test request 'event' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('event');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'created' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('created');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'requester' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requester');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'status' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('status');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/3/requests?eventId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "3",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RequestUser4Event2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has request create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test request 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test request 'event' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('event');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'created' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('created');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'requester' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requester');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'status' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('status');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4/requests?eventId=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RequestUser1Event2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has request create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test request 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test request 'event' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('event');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'created' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('created');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'requester' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('requester');\r",
+                  "});\r",
+                  "pm.test(\"Test request 'status' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('status');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1/requests?eventId=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AproveRequests1-2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has requestAprove create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test requestAprove 'confirmedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+                  "});\r",
+                  "pm.test(\"Test requestAprove 'rejectedRequests' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('rejectedRequests');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"requestIds\": [\r\n    1,\r\n    2\r\n  ],\r\n  \"status\": \"CONFIRMED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/1/events/1/requests",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1",
+                "events",
+                "1",
+                "requests"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
-      "key": "uri",
-      "value": "1"
-    },
-    {
-      "key": "source",
-      "value": ""
+      "name": "Marks",
+      "item": [
+        {
+          "name": "AddMarkUser2Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event1 Duplicate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser99Event1 WrongUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/99/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "99",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event99 WrongEvent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/99/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "99",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event1 Mark<0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like?mark=-5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "-5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event1 Mark=0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like?mark=0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event1 Mark>5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like?mark=6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event1 MarkByAuthor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser4Event1 MarkByUserWithoutRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser2Event3 MarkEventNotPublished",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/3/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "3",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser3Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 1').to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/3/events/1/like?mark=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "3",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetEvent1WithMark",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser4Event2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4/events/2/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4",
+                "events",
+                "2",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser1Event2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/1/events/2/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "1",
+                "events",
+                "2",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPublicEventsWithMarksByViews",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test getEventsWithMark response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.length, 'List length must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?onlyAvailable=false&sort=VIEWS&from=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "onlyAvailable",
+                  "value": "false"
+                },
+                {
+                  "key": "sort",
+                  "value": "VIEWS"
+                },
+                {
+                  "key": "from",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPublicEventsWithMarksByMarks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test getEventsWithMark response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.length, 'List length must be 2').to.eql(2);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?onlyAvailable=false&from=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "onlyAvailable",
+                  "value": "false"
+                },
+                {
+                  "key": "from",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAdminEventsWithMarks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test getEventsWithMark response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.length, 'List length must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[2]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[2].id, '\"id\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[2]).to.not.have.property('mark');\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[2].initiator).to.not.have.property('mark');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/admin/events?from=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteMarkUser2Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser4Event1 NoMarkFromUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser99Event1 WrongUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/99/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "99",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser2Event99 WrongEvent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/2/events/99/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "2",
+                "events",
+                "99",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetEvent1WithMark AfterDelete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 1').to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
