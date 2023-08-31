@@ -132,7 +132,7 @@
           "response": []
         },
         {
-          "name": "AddEvent111byUser1",
+          "name": "AddEvent111byUser2",
           "event": [
             {
               "listen": "test",
@@ -238,7 +238,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/1/events",
+              "raw": "http://localhost:8080/users/2/events",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -246,7 +246,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "1",
+                "2",
                 "events"
               ]
             }
@@ -370,6 +370,37 @@
                 "users",
                 "1",
                 "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetEvent1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
               ]
             }
           },
@@ -620,6 +651,37 @@
           "response": []
         },
         {
+          "name": "GetEvent1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/116",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "116"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "AddEvent116byUser1",
           "event": [
             {
@@ -864,7 +926,38 @@
           "response": []
         },
         {
-          "name": "AddEvent117byUser1",
+          "name": "GetEvent1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddEvent117byUser2",
           "event": [
             {
               "listen": "test",
@@ -970,7 +1063,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/1/events",
+              "raw": "http://localhost:8080/users/2/events",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -978,7 +1071,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "1",
+                "2",
                 "events"
               ]
             }
