@@ -3,7 +3,6 @@ package ru.practicum.ewmservice.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ru.practicum.ewmservice.model.Event;
 
@@ -18,17 +17,15 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query("SELECT E FROM Event AS E LEFT JOIN Mark AS M ON M.event.id = E.id " +
             "WHERE E.id in :events " +
             "GROUP BY E.id, M.event.id, M.user.id " +
-            "ORDER BY avg (M.mark)")
+            "ORDER BY avg (M.mark) DESC ")
     Collection<Event> findAllWithCriteria(Collection<Integer> events);
 
-    @Query("SELECT E FROM Event AS E LEFT JOIN Mark AS M ON M.event.id = E.id " +
+    @Query("SELECT E FROM Event AS E " +
             "WHERE (:users is null or E.initiator.id in (:users)) " +
             "AND (:states is null or cast(E.state as string ) in (:states)) " +
             "AND (:categories is null or E.category.id in (:categories) ) " +
             "AND (:rangeStart is null or E.eventDate >= cast(:rangeStart as timestamp) ) " +
-            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) " +
-            "GROUP BY E.id, M.event.id, M.user.id " +
-            "ORDER BY avg (M.mark)")
+            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) " )
     Page<Event> findAllAdminWithCriteria(Pageable page,
                                          Collection<Integer> users,
                                          Collection<String> states,
@@ -47,7 +44,8 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
             "AND (:onlyAvailable = FALSE or (E.participantLimit = 0 or E.requestModeration = FALSE " +
             "or E.participantLimit > (SELECT count (PR.id) FROM PR WHERE PR.status = 'CONFIRMED' AND PR.event.id = E.id))) " +
             "AND (E.state = 'PUBLISHED') " +
-            "AND ((:rangeStart is null AND :rangeEnd is null) or (E.eventDate >= now()) ) ")
+            "AND ((:rangeStart is null AND :rangeEnd is null) or (E.eventDate >= now()) ) " +
+            "GROUP BY E")
     Page<Event> findAllPublicWithCriteria(Pageable page,
                                           String text,
                                           Collection<Integer> categories,

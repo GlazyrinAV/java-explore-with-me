@@ -101,11 +101,11 @@ create table if not exists compilation_events
 create table if not exists marks
 (
     user_id  integer not null
-        constraint marks_event_id_fk
-            references public.event
         constraint marks_users_id_fk
             references public.users,
-    event_id integer not null,
+    event_id integer not null
+        constraint marks_event_id_fk
+            references public.event,
     mark     integer not null
         constraint check_mark
             check ((mark > 0) AND (mark < 6)),

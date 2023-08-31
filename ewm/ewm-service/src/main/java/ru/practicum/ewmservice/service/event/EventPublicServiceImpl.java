@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmservice.exceptions.exceptions.BadParameter;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
@@ -61,16 +60,24 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         if (SortType.from(sort).isPresent()) {
             if (sort.equals(SortType.EVENT_DATE.name())) {
-                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("eventDate"));
-
-            } else {
-                page = PageRequest.of(from == 0 ? 0 : from / size, size, Sort.by("views"));
-            }
-            return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
-                    .stream().map(mapper::toDto).collect(Collectors.toList());
+                return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+                        .stream()
+                        .map(mapper::toDto)
+                        .sorted(Comparator.comparing(EventDto::getEventDate))
+                        .collect(Collectors.toList());
+               } else {
+                return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
+                        .stream()
+                        .map(mapper::toDto)
+                        .sorted(Comparator.comparing(EventDto::getViews).reversed())
+                        .collect(Collectors.toList());
+                }
         }
         return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
-                .stream().map(mapper::toDto).sorted(new EventComparator()).collect(Collectors.toList());
+                .stream()
+                .map(mapper::toDto)
+                .sorted(new EventComparatorByMarks().reversed())
+                .collect(Collectors.toList());
     }
 
     public EventDto findById(int id) {
@@ -81,7 +88,7 @@ public class EventPublicServiceImpl implements EventPublicService {
         return mapper.toDto(event);
     }
 
-    static class EventComparator implements Comparator<EventDto> {
+    static class EventComparatorByMarks implements Comparator<EventDto> {
 
         @Override
         public int compare(EventDto o1, EventDto o2) {

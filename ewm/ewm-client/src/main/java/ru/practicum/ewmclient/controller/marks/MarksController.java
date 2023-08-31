@@ -22,7 +22,7 @@ public class MarksController {
     @PostMapping
     public ResponseEntity<Object> save(@Positive @PathVariable int userId,
                                        @Positive @PathVariable int eventId,
-                                       @Positive @RequestParam int mark) {
+                                       @RequestParam int mark) {
         return client.save(userId, eventId, mark);
     }
 

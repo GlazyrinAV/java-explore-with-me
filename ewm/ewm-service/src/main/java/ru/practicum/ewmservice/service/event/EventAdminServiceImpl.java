@@ -22,11 +22,13 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
 
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,7 @@ public class EventAdminServiceImpl implements EventAdminService {
         return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
                 .stream()
                 .map(mapper::toDto)
+                .sorted(new EventComparatorByMarks().reversed())
                 .collect(Collectors.toList());
     }
 
@@ -141,6 +144,23 @@ public class EventAdminServiceImpl implements EventAdminService {
         }
 
         return mapper.toDto(repository.save(event));
+    }
+
+    static class EventComparatorByMarks implements Comparator<EventDto> {
+
+        @Override
+        public int compare(EventDto o1, EventDto o2) {
+            BigDecimal markO1 = o1.getMark();
+            BigDecimal mark02 = o2.getMark();
+
+            if (markO1 == null && mark02 == null) {
+                return 0;
+            } else if (markO1 == null) {
+                return -1;
+            } else if (mark02 == null) {
+                return 1;
+            } return markO1.subtract(mark02).toBigInteger().intValue();
+        }
     }
 
 }

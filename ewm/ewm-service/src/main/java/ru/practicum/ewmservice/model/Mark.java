@@ -3,7 +3,6 @@ package ru.practicum.ewmservice.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "marks")
@@ -11,20 +10,21 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@IdClass(MarkId.class)
-public class Mark implements Serializable {
 
-    @Id
+public class Mark {
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @MapsId("userId")
     private User user;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "event_id")
+    @MapsId("eventId")
     private Event event;
 
     @Column(name = "mark")
     private Integer mark;
+
+    @EmbeddedId
+    private MarkId markId;
 
 }

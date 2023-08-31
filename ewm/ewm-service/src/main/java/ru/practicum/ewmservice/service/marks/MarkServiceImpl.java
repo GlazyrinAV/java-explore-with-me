@@ -4,17 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmclient.model.MarkDto;
 import ru.practicum.ewmservice.exceptions.exceptions.*;
-import ru.practicum.ewmservice.model.Event;
-import ru.practicum.ewmservice.model.EventState;
-import ru.practicum.ewmservice.model.Mark;
-import ru.practicum.ewmservice.model.User;
+import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.model.mapper.MarkMapper;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.MarkRepository;
 import ru.practicum.ewmservice.repository.ParticipationRequestsRepository;
 import ru.practicum.ewmservice.repository.UserRepository;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -34,23 +29,27 @@ public class MarkServiceImpl implements MarkService {
     public MarkDto save(int userId, int eventId, int mark) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFound(eventId));
-        if (!event.getState().equals(EventState.PUBLISHED) || event.getEventDate().isAfter(LocalDateTime.now())) {
-            throw new WrongParameter("Оценивать можно только опубликованные события, которые прошли.");
+        if (mark < 1 || mark > 5) {
+            throw new BadParameter("Оценка должна быть в пределах от 1 до 5.");
+        }
+        if (!event.getState().equals(EventState.PUBLISHED)) {
+            throw new WrongParameter("Оценивать можно только опубликованные события.");
         }
         if (requestsRepository.findRequestByUserForMarks(userId, eventId) == null) {
             throw new WrongParameter("Оценку может ставить пользователь принимавший участие в событии.");
         }
+        if (repository.findByUser_IdAndEvent_Id(userId, eventId) != null) {
+            throw new WrongParameter("Оценка уже поставлена.");
+        }
         if (event.getInitiator().getId() == userId) {
             throw new WrongParameter("Автор мероприятия не может ставить оценку.");
-        }
-        if (mark < 1 || mark > 5) {
-            throw new BadParameter("Оценка должна быть в пределах от 1 до 5.");
         }
 
         Mark eventMark = Mark.builder()
                 .user(user)
                 .event(event)
                 .mark(mark)
+                .markId(new MarkId(userId, eventId))
                 .build();
         return mapper.toDto(repository.save(eventMark));
     }
@@ -63,7 +62,7 @@ public class MarkServiceImpl implements MarkService {
         if (mark == null) {
             throw new MarkNotFound();
         }
-        repository.removeByUser_IdAndEvent_Id(userId, eventId);
+        repository.delete(mark);
     }
 
 }

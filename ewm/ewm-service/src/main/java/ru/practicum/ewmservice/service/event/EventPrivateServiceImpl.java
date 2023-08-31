@@ -177,7 +177,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
     private EventRequestStatusUpdateResult confirmRequest(Event event, Collection<Integer> requestIds) {
         EventRequestStatusUpdateResult result = new EventRequestStatusUpdateResult();
-        Integer confirmedRequests = requestsRepository.findConfirmedRequests(event.getId());
+        int confirmedRequests = requestsRepository.findConfirmedRequests(event.getId());
         for (int requestId : requestIds) {
             ParticipationRequest request = requestsRepository.findById(requestId)
                     .orElseThrow(() -> new ParticipationRequestNotFound(requestId));
