@@ -27,7 +27,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "raw": "{\r\n\"participantLimit\": 0,\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -51,7 +51,7 @@
           "response": []
         },
         {
-          "name": "PublishEvent2",
+          "name": "PublishEvent4",
           "event": [
             {
               "listen": "test",
@@ -68,7 +68,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "raw": "{\r\n\"participantLimit\": 0,\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -76,7 +76,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/admin/events/2",
+              "raw": "http://localhost:8080/admin/events/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -85,7 +85,7 @@
               "path": [
                 "admin",
                 "events",
-                "2"
+                "4"
               ]
             }
           },
@@ -209,7 +209,7 @@
           "response": []
         },
         {
-          "name": "AddRequestUser12Event2",
+          "name": "AddRequestUser12Event4",
           "event": [
             {
               "listen": "test",
@@ -225,7 +225,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/12/requests?eventId=2",
+              "raw": "http://localhost:8080/users/12/requests?eventId=4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -239,7 +239,7 @@
               "query": [
                 {
                   "key": "eventId",
-                  "value": "2"
+                  "value": "4"
                 }
               ]
             }
@@ -247,7 +247,7 @@
           "response": []
         },
         {
-          "name": "AddRequestUser13Event2",
+          "name": "AddRequestUser13Event4",
           "event": [
             {
               "listen": "test",
@@ -263,7 +263,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/13/requests?eventId=2",
+              "raw": "http://localhost:8080/users/13/requests?eventId=4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -277,7 +277,7 @@
               "query": [
                 {
                   "key": "eventId",
-                  "value": "2"
+                  "value": "4"
                 }
               ]
             }
@@ -719,7 +719,7 @@
           "response": []
         },
         {
-          "name": "AddMarkUser3Event116",
+          "name": "AddMarkUser11Event116",
           "event": [
             {
               "listen": "test",
@@ -828,7 +828,7 @@
           "response": []
         },
         {
-          "name": "AddMarkUser12Event2",
+          "name": "AddMarkUser12Event4",
           "event": [
             {
               "listen": "test",
@@ -849,7 +849,7 @@
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 4').to.eql(4);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -865,7 +865,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/12/events/2/like?mark=5",
+              "raw": "http://localhost:8080/users/12/events/4/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -875,7 +875,7 @@
                 "users",
                 "12",
                 "events",
-                "2",
+                "4",
                 "like"
               ],
               "query": [
@@ -889,7 +889,7 @@
           "response": []
         },
         {
-          "name": "AddMarkUser13Event2",
+          "name": "AddMarkUser13Event4",
           "event": [
             {
               "listen": "test",
@@ -910,7 +910,7 @@
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 4').to.eql(4);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -926,7 +926,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/13/events/2/like?mark=5",
+              "raw": "http://localhost:8080/users/13/events/4/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -936,7 +936,7 @@
                 "users",
                 "13",
                 "events",
-                "2",
+                "4",
                 "like"
               ],
               "query": [
@@ -963,7 +963,7 @@
                   "pm.test(\"Test event[0] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 4').to.eql(4);\r",
                   "});\r",
                   "pm.test(\"Test event[0] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -1041,7 +1041,7 @@
                   "pm.test(\"Test event[0] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 4').to.eql(4);\r",
                   "});\r",
                   "pm.test(\"Test event[0] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
