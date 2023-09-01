@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Builder
@@ -63,5 +64,11 @@ public class Event {
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private EventState state;
+
+    @OneToMany(mappedBy = "event")
+    private Collection<ParticipationRequest> requests;
+
+    @OneToMany(mappedBy = "event")
+    private Collection<Mark> marks;
 
 }
