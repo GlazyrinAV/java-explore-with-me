@@ -6,12 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmclient.model.EventDto;
+import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 import ru.practicum.ewmservice.exceptions.exceptions.BadParameter;
 import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
-import ru.practicum.ewmclient.model.EventDto;
-import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 import ru.practicum.ewmservice.model.Event;
 import ru.practicum.ewmservice.model.EventState;
 import ru.practicum.ewmservice.model.Location;
@@ -22,14 +22,11 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
 
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -65,17 +62,14 @@ public class EventAdminServiceImpl implements EventAdminService {
         if (rangeEnd != null) {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
         }
-        if (rangeStart != null && rangeEnd != null) {
-            if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
-                throw new BadParameter("Дата начала не может быть позже даты конца.");
-            }
+        if (rangeStart != null && rangeEnd != null && LocalDateTime.parse(rangeStart, formatter)
+                .isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
+            throw new BadParameter("Дата начала не может быть позже даты конца.");
         }
-        List<EventDto> result = repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
+        return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
                 .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
-        result.sort(new EventComparatorByMarks().reversed());
-        return result;
     }
 
     @Override
@@ -146,24 +140,6 @@ public class EventAdminServiceImpl implements EventAdminService {
         }
 
         return mapper.toDto(repository.save(event));
-    }
-
-    static class EventComparatorByMarks implements Comparator<EventDto> {
-
-        @Override
-        public int compare(EventDto o1, EventDto o2) {
-            BigDecimal markO1 = o1.getMark();
-            BigDecimal mark02 = o2.getMark();
-
-            if (markO1 == null && mark02 == null) {
-                return 0;
-            } else if (markO1 == null) {
-                return -1;
-            } else if (mark02 == null) {
-                return 1;
-            }
-            return markO1.subtract(mark02).toBigInteger().intValue();
-        }
     }
 
 }

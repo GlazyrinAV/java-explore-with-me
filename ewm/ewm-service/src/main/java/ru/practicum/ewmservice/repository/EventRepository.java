@@ -21,11 +21,13 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     Collection<Event> findAllWithCriteria(Collection<Integer> events);
 
     @Query("SELECT E FROM Event AS E " +
+            "LEFT JOIN Mark AS M ON M.event.id = E.id " +
             "WHERE (:users is null or E.initiator.id in (:users)) " +
             "AND (:states is null or cast(E.state as string ) in (:states)) " +
             "AND (:categories is null or E.category.id in (:categories) ) " +
             "AND (:rangeStart is null or E.eventDate >= cast(:rangeStart as timestamp) ) " +
-            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) ")
+            "AND (:rangeEnd is null or E.eventDate <= cast( :rangeEnd as timestamp ) ) " +
+            "GROUP BY E ORDER BY avg(M.mark) DESC NULLS LAST ")
     Page<Event> findAllAdminWithCriteria(Pageable page,
                                          Collection<Integer> users,
                                          Collection<String> states,
@@ -33,7 +35,8 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
                                          String rangeStart,
                                          String rangeEnd);
 
-    @Query("SELECT E FROM Event AS E left JOIN Mark AS M ON M.event.id = E.id " +
+    @Query("SELECT E FROM Event AS E " +
+            "LEFT JOIN Mark AS M ON M.event.id = E.id " +
             "LEFT JOIN ParticipationRequest  AS  PR ON PR.event.id = E.id " +
             "WHERE (:text is null or lower(E.annotation) like lower(CONCAT('%', :text, '%')) " +
             "or lower(E.description) like lower(CONCAT('%', :text, '%'))) " +
@@ -53,5 +56,50 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
                                           String rangeStart,
                                           String rangeEnd,
                                           Boolean onlyAvailable);
+
+    @Query("SELECT E FROM Event AS E left JOIN Mark AS M ON M.event.id = E.id " +
+            "LEFT JOIN ParticipationRequest  AS  PR ON PR.event.id = E.id " +
+            "WHERE (:text is null or lower(E.annotation) like lower(CONCAT('%', :text, '%')) " +
+            "or lower(E.description) like lower(CONCAT('%', :text, '%'))) " +
+            "AND (:categories is null or E.category.id in (:categories)) " +
+            "AND (:paid is null or E.paid in :paid) " +
+            "AND (:rangeStart is null or E.eventDate >= cast(:rangeStart as timestamp )) " +
+            "AND (:rangeEnd is null or E.eventDate <= cast(:rangeEnd as timestamp ) ) " +
+            "AND (:onlyAvailable = FALSE or (E.participantLimit = 0 or E.requestModeration = FALSE " +
+            "or E.participantLimit > (SELECT count (PR.id) FROM PR WHERE PR.status = 'CONFIRMED' AND PR.event.id = E.id))) " +
+            "AND (E.state = 'PUBLISHED') " +
+            "AND ((:rangeStart is null AND :rangeEnd is null) or (E.eventDate >= now()) ) " +
+            "GROUP BY E " +
+            "ORDER BY E.eventDate DESC ")
+    Page<Event> findAllPublicWithCriteriaSortDate(Pageable page,
+                                          String text,
+                                          Collection<Integer> categories,
+                                          Boolean paid,
+                                          String rangeStart,
+                                          String rangeEnd,
+                                          Boolean onlyAvailable);
+
+    @Query("SELECT E FROM Event AS E " +
+            "LEFT JOIN Mark AS M ON M.event.id = E.id " +
+            "LEFT JOIN ParticipationRequest  AS  PR ON PR.event.id = E.id " +
+            "WHERE (:text is null or lower(E.annotation) like lower(CONCAT('%', :text, '%')) " +
+            "or lower(E.description) like lower(CONCAT('%', :text, '%'))) " +
+            "AND (:categories is null or E.category.id in (:categories)) " +
+            "AND (:paid is null or E.paid in :paid) " +
+            "AND (:rangeStart is null or E.eventDate >= cast(:rangeStart as timestamp )) " +
+            "AND (:rangeEnd is null or E.eventDate <= cast(:rangeEnd as timestamp ) ) " +
+            "AND (:onlyAvailable = FALSE or (E.participantLimit = 0 or E.requestModeration = FALSE " +
+            "or E.participantLimit > (SELECT count (PR.id) FROM PR WHERE PR.status = 'CONFIRMED' AND PR.event.id = E.id))) " +
+            "AND (E.state = 'PUBLISHED') " +
+            "AND ((:rangeStart is null AND :rangeEnd is null) or (E.eventDate >= now()) ) " +
+            "GROUP BY E " +
+            "ORDER BY avg(M.mark) DESC NULLS LAST ")
+    Page<Event> findAllPublicWithCriteriaSortMark(Pageable page,
+                                                  String text,
+                                                  Collection<Integer> categories,
+                                                  Boolean paid,
+                                                  String rangeStart,
+                                                  String rangeEnd,
+                                                  Boolean onlyAvailable);
 
 }
