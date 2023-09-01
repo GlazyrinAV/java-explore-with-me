@@ -7,1403 +7,16 @@
   },
   "item": [
     {
-      "name": "Events",
+      "name": "Prep",
       "item": [
         {
-          "name": "AddEvent112byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"на лодках похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на лодках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на лодках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1 Copy 2",
+          "name": "PublishEvent1",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
                   ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent111byUser2",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\r\n  \"category\": 2,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/2/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "2",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1 Copy",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent117byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на байдарках похож на .\",\r\n  \"category\": 2,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent118byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на байдарках на полет.\",\r\n  \"category\": 2,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1 Copy",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/116",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "116"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent119byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав hhhhна похож на полет.\",\r\n  \"category\": 2,\r\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на байдарках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/116",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "116"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent116byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на hhhhhh на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на лодках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на лодках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1 Copy 2",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent120byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"похож на hhhhhhh полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на лодках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на лодках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetEvent1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent117byUser2",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на hhhhhhh лодках \",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на лодках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на лодках\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/2/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "2",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddEvent113byUser1",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на плотах похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на плотах похож на полет. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на плотах\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "PublishEvent116",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "    pm.expect(jsonData.id, '\"id\" must be 116').to.eql(116);\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "    pm.expect(jsonData.state).to.eql('PUBLISHED');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
                 ],
                 "type": "text/javascript"
               }
@@ -1414,7 +27,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "raw": "{\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1422,7 +35,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/admin/events/116",
+              "raw": "http://localhost:8080/admin/events/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1431,214 +44,20 @@
               "path": [
                 "admin",
                 "events",
-                "116"
+                "1"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "AddEvent114byUser1",
+          "name": "PublishEvent2",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на плотах похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \" На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на плотах\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:8080/users/1/events",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "1",
-                "events"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "PublishEvent117",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "    pm.expect(jsonData.id, '\"id\" must be 117').to.eql(117);\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "    pm.expect(jsonData.state).to.eql('PUBLISHED');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
@@ -1649,7 +68,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "raw": "{\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1657,7 +76,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/admin/events/117",
+              "raw": "http://localhost:8080/admin/events/2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1666,112 +85,31 @@
               "path": [
                 "admin",
                 "events",
-                "117"
+                "2"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "AddEvent115byUser1",
+          "name": "RejectEvent3",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});\r",
-                  "pm.test(\"Test event 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('id');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'title' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('title');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'annotation' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('annotation');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'initiator' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('initiator');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'confirmedRequests' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'category' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('category');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'createdOn' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('createdOn');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'description' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('description');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'eventDate' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('eventDate');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'location' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('location');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'paid' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('paid');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'participantLimit' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('participantLimit');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'requestModeration' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('requestModeration');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'state' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('state');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'views' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.have.property('views');\r",
-                  "});\r",
-                  "pm.test(\"Test event 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData).to.not.have.property('mark');\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
             }
           ],
           "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "Accept",
-                "value": "*/*",
-                "type": "text"
-              }
-            ],
+            "method": "PATCH",
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"annotation\": \"Сплав на плотах похож на полет.\",\r\n  \"category\": 1,\r\n  \"description\": \"Сплав на плотах похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. \",\r\n  \"eventDate\": \"2025-12-31 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 55.754167,\r\n    \"lon\": 37.62\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сплав на плотах\"\r\n}",
+              "raw": "{\r\n  \"stateAction\": \"REJECT_EVENT\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1779,40 +117,29 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/1/events",
+              "raw": "http://localhost:8080/admin/events/3",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "8080",
               "path": [
-                "users",
-                "1",
-                "events"
+                "admin",
+                "events",
+                "3"
               ]
             }
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "Requests",
-      "item": [
+        },
         {
-          "name": "AddRequesrUser2Event116",
+          "name": "AddRequestUser10Event1",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
@@ -1822,7 +149,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/requests?eventId=116",
+              "raw": "http://localhost:8080/users/10/requests?eventId=1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1830,13 +157,13 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "requests"
               ],
               "query": [
                 {
                   "key": "eventId",
-                  "value": "116"
+                  "value": "1"
                 }
               ]
             }
@@ -1844,19 +171,13 @@
           "response": []
         },
         {
-          "name": "AddRequesrUser3Event116",
+          "name": "AddRequestUser11Event1",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
@@ -1866,7 +187,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/3/requests?eventId=116",
+              "raw": "http://localhost:8080/users/11/requests?eventId=1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1874,13 +195,13 @@
               "port": "8080",
               "path": [
                 "users",
-                "3",
+                "11",
                 "requests"
               ],
               "query": [
                 {
                   "key": "eventId",
-                  "value": "116"
+                  "value": "1"
                 }
               ]
             }
@@ -1888,19 +209,13 @@
           "response": []
         },
         {
-          "name": "AddRequesrUser3Event117",
+          "name": "AddRequestUser12Event2",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
@@ -1910,7 +225,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/3/requests?eventId=117",
+              "raw": "http://localhost:8080/users/12/requests?eventId=2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1918,13 +233,13 @@
               "port": "8080",
               "path": [
                 "users",
-                "3",
+                "12",
                 "requests"
               ],
               "query": [
                 {
                   "key": "eventId",
-                  "value": "117"
+                  "value": "2"
                 }
               ]
             }
@@ -1932,19 +247,13 @@
           "response": []
         },
         {
-          "name": "AddRequesrUser4Event117 Copy",
+          "name": "AddRequestUser13Event2",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-                  "});\r",
-                  "pm.test(\"Has user create response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript"
               }
@@ -1954,7 +263,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/4/requests?eventId=117",
+              "raw": "http://localhost:8080/users/13/requests?eventId=2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1962,13 +271,13 @@
               "port": "8080",
               "path": [
                 "users",
-                "4",
+                "13",
                 "requests"
               ],
               "query": [
                 {
                   "key": "eventId",
-                  "value": "117"
+                  "value": "2"
                 }
               ]
             }
@@ -1981,7 +290,7 @@
       "name": "Marks",
       "item": [
         {
-          "name": "AddMarkUser2Event116",
+          "name": "AddMarkUser10Event1",
           "event": [
             {
               "listen": "test",
@@ -1997,12 +306,12 @@
                   "pm.test(\"Test mark 'userId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('userId');\r",
-                  "    pm.expect(jsonData.userId, '\"userId\" must be 2').to.eql(2);\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 10').to.eql(10);\r",
                   "});\r",
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2018,7 +327,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/116/like?mark=5",
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2026,9 +335,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
-                "116",
+                "1",
                 "like"
               ],
               "query": [
@@ -2042,7 +351,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser2Event116 Duplicate",
+          "name": "AddErrorMarkUser10Event1 Duplicate",
           "event": [
             {
               "listen": "test",
@@ -2064,7 +373,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/116/like?mark=5",
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2072,9 +381,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
-                "116",
+                "1",
                 "like"
               ],
               "query": [
@@ -2134,7 +443,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser2Event99 WrongEvent",
+          "name": "AddErrorMarkUser10Event99 WrongEvent",
           "event": [
             {
               "listen": "test",
@@ -2156,7 +465,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/999/like?mark=5",
+              "raw": "http://localhost:8080/users/10/events/999/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2164,7 +473,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
                 "999",
                 "like"
@@ -2180,7 +489,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser2Event1 Mark<0",
+          "name": "AddErrorMarkUser10Event1 Mark<0",
           "event": [
             {
               "listen": "test",
@@ -2202,7 +511,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/1/like?mark=-5",
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=-5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2210,7 +519,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
                 "1",
                 "like"
@@ -2226,7 +535,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser2Event1 Mark=0",
+          "name": "AddErrorMarkUser10Event1 Mark=0",
           "event": [
             {
               "listen": "test",
@@ -2248,7 +557,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/1/like?mark=0",
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=0",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2256,7 +565,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
                 "1",
                 "like"
@@ -2272,7 +581,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser2Event1 Mark>5",
+          "name": "AddErrorMarkUser10Event1 Mark>5",
           "event": [
             {
               "listen": "test",
@@ -2294,7 +603,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/1/like?mark=6",
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=6",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2302,7 +611,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
                 "1",
                 "like"
@@ -2318,7 +627,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser1Event1 MarkByAuthor",
+          "name": "AddErrorMarkUser50Event1 MarkByUserWithoutRequest",
           "event": [
             {
               "listen": "test",
@@ -2340,7 +649,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/1/events/116/like?mark=5",
+              "raw": "http://localhost:8080/users/50/events/1/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2348,9 +657,9 @@
               "port": "8080",
               "path": [
                 "users",
+                "50",
+                "events",
                 "1",
-                "events",
-                "116",
                 "like"
               ],
               "query": [
@@ -2364,7 +673,7 @@
           "response": []
         },
         {
-          "name": "AddErrorMarkUser4Event1 MarkByUserWithoutRequest",
+          "name": "AddErrorMarkUser10Event3 MarkEventNotPublished",
           "event": [
             {
               "listen": "test",
@@ -2386,7 +695,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/4/events/116/like?mark=5",
+              "raw": "http://localhost:8080/users/10/events/3/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2394,55 +703,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "4",
+                "10",
                 "events",
-                "116",
-                "like"
-              ],
-              "query": [
-                {
-                  "key": "mark",
-                  "value": "5"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AddErrorMarkUser2Event3 MarkEventNotPublished",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 409\", function () {\r",
-                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
-                  "});\r",
-                  "pm.test(\"Has error response\", function () {\r",
-                  "    pm.response.to.be.withBody;\r",
-                  "    pm.response.to.be.json;\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/users/2/events/118/like?mark=5",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "users",
-                "2",
-                "events",
-                "118",
+                "3",
                 "like"
               ],
               "query": [
@@ -2462,8 +725,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200 or 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
                   "});\r",
                   "pm.test(\"Has mark create response\", function () {\r",
                   "    pm.response.to.be.withBody;\r",
@@ -2472,12 +735,12 @@
                   "pm.test(\"Test mark 'userId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('userId');\r",
-                  "    pm.expect(jsonData.userId, '\"userId\" must be 3').to.eql(3);\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 11').to.eql(11);\r",
                   "});\r",
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2493,7 +756,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/3/events/116/like?mark=1",
+              "raw": "http://localhost:8080/users/11/events/1/like?mark=1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2501,9 +764,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "3",
+                "11",
                 "events",
-                "116",
+                "1",
                 "like"
               ],
               "query": [
@@ -2517,7 +780,7 @@
           "response": []
         },
         {
-          "name": "GetEvent116WithMark",
+          "name": "GetEvent1WithMark",
           "event": [
             {
               "listen": "test",
@@ -2529,7 +792,7 @@
                   "pm.test(\"Test event 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('id');\r",
-                  "    pm.expect(jsonData.id, '\"id\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test event 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2550,7 +813,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/events/116",
+              "raw": "http://localhost:8080/events/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2558,21 +821,21 @@
               "port": "8080",
               "path": [
                 "events",
-                "116"
+                "1"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "AddMarkUser4Event117",
+          "name": "AddMarkUser12Event2",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200 or 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
                   "});\r",
                   "pm.test(\"Has mark create response\", function () {\r",
                   "    pm.response.to.be.withBody;\r",
@@ -2581,12 +844,12 @@
                   "pm.test(\"Test mark 'userId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('userId');\r",
-                  "    pm.expect(jsonData.userId, '\"userId\" must be 4').to.eql(4);\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 12').to.eql(12);\r",
                   "});\r",
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 117').to.eql(117);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2602,7 +865,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/4/events/117/like?mark=5",
+              "raw": "http://localhost:8080/users/12/events/2/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2610,9 +873,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "4",
+                "12",
                 "events",
-                "117",
+                "2",
                 "like"
               ],
               "query": [
@@ -2626,14 +889,14 @@
           "response": []
         },
         {
-          "name": "AddMarkUser3Event117",
+          "name": "AddMarkUser13Event2",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200 or 201\", function () {\r",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
                   "});\r",
                   "pm.test(\"Has mark create response\", function () {\r",
                   "    pm.response.to.be.withBody;\r",
@@ -2642,12 +905,12 @@
                   "pm.test(\"Test mark 'userId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('userId');\r",
-                  "    pm.expect(jsonData.userId, '\"userId\" must be 3').to.eql(3);\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 13').to.eql(13);\r",
                   "});\r",
                   "pm.test(\"Test mark 'eventId' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('eventId');\r",
-                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 117').to.eql(117);\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 2').to.eql(2);\r",
                   "});\r",
                   "pm.test(\"Test mark 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2663,7 +926,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/3/events/117/like?mark=5",
+              "raw": "http://localhost:8080/users/13/events/2/like?mark=5",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2671,105 +934,15 @@
               "port": "8080",
               "path": [
                 "users",
-                "3",
+                "13",
                 "events",
-                "117",
+                "2",
                 "like"
               ],
               "query": [
                 {
                   "key": "mark",
                   "value": "5"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "GetPublicEventsWithMarksByViews",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.be.ok;\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[0].id, '\"id\" must be 116').to.eql(116);\r",
-                  "});\r",
-                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 3').to.eql(3);\r",
-                  "});\r",
-                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[1].id, '\"id\" must be 117').to.eql(117);\r",
-                  "});\r",
-                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 5').to.eql(5);\r",
-                  "});\r",
-                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
-                  "    var jsonData = pm.response.json();\r",
-                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/events?rangeStart=2025-12-31%2015%3A00%3A00&rangeEnd=2025-12-31%2015%3A30%3A00&onlyAvailable=false&sort=VIEWS&from=0&size=15",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "events"
-              ],
-              "query": [
-                {
-                  "key": "rangeStart",
-                  "value": "2025-12-31%2015%3A00%3A00"
-                },
-                {
-                  "key": "rangeEnd",
-                  "value": "2025-12-31%2015%3A30%3A00"
-                },
-                {
-                  "key": "onlyAvailable",
-                  "value": "false"
-                },
-                {
-                  "key": "sort",
-                  "value": "VIEWS"
-                },
-                {
-                  "key": "from",
-                  "value": "0"
-                },
-                {
-                  "key": "size",
-                  "value": "15"
                 }
               ]
             }
@@ -2790,7 +963,7 @@
                   "pm.test(\"Test event[0] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[0].id, '\"id\" must be 117').to.eql(117);\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
                   "});\r",
                   "pm.test(\"Test event[0] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2800,13 +973,13 @@
                   "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
                   "});\r",
                   "\r",
                   "pm.test(\"Test event[1] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[1]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[1].id, '\"id\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test event[1] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2816,7 +989,7 @@
                   "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -2827,7 +1000,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/events?rangeStart=2025-12-31%2015%3A00%3A00&rangeEnd=2025-12-31%2015%3A30%3A00&onlyAvailable=false&from=0&size=15",
+              "raw": "http://localhost:8080/events?onlyAvailable=false&from=0&size=50",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2838,14 +1011,6 @@
               ],
               "query": [
                 {
-                  "key": "rangeStart",
-                  "value": "2025-12-31%2015%3A00%3A00"
-                },
-                {
-                  "key": "rangeEnd",
-                  "value": "2025-12-31%2015%3A30%3A00"
-                },
-                {
                   "key": "onlyAvailable",
                   "value": "false"
                 },
@@ -2855,7 +1020,7 @@
                 },
                 {
                   "key": "size",
-                  "value": "15"
+                  "value": "50"
                 }
               ]
             }
@@ -2876,7 +1041,7 @@
                   "pm.test(\"Test event[0] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[0].id, '\"id\" must be 117').to.eql(117);\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 2').to.eql(2);\r",
                   "});\r",
                   "pm.test(\"Test event[0] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2886,13 +1051,13 @@
                   "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
                   "});\r",
                   "\r",
                   "pm.test(\"Test event[1] 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[1]).to.have.property('id');\r",
-                  "    pm.expect(jsonData[1].id, '\"id\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test event[1] 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
@@ -2902,7 +1067,7 @@
                   "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 4').to.eql(4);\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -2913,7 +1078,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/admin/events?rangeStart=2025-12-31%2015%3A00%3A00&rangeEnd=2025-12-31%2015%3A30%3A00&from=0&size=50",
+              "raw": "http://localhost:8080/admin/events?states=PUBLISHED&from=0&size=50",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2925,12 +1090,8 @@
               ],
               "query": [
                 {
-                  "key": "rangeStart",
-                  "value": "2025-12-31%2015%3A00%3A00"
-                },
-                {
-                  "key": "rangeEnd",
-                  "value": "2025-12-31%2015%3A30%3A00"
+                  "key": "states",
+                  "value": "PUBLISHED"
                 },
                 {
                   "key": "from",
@@ -2946,7 +1107,7 @@
           "response": []
         },
         {
-          "name": "DeleteMarkUser2Event116",
+          "name": "DeleteMarkUser11Event1",
           "event": [
             {
               "listen": "test",
@@ -2964,7 +1125,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/116/like",
+              "raw": "http://localhost:8080/users/11/events/1/like",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2972,9 +1133,9 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "11",
                 "events",
-                "116",
+                "1",
                 "like"
               ]
             }
@@ -2982,7 +1143,7 @@
           "response": []
         },
         {
-          "name": "DeleteErrorMarkUser4Event116 NoMarkFromUser",
+          "name": "DeleteErrorMarkUser4Event1 NoMarkFromUser",
           "event": [
             {
               "listen": "test",
@@ -3004,7 +1165,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/4/events/116/like",
+              "raw": "http://localhost:8080/users/4/events/1/like",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -3014,7 +1175,7 @@
                 "users",
                 "4",
                 "events",
-                "116",
+                "1",
                 "like"
               ]
             }
@@ -3062,7 +1223,7 @@
           "response": []
         },
         {
-          "name": "DeleteErrorMarkUser2Event999 WrongEvent",
+          "name": "DeleteErrorMarkUser10Event999 WrongEvent",
           "event": [
             {
               "listen": "test",
@@ -3084,7 +1245,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/2/events/999/like",
+              "raw": "http://localhost:8080/users/10/events/999/like",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -3092,7 +1253,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "2",
+                "10",
                 "events",
                 "999",
                 "like"
@@ -3102,7 +1263,7 @@
           "response": []
         },
         {
-          "name": "GetPublicEvent116WithMark AfterDelete",
+          "name": "GetPublicEvent1WithMark AfterDelete",
           "event": [
             {
               "listen": "test",
@@ -3114,17 +1275,17 @@
                   "pm.test(\"Test event 'id' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('id');\r",
-                  "    pm.expect(jsonData.id, '\"id\" must be 116').to.eql(116);\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 21').to.eql(1);\r",
                   "});\r",
                   "pm.test(\"Test event 'mark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData).to.have.property('mark');\r",
-                  "    pm.expect(jsonData.mark, '\"mark\" must be 1').to.eql(1);\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
                   "});\r",
                   "pm.test(\"Test event 'UserMark' field\", function () {\r",
                   "    var jsonData = pm.response.json();\r",
                   "    pm.expect(jsonData.initiator).to.have.property('mark');\r",
-                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 3.7').to.eql(3.7);\r",
+                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -3135,7 +1296,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/events/116",
+              "raw": "http://localhost:8080/events/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -3143,7 +1304,7 @@
               "port": "8080",
               "path": [
                 "events",
-                "116"
+                "1"
               ]
             }
           },
