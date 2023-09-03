@@ -1,0 +1,1316 @@
+{
+  "info": {
+    "_postman_id": "b20168b9-1248-4be0-a031-54b21dca083f",
+    "name": "EWM-Marks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26681728"
+  },
+  "item": [
+    {
+      "name": "Prep",
+      "item": [
+        {
+          "name": "PublishEvent1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"participantLimit\": 0,\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PublishEvent4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"participantLimit\": 0,\r\n\"requestModeration\": false,\r\n\"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/events/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RejectEvent3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"stateAction\": \"REJECT_EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/admin/events/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddRequestUser10Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/requests?eventId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddRequestUser11Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/11/requests?eventId=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "11",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddRequestUser12Event4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/12/requests?eventId=4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "12",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddRequestUser13Event4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/13/requests?eventId=4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "13",
+                "requests"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Marks",
+      "item": [
+        {
+          "name": "AddMarkUser10Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 10').to.eql(10);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event1 Duplicate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser999Event1 WrongUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/999/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "999",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event99 WrongEvent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/999/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "999",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event1 Mark<0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=-5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "-5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event1 Mark=0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event1 Mark>5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/1/like?mark=6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser50Event1 MarkByUserWithoutRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/50/events/1/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "50",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddErrorMarkUser10Event3 MarkEventNotPublished",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([409]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/3/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "3",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser11Event116",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 11').to.eql(11);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 1').to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/11/events/1/like?mark=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "11",
+                "events",
+                "1",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetEvent1WithMark",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser12Event4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 12').to.eql(12);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/12/events/4/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "12",
+                "events",
+                "4",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddMarkUser13Event4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
+                  "});\r",
+                  "pm.test(\"Has mark create response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'userId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('userId');\r",
+                  "    pm.expect(jsonData.userId, '\"userId\" must be 13').to.eql(13);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'eventId' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('eventId');\r",
+                  "    pm.expect(jsonData.eventId, '\"eventId\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test mark 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/13/events/4/like?mark=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "13",
+                "events",
+                "4",
+                "like"
+              ],
+              "query": [
+                {
+                  "key": "mark",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPublicEventsWithMarksByMarks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?onlyAvailable=false&from=0&size=50",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "onlyAvailable",
+                  "value": "false"
+                },
+                {
+                  "key": "from",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAdminEventsWithMarks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[0] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[0].id, '\"id\" must be 4').to.eql(4);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event[0] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[0].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[0].initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Test event[1] 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('id');\r",
+                  "    pm.expect(jsonData[1].id, '\"id\" must be 1').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1]).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});\r",
+                  "pm.test(\"Test event[1] 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData[1].initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData[1].initiator.mark, '\"mark\" must be 3').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/admin/events?states=PUBLISHED&from=0&size=50",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "admin",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "states",
+                  "value": "PUBLISHED"
+                },
+                {
+                  "key": "from",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteMarkUser11Event1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/11/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "11",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser4Event1 NoMarkFromUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/4/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "4",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser999Event1 WrongUser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/999/events/1/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "999",
+                "events",
+                "1",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteErrorMarkUser10Event999 WrongEvent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "     pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});\r",
+                  "pm.test(\"Has error response\", function () {\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/users/10/events/999/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "10",
+                "events",
+                "999",
+                "like"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPublicEvent1WithMark AfterDelete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Test event 'id' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('id');\r",
+                  "    pm.expect(jsonData.id, '\"id\" must be 21').to.eql(1);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'mark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});\r",
+                  "pm.test(\"Test event 'UserMark' field\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.initiator).to.have.property('mark');\r",
+                  "    pm.expect(jsonData.initiator.mark, '\"mark\" must be 5').to.eql(5);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

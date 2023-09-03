@@ -18,7 +18,7 @@ import java.util.Objects;
 public class ErrorHandler {
 
     @ExceptionHandler({CategoryNotFound.class, EventNotFound.class, CompilationNotFound.class,
-            UserNotFound.class, ParticipationRequestNotFound.class})
+            UserNotFound.class, ParticipationRequestNotFound.class, MarkNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse entityNotFound(RuntimeException exception) {
         return sendErrorResponse(exception.getMessage());

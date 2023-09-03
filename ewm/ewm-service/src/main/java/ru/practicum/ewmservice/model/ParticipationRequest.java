@@ -22,7 +22,7 @@ public class ParticipationRequest {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "event_id", referencedColumnName = "id")
     private Event event;
 
     @Column(name = "created")
@@ -33,6 +33,7 @@ public class ParticipationRequest {
     private User requester;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
 }

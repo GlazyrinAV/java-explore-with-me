@@ -6,12 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmclient.model.EventDto;
+import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 import ru.practicum.ewmservice.exceptions.exceptions.BadParameter;
 import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
-import ru.practicum.ewmclient.model.EventDto;
-import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 import ru.practicum.ewmservice.model.Event;
 import ru.practicum.ewmservice.model.EventState;
 import ru.practicum.ewmservice.model.Location;
@@ -62,13 +62,14 @@ public class EventAdminServiceImpl implements EventAdminService {
         if (rangeEnd != null) {
             rangeEnd = URLDecoder.decode(rangeEnd, Charset.defaultCharset());
         }
-        if (rangeStart != null && rangeEnd != null) {
-            if (LocalDateTime.parse(rangeStart, formatter).isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
-                throw new BadParameter("Дата начала не может быть позже даты конца.");
-            }
+        if (rangeStart != null && rangeEnd != null && LocalDateTime.parse(rangeStart, formatter)
+                .isAfter(LocalDateTime.parse(rangeEnd, formatter))) {
+            throw new BadParameter("Дата начала не может быть позже даты конца.");
         }
         return repository.findAllAdminWithCriteria(page, users, states, categories, rangeStart, rangeEnd)
-                .stream().map(mapper::toDto).collect(Collectors.toList());
+                .stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

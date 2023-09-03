@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Builder
 @Data
@@ -53,5 +54,7 @@ public class EventDto {
     private String stateAction;
 
     private Integer views;
+
+    private BigDecimal mark;
 
 }
