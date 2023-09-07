@@ -43,7 +43,7 @@ public class StatsRequestServiceImpl implements StatsRequestService {
                 return Integer.parseInt(responseBody);
             }
         } catch (IOException e) {
-            return 0;
+            throw new RuntimeException();
         }
     }
 
