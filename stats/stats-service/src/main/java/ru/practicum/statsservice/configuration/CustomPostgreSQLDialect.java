@@ -1,4 +1,4 @@
-package ru.practicum.statsservice.model;
+package ru.practicum.statsservice.configuration;
 
 import io.hypersistence.utils.hibernate.type.json.JsonNodeBinaryType;
 import org.hibernate.dialect.PostgreSQL10Dialect;
