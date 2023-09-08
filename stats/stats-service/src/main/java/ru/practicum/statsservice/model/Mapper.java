@@ -1,8 +1,8 @@
 package ru.practicum.statsservice.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Builder;
 import org.springframework.stereotype.Component;
-import ru.practicum.statsclient.dto.StatsDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,12 +13,10 @@ public class Mapper {
 
     private final DateTimeFormatter formatter;
 
-    public Stats fromDto(StatsDto dto) {
+    public Stats fromDto(JsonNode dto) {
         return Stats.builder()
-                .app(dto.getApp())
-                .ip(dto.getIp())
-                .uri(dto.getUri())
-                .timeStamp(LocalDateTime.parse(dto.getTimeStamp(), formatter))
+                .timeStamp(LocalDateTime.now())
+                .additionalProps(dto)
                 .build();
     }
 
