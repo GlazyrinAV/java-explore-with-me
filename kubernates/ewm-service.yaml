@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm-service-deployment
+  labels:
+    app: ewm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm-service
+  template:
+    metadata:
+      labels:
+        app: ewm-service
+    spec:
+      containers:
+        - name: ewm-service
+          image:
+          ports:
+            - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewm-service-service
+spec:
+  selector:
+    app: ewm-service
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

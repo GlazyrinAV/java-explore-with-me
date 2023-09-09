@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm-db-deployment
+  labels:
+    app: ewm-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm-db
+  template:
+    metadata:
+      labels:
+        app: ewm-db
+    spec:
+      containers:
+        - name: stats-db
+          image: postgres:14-alpine
+          ports:
+            - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewm-db-service
+spec:
+  selector:
+    app: ewm-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
