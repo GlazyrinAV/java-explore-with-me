@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats-client-deployment
+  labels:
+    app: stats-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stats-client
+  template:
+    metadata:
+      labels:
+        app: stats-client
+    spec:
+      containers:
+        - name: stats-service
+          image: glazyrinalexey/stats-client:stats-client
+          ports:
+            - containerPort: 9090
+          env:
+            - name: STATS_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-service-config
+                  key: stats-service-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stats-client-service
+spec:
+  type: NodePort
+  selector:
+    app: stats-client
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 30200

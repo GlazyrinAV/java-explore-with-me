@@ -16,9 +16,25 @@ spec:
     spec:
       containers:
         - name: stats-service
-          image:
+          image: glazyrinalexey/stats-service:stats-service
           ports:
-            - containerPort: 5432
+            - containerPort: 9091
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: spring.datasource.username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: spring.datasource.password
+            - name: STATS_DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-db-config
+                  key: stats-db-url
 ---
 apiVersion: v1
 kind: Service
@@ -29,5 +45,5 @@ spec:
     app: stats-service
   ports:
     - protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 9091
+      targetPort: 9091

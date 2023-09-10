@@ -16,9 +16,25 @@ spec:
     spec:
       containers:
         - name: ewm-service
-          image:
+          image: glazyrinalexey/java-explore-with-me-ewm-service:ewm-service
           ports:
-            - containerPort: 5432
+            - containerPort: 8081
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: spring.datasource.username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: spring.datasource.password
+            - name: EWM_DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-db-config
+                  key: ewm-db-url
 ---
 apiVersion: v1
 kind: Service
@@ -29,5 +45,5 @@ spec:
     app: ewm-service
   ports:
     - protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 8081
+      targetPort: 8081

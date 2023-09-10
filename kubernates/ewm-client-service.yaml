@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm-client-deployment
+  labels:
+    app: ewm-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm-client
+  template:
+    metadata:
+      labels:
+        app: ewm-client
+    spec:
+      containers:
+        - name: stats-service
+          image: glazyrinalexey/java-explore-with-me-ewm-client:ewm-client
+          ports:
+            - containerPort: 8080
+          env:
+            - name: EWM_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: ewm-service-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewm-client-service
+spec:
+  type: NodePort
+  selector:
+    app: ewm-client
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+        nodePort: 30100
