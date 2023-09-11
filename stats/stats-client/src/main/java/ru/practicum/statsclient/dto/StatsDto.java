@@ -10,8 +10,6 @@ import javax.validation.constraints.NotBlank;
 @RequiredArgsConstructor
 public class StatsDto {
 
-    private Integer id;
-
     @NotBlank
     private String app;
 

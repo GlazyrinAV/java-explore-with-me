@@ -1,10 +1,10 @@
 package ru.practicum.statsservice.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.statsclient.dto.StatsDto;
 import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.exception.BadParameter;
 import ru.practicum.statsservice.model.Mapper;
@@ -22,7 +22,8 @@ import java.util.Objects;
 @Slf4j
 public class StatsServiceImpl implements StatsService {
 
-    private final StatsRepository repository;
+    private final
+    StatsRepository repository;
 
     private final Mapper mapper;
 
@@ -30,7 +31,7 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     @Transactional
-    public void saveStats(StatsDto dto) {
+    public void saveStats(JsonNode dto) {
         repository.save(mapper.fromDto(dto));
     }
 
@@ -41,14 +42,14 @@ public class StatsServiceImpl implements StatsService {
         if (startDto.isAfter(endDto)) {
             throw new BadParameter("Дата начала не может быть позже конца.");
         }
-        if (unique && uris != null) {
-            return repository.findUniqueStatsWithUris(start, end, uris);
-        } else if (unique) {
-            return repository.findUniqueStatsWithoutUris(start, end);
-        } else if (uris != null) {
+        if (!uris.isEmpty() && !unique) {
             return repository.findAllStatsWithUris(start, end, uris);
-        } else {
+        } else if (uris.isEmpty() && !unique){
             return repository.findAllStatsWithoutUris(start, end);
+        } else if (!uris.isEmpty()) {
+            return repository.findAllUniqueStatsWithoutUris(start, end);
+        } else {
+            return repository.findAllUniqueStatsWithUris(start, end, uris);
         }
     }
 
