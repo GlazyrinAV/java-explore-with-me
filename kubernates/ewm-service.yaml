@@ -24,12 +24,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: ewm-db-secret
-                  key: spring.datasource.username
+                  key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: ewm-db-secret
-                  key: spring.datasource.password
+                  key: password
             - name: EWM_DB_URL
               valueFrom:
                 configMapKeyRef:
