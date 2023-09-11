@@ -25,7 +25,7 @@ spec:
                 secretKeyRef:
                   name: ewm-db-secret
                   key: spring.datasource.password
-            - name: POSTGRES_USERNAME
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: ewm-db-secret

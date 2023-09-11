@@ -25,7 +25,7 @@ spec:
                 secretKeyRef:
                   name: stats-db-secret
                   key: spring.datasource.password
-            - name: POSTGRES_USERNAME
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: stats-db-secret

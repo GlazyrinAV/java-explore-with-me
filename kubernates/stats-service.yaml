@@ -20,16 +20,16 @@ spec:
           ports:
             - containerPort: 9091
           env:
-            - name: USERNAME
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: stats-db-secret
-                  key: spring.datasource.username
-            - name: PASSWORD
+                  key: username
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: stats-db-secret
-                  key: spring.datasource.password
+                  key: password
             - name: STATS_DB_URL
               valueFrom:
                 configMapKeyRef:
