@@ -17,6 +17,7 @@ spec:
       containers:
         - name: ewm-service
           image: glazyrinalexey/java-explore-with-me-ewm-service:ewm-service
+          command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
           ports:
             - containerPort: 8081
           env:

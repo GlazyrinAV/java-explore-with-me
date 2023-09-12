@@ -17,6 +17,7 @@ spec:
       containers:
         - name: stats-service
           image: glazyrinalexey/stats-service:stats-service
+          command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
           ports:
             - containerPort: 9091
           env:
