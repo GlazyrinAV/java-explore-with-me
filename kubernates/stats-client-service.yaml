@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats-client-deployment
+  labels:
+    app: stats-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stats-client
+  template:
+    metadata:
+      labels:
+        app: stats-client
+    spec:
+      containers:
+        - name: stats-client
+          image: glazyrinalexey/stats-client:stats-client
+          ports:
+            - containerPort: 9090
+          env:
+            - name: STATS_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-service-config
+                  key: stats_service_url
+            - name: ewm_service_url
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-service-config
+                  key: ewm_service_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stats-client
+spec:
+  selector:
+    app: stats-client
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090

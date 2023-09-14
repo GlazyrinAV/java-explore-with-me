@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stats-service-config
+data:
+  stats_service_url: 'http://stats-service:9091'
+  ewm_service_url: 'http://ewm-service:8081'

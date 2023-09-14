@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm-client-deployment
+  labels:
+    app: ewm-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm-client
+  template:
+    metadata:
+      labels:
+        app: ewm-client
+    spec:
+      containers:
+        - name: ewm-client
+          image: glazyrinalexey/java-explore-with-me-ewm-client:ewm-client
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ewm_service_url
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: ewm_service_url
+            - name: stats_client_url
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: stats_client_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewm-client
+spec:
+  selector:
+    app: ewm-client
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

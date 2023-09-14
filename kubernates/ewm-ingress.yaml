@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ewm-ingress
+spec:
+  ingressClassName: ewm
+  rules:
+    - host: ewm.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ewm-client
+                port:
+                  number: 8080
+          - path: /hit
+            pathType: Prefix
+            backend:
+              service:
+                name: stats-client
+                port:
+                  number: 9090
+          - path: /stats
+            pathType: Prefix
+            backend:
+              service:
+                name: stats-client
+                port:
+                  number: 9090

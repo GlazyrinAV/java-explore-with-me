@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats-service-deployment
+  labels:
+    app: stats-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stats-service
+  template:
+    metadata:
+      labels:
+        app: stats-service
+    spec:
+      containers:
+        - name: stats-service
+          image: glazyrinalexey/stats-service:stats-service
+          ports:
+            - containerPort: 9091
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: dbname
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-db-config
+                  key: SPRING_DATASOURCE_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stats-service
+spec:
+  selector:
+    app: stats-service
+  ports:
+    - protocol: TCP
+      port: 9091
+      targetPort: 9091

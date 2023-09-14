@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm-service-deployment
+  labels:
+    app: ewm-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm-service
+  template:
+    metadata:
+      labels:
+        app: ewm-service
+    spec:
+      containers:
+        - name: ewm-service
+          image: glazyrinalexey/java-explore-with-me-ewm-service:ewm-service
+          ports:
+            - containerPort: 8081
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: dbname
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-db-config
+                  key: SPRING_DATASOURCE_URL
+            - name: stats_client_url
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: stats_client_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewm-service
+spec:
+  selector:
+    app: ewm-service
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
