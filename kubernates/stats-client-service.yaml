@@ -24,12 +24,17 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: stats-service-config
-                  key: stats-service-url
+                  key: stats_service_url
+            - name: ewm_service_url
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-service-config
+                  key: ewm_service_url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: stats-client-service
+  name: stats-client
 spec:
   selector:
     app: stats-client

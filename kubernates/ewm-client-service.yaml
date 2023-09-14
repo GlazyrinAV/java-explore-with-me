@@ -20,19 +20,25 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: EWM_SERVICE_URL
+            - name: ewm_service_url
               valueFrom:
                 configMapKeyRef:
                   name: ewm-service-config
-                  key: ewm-service-url
+                  key: ewm_service_url
+            - name: stats_client_url
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: stats_client_url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ewm-client-service
+  name: ewm-client
 spec:
   selector:
     app: ewm-client
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8080

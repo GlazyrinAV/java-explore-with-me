@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: stats-service-config
 data:
-  stats-service-url: 'stats-service'
+  stats_service_url: 'stats-service'
+  ewm_service_url: 'ewm-service'

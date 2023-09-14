@@ -17,7 +17,6 @@ spec:
       containers:
         - name: stats-service
           image: glazyrinalexey/stats-service:stats-service
-          command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
           ports:
             - containerPort: 9091
           env:
@@ -31,16 +30,21 @@ spec:
                 secretKeyRef:
                   name: stats-db-secret
                   key: password
-            - name: STATS_DB_URL
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: dbname
+            - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
                   name: stats-db-config
-                  key: stats-db-url
+                  key: SPRING_DATASOURCE_URL
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: stats-service-service
+  name: stats-service
 spec:
   selector:
     app: stats-service

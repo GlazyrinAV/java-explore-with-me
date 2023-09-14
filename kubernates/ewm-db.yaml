@@ -30,11 +30,16 @@ spec:
                 secretKeyRef:
                   name: ewm-db-secret
                   key: username
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: dbname
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ewm-db-service
+  name: ewm-db
 spec:
   selector:
     app: ewm-db

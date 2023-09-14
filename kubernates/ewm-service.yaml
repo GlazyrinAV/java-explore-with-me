@@ -17,7 +17,6 @@ spec:
       containers:
         - name: ewm-service
           image: glazyrinalexey/java-explore-with-me-ewm-service:ewm-service
-          command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
           ports:
             - containerPort: 8081
           env:
@@ -31,16 +30,26 @@ spec:
                 secretKeyRef:
                   name: ewm-db-secret
                   key: password
-            - name: EWM_DB_URL
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: ewm-db-secret
+                  key: dbname
+            - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
                   name: ewm-db-config
-                  key: ewm-db-url
+                  key: SPRING_DATASOURCE_URL
+            - name: stats_client_url
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: stats_client_url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ewm-service-service
+  name: ewm-service
 spec:
   selector:
     app: ewm-service

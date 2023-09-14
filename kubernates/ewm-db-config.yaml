@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: ewm-db-config
 data:
-  ewm-db-url: 'ewm-db-service'
+  SPRING_DATASOURCE_URL: 'jdbc:postgresql://ewm-db:5432/ewm-db'

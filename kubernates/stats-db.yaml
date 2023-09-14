@@ -30,11 +30,16 @@ spec:
                 secretKeyRef:
                   name: stats-db-secret
                   key: username
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: dbname
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: stats-db-service
+  name: stats-db
 spec:
   selector:
     app: stats-db

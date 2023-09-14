@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: stats-db-config
 data:
-  stats-db-url: 'stats-db-service'
+  SPRING_DATASOURCE_URL: 'jdbc:postgresql://stats-db:5432/stats-db'
