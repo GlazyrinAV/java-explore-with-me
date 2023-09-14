@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ewm-service
-          image: glazyrinalexey/java-explore-with-me-ewm-service:ewm-service
+          image: glazyrinalexey/java-explore-with-me-ewm-service:v2
           ports:
             - containerPort: 8081
           env:

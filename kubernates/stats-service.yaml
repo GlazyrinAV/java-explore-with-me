@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: stats-service
-          image: glazyrinalexey/stats-service:stats-service
+          image: glazyrinalexey/stats-service:v2
           ports:
             - containerPort: 9091
           env:
