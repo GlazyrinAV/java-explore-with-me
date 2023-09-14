@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ewm-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
   ingressClassName: ewm
   rules:
@@ -17,3 +15,17 @@ spec:
                 name: ewm-client
                 port:
                   number: 8080
+          - path: /hit
+            pathType: Prefix
+            backend:
+              service:
+                name: stats-client
+                port:
+                  number: 9090
+          - path: /stats
+            pathType: Prefix
+            backend:
+              service:
+                name: stats-client
+                port:
+                  number: 9090

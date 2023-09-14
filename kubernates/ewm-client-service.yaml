@@ -15,7 +15,7 @@ spec:
         app: ewm-client
     spec:
       containers:
-        - name: stats-service
+        - name: ewm-client
           image: glazyrinalexey/java-explore-with-me-ewm-client:ewm-client
           ports:
             - containerPort: 8080

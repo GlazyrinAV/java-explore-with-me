@@ -15,7 +15,7 @@ spec:
         app: stats-client
     spec:
       containers:
-        - name: stats-service
+        - name: stats-client
           image: glazyrinalexey/stats-client:stats-client
           ports:
             - containerPort: 9090
@@ -38,6 +38,7 @@ metadata:
 spec:
   selector:
     app: stats-client
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 9090

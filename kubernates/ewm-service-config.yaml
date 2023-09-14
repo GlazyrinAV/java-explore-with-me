@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: ewm-service-config
 data:
-  ewm_service_url: 'ewm-service'
-  stats_client_url: 'stats-service'
+  ewm_service_url: 'http://ewm-service:8081'
+  stats_client_url: 'http://stats-client:9090'
