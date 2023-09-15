@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 @JsonTest
-public class UserDtoTests {
+class UserDtoTests {
 
     @Autowired
     private JacksonTester<UserDto> json;

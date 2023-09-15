@@ -11,7 +11,7 @@ import ru.practicum.statsclient.dto.StatsDto;
 import java.io.IOException;
 
 @JsonTest
-public class StatsDtoTests {
+class StatsDtoTests {
 
     @Autowired
     private JacksonTester<StatsDto> json;

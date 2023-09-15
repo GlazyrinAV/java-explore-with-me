@@ -11,7 +11,7 @@ import ru.practicum.ewmclient.model.LocationDto;
 import java.io.IOException;
 
 @JsonTest
-public class LocationDtoTests {
+class LocationDtoTests {
 
     @Autowired
     private JacksonTester<LocationDto> json;

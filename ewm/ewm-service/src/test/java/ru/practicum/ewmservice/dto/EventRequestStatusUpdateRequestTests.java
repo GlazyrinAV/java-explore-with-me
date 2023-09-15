@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @JsonTest
-public class EventRequestStatusUpdateRequestTests {
+class EventRequestStatusUpdateRequestTests {
 
     @Autowired
     private JacksonTester<EventRequestStatusUpdateRequest> json;

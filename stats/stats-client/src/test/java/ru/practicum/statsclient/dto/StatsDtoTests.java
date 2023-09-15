@@ -10,7 +10,7 @@ import org.springframework.boot.test.json.JsonContent;
 import java.io.IOException;
 
 @JsonTest
-public class StatsDtoTests {
+class StatsDtoTests {
 
     @Autowired
     private JacksonTester<StatsDto> json;

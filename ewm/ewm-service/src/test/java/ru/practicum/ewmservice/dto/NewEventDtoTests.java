@@ -12,7 +12,7 @@ import ru.practicum.ewmclient.model.NewEventDto;
 import java.io.IOException;
 
 @JsonTest
-public class NewEventDtoTests {
+class NewEventDtoTests {
 
     @Autowired
     private JacksonTester<NewEventDto> json;

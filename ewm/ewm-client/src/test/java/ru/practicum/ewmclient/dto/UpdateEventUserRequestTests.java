@@ -12,7 +12,7 @@ import ru.practicum.ewmclient.model.UpdateEventUserRequest;
 import java.io.IOException;
 
 @JsonTest
-public class UpdateEventUserRequestTests {
+class UpdateEventUserRequestTests {
 
     @Autowired
     private JacksonTester<UpdateEventUserRequest> json;

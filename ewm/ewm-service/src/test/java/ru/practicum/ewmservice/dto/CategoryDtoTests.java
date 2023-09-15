@@ -11,7 +11,7 @@ import ru.practicum.ewmclient.model.CategoryDto;
 import java.io.IOException;
 
 @JsonTest
-public class CategoryDtoTests {
+class CategoryDtoTests {
 
     @Autowired
     private JacksonTester<CategoryDto> json;

@@ -14,7 +14,7 @@ import ru.practicum.ewmclient.model.UserDto;
 import java.io.IOException;
 
 @JsonTest
-public class EventDtoTests {
+class EventDtoTests {
 
     @Autowired
     private JacksonTester<EventDto> json;

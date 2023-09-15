@@ -11,7 +11,7 @@ import ru.practicum.ewmclient.model.MarkDto;
 import java.io.IOException;
 
 @JsonTest
-public class MarkDtoTests {
+class MarkDtoTests {
 
     @Autowired
     private JacksonTester<MarkDto> json;

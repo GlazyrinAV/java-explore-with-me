@@ -11,7 +11,7 @@ import ru.practicum.ewmclient.model.ParticipationRequestDto;
 import java.io.IOException;
 
 @JsonTest
-public class ParticipationRequestDtoTests {
+class ParticipationRequestDtoTests {
 
     @Autowired
     private JacksonTester<ParticipationRequestDto> json;

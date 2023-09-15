@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @JsonTest
-public class NewCompilationDtoTests {
+class NewCompilationDtoTests {
 
     @Autowired
     private JacksonTester<NewCompilationDto> json;

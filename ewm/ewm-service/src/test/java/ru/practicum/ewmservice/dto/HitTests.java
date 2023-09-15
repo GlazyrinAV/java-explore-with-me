@@ -11,7 +11,7 @@ import ru.practicum.ewmclient.model.Hit;
 import java.io.IOException;
 
 @JsonTest
-public class HitTests {
+class HitTests {
 
     @Autowired
     private JacksonTester<Hit> json;
