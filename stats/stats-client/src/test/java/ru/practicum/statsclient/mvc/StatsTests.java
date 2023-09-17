@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.statsclient.client.StatsClient;
 import ru.practicum.statsclient.controller.StatsController;
 import ru.practicum.statsclient.dto.StatsDto;
 
@@ -23,7 +24,7 @@ class StatsTests {
     ObjectMapper mapper;
 
     @MockBean
-    StatsController controller;
+    StatsClient client;
 
     @Autowired
     private MockMvc mvc;
@@ -42,6 +43,130 @@ class StatsTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void saveStatsErrorAppBlank() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("")
+                .ip("1.1.1.1")
+                .uri("test.ru")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsErrorAppNull() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .ip("1.1.1.1")
+                .uri("test.ru")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsIpBlank() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .ip("")
+                .uri("test.ru")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsIpNull() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .uri("test.ru")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsUriBlank() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .ip("1.1.1.1")
+                .uri("")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsUriNull() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .ip("1.1.1.1")
+                .timeStamp("2011-11-11 11:11")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsTimeStampBlank() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .ip("1.1.1.1")
+                .uri("test.ru")
+                .timeStamp("")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveStatsTimeStampNull() throws Exception {
+        StatsDto dto = StatsDto.builder()
+                .app("testApp")
+                .ip("1.1.1.1")
+                .uri("test.ru")
+                .build();
+        mvc.perform(post("/hit")
+                        .content(mapper.writeValueAsString(dto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
