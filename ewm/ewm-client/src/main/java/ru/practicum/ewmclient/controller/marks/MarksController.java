@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.marks.MarksClient;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -20,15 +21,15 @@ public class MarksController {
     private final MarksClient client;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Positive @PathVariable int userId,
-                                       @Positive @PathVariable int eventId,
+    public ResponseEntity<Object> save(@Positive @NotNull @PathVariable int userId,
+                                       @Positive @NotNull @PathVariable int eventId,
                                        @RequestParam int mark) {
         return client.save(userId, eventId, mark);
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> remove(@Positive @PathVariable int userId,
-                                         @Positive @PathVariable int eventId) {
+    public ResponseEntity<Object> remove(@Positive @NotNull @PathVariable int userId,
+                                         @Positive @NotNull @PathVariable int eventId) {
         return client.remove(userId, eventId);
     }
 

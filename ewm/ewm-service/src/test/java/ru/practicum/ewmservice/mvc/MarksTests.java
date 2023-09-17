@@ -1,4 +1,4 @@
-package ru.practicum.ewmclient.mvc;
+package ru.practicum.ewmservice.mvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -7,32 +7,31 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.ewmclient.client.compilation.CompilationPublicClient;
-import ru.practicum.ewmclient.controller.compilation.CompilationPublicController;
+import ru.practicum.ewmservice.controller.marks.MarkController;
+import ru.practicum.ewmservice.service.marks.MarkService;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = CompilationPublicController.class)
-class CompilationPublicTests {
+@WebMvcTest(controllers = MarkController.class)
+class MarksTests {
 
     @Autowired
     ObjectMapper mapper;
 
     @MockBean
-    CompilationPublicClient client;
+    MarkService service;
 
     @Autowired
     private MockMvc mvc;
 
     @Test
-    void findAllNormal() throws Exception {
-        mvc.perform(get("/compilations")
-                        .param("pinned", "TRUE")
-                        .param("from", "1")
-                        .param("size", "2")
+    void saveNormaL() throws Exception {
+        mvc.perform(post("/users/1/events/1/like")
+                        .param("mark", "5")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -40,10 +39,35 @@ class CompilationPublicTests {
     }
 
     @Test
-    void findAllNormalWithoutPinned() throws Exception {
-        mvc.perform(get("/compilations")
-                        .param("from", "1")
-                        .param("size", "2")
+    void saveWithoutMark() throws Exception {
+        mvc.perform(post("/users/1/events/1/like")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveUserIdNull() throws Exception {
+        mvc.perform(post("/users/a/events/1/like")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void saveEventIdNull() throws Exception {
+        mvc.perform(post("/users/1/events/a/like")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void removeNormal() throws Exception {
+        mvc.perform(delete("/users/1/events/1/like")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -51,44 +75,21 @@ class CompilationPublicTests {
     }
 
     @Test
-    void findAllNormalWithoutFrom() throws Exception {
-        mvc.perform(get("/compilations")
-                        .param("pinned", "TRUE")
-                        .param("size", "2")
+    void removeUserIdNull() throws Exception {
+        mvc.perform(delete("/users/a/events/1/like")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
-    void findAllNormalWithoutSize() throws Exception {
-        mvc.perform(get("/compilations")
-                        .param("pinned", "TRUE")
-                        .param("from", "1")
-                        .param("size", "2")
+    void removeEventIdNull() throws Exception {
+        mvc.perform(delete("/users/1/events/a/like")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void findAllNormalWithoutAll() throws Exception {
-        mvc.perform(get("/compilations")
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void findByIdNormal() throws Exception {
-        mvc.perform(get("/compilations/1")
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is4xxClientError());
     }
 
 }

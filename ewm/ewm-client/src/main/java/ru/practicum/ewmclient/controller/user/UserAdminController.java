@@ -10,6 +10,7 @@ import ru.practicum.ewmclient.client.user.UserAdminClient;
 import ru.practicum.ewmclient.model.UserDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -36,7 +37,7 @@ public class UserAdminController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> remove(@PathVariable int userId) {
+    public ResponseEntity<Object> remove(@NotNull @PathVariable int userId) {
         return client.remove(userId);
     }
 

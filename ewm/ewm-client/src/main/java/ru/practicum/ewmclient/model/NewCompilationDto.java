@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Data
@@ -17,6 +18,7 @@ public class NewCompilationDto {
     @NotBlank
     private String title;
 
+    @NotNull
     private Boolean pinned;
 
     Collection<Integer> events;

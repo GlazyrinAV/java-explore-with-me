@@ -1,4 +1,37 @@
 package ru.practicum.ewmservice.jpa;
 
-public class LocationTests {
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.jdbc.Sql;
+import ru.practicum.ewmservice.repository.LocationRepository;
+
+import javax.transaction.Transactional;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+@Sql(value = {"/schema.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+// @Sql(value = "/testData.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+class LocationTests {
+
+    @Autowired
+    private TestEntityManager em;
+
+    @Autowired
+    private LocationRepository repository;
+
+    @Test
+    void contextLoads() {
+        Assertions.assertNotNull(em);
+    }
+
+    @Test
+    void findByLatAndLon() {
+
+    }
+
 }
