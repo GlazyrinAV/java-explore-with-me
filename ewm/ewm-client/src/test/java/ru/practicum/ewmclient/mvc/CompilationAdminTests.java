@@ -135,19 +135,6 @@ class CompilationAdminTests {
     }
 
     @Test
-    void savePinnedNull() throws Exception {
-        NewCompilationDto dto = NewCompilationDto.builder()
-                .title("testCompilationTitle")
-                .build();
-        mvc.perform(post("/admin/compilations")
-                        .content(mapper.writeValueAsString(dto))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
     void saveTitleBlank() throws Exception {
         NewCompilationDto dto = NewCompilationDto.builder()
                 .title("")

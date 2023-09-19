@@ -42,11 +42,11 @@ public class StatsServiceImpl implements StatsService {
         if (startDto.isAfter(endDto)) {
             throw new BadParameter("Дата начала не может быть позже конца.");
         }
-        if (!uris.isEmpty() && !unique) {
+        if (uris != null && !unique) {
             return repository.findAllStatsWithUris(start, end, uris);
-        } else if (uris.isEmpty() && !unique){
+        } else if (uris == null && !unique){
             return repository.findAllStatsWithoutUris(start, end);
-        } else if (!uris.isEmpty()) {
+        } else if (uris == null) {
             return repository.findAllUniqueStatsWithoutUris(start, end);
         } else {
             return repository.findAllUniqueStatsWithUris(start, end, uris);

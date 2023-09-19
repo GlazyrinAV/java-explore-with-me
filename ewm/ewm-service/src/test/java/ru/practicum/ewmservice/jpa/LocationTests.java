@@ -7,15 +7,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.jdbc.Sql;
+import ru.practicum.ewmservice.model.Location;
 import ru.practicum.ewmservice.repository.LocationRepository;
-
-import javax.transaction.Transactional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional
 @Sql(value = {"/schema.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-// @Sql(value = "/testData.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/testData.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class LocationTests {
 
     @Autowired
@@ -31,7 +29,16 @@ class LocationTests {
 
     @Test
     void findByLatAndLon() {
+        Location location = repository.findByLatAndLon(20.20, 30.30);
+        Assertions.assertEquals(2, location.getId());
+        Assertions.assertEquals(20.20, location.getLat());
+        Assertions.assertEquals(30.30, location.getLon());
+    }
 
+    @Test
+    void findByLatAndLonNull() {
+        Location location = repository.findByLatAndLon(90.20, 90.30);
+        Assertions.assertNull(location);
     }
 
 }

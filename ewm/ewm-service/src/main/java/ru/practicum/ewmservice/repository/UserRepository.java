@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByName(String name);
 
-    @Query("FROM User AS U WHERE (:ids is null or U.id in :ids)")
+    @Query("FROM User AS U WHERE ((:ids) is null or U.id in (:ids))")
     Page<User> findAllAdminWithCriteria(Pageable page,
                                         Collection<Integer> ids);
 
