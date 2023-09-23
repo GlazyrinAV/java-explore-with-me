@@ -31,5 +31,6 @@ INSERT INTO compilation_events (compilation_id, event_id) VALUES (1, 2);
 
 INSERT INTO participation_requests (event_id, requester, created, status) VALUES (2, 2, '2001-01-04 10:00', 'PENDING');
 INSERT INTO participation_requests (event_id, requester, created, status) VALUES (2, 3, '2001-01-04 10:00', 'CONFIRMED');
+INSERT INTO participation_requests (event_id, requester, created, status) VALUES (2, 6, '2001-01-04 10:00', 'CONFIRMED');
 
 INSERT INTO marks (user_id, event_id, mark) VALUES (3, 2, 5);

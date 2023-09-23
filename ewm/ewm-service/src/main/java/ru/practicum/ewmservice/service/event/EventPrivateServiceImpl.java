@@ -142,8 +142,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                 event.setState(EventState.PENDING);
             } else if (StateAction.valueOf(dto.getStateAction()).equals(StateAction.CANCEL_REVIEW)) {
                 event.setState(EventState.CANCELED);
-            } else {
-                throw new WrongParameter("Указано недопустимое состояние.");
             }
         }
 
@@ -162,13 +160,15 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             throw new NoConfirmationNeeded();
         }
 
-        if (RequestStatus.valueOf(dto.getStatus()).equals(RequestStatus.REJECTED)) {
+        if (RequestStatus.from(dto.getStatus()).isPresent()
+                && RequestStatus.valueOf(dto.getStatus()).equals(RequestStatus.REJECTED)) {
             return rejectRequest(dto.getRequestIds());
         }
 
         checkEventLimit(event);
 
-        if (RequestStatus.valueOf(dto.getStatus()).equals(RequestStatus.CONFIRMED)) {
+        if (RequestStatus.from(dto.getStatus()).isPresent() &&
+                RequestStatus.valueOf(dto.getStatus()).equals(RequestStatus.CONFIRMED)) {
             return confirmRequest(event, dto.getRequestIds());
         }
 

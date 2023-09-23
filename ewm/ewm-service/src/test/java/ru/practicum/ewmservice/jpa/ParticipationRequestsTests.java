@@ -37,7 +37,7 @@ class ParticipationRequestsTests {
         Collection<ParticipationRequest> requests = repository.findByEventId(2);
         List<ParticipationRequest> result = new ArrayList<>(requests);
 
-        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals(3, result.size());
 
         Assertions.assertEquals(1, result.get(0).getId());
         Assertions.assertEquals("User(id=2, name=USER2, email=email2@mail.ru)", result.get(0).getRequester().toString());
@@ -57,15 +57,26 @@ class ParticipationRequestsTests {
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
-                result.get(0).getEvent().toString());
+                result.get(1).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(1).getCreated().toString());
         Assertions.assertEquals(RequestStatus.CONFIRMED, result.get(1).getStatus());
+
+        Assertions.assertEquals(3, result.get(2).getId());
+        Assertions.assertEquals("User(id=6, name=USER6, email=email6@mail.ru)", result.get(2).getRequester().toString());
+        Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
+                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
+                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                result.get(2).getEvent().toString());
+        Assertions.assertEquals("2001-01-04T10:00", result.get(2).getCreated().toString());
+        Assertions.assertEquals(RequestStatus.CONFIRMED, result.get(2).getStatus());
     }
 
     @Test
     void findConfirmedRequests() {
         int result = repository.findConfirmedRequests(2);
-        Assertions.assertEquals(1, result);
+        Assertions.assertEquals(2, result);
     }
 
     @Test
