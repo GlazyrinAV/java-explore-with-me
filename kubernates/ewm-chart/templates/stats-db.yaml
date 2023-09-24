@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-stats-db-deployment
+  labels:
+    app: stats-db
+spec:
+  replicas: {{ .Values.stats.replicaCount }}
+  selector:
+    matchLabels:
+      app: stats-db
+  template:
+    metadata:
+      labels:
+        app: stats-db
+    spec:
+      containers:
+        - name: stats-db
+          image: {{ .Values.stats.dbImage }}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: username
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: stats-db-secret
+                  key: dbname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stats-db
+spec:
+  selector:
+    app: stats-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
