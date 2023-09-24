@@ -1,0 +1,11 @@
+ewm:
+   dbImage: postgres:14-alpine
+   serviceImage: glazyrinalexey/java-explore-with-me-ewm-service:v2
+   clientImage: glazyrinalexey/java-explore-with-me-ewm-client:v2
+   replicaCount: 1
+
+stats:
+   dbImage: postgres:14-alpine
+   serviceImage: glazyrinalexey/stats-service:v2
+   clientImage: glazyrinalexey/stats-client:v2
+   replicaCount: 1
