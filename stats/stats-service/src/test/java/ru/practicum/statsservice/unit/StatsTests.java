@@ -42,7 +42,7 @@ class StatsTests {
                 .timeStamp("2011-11-11 11:11")
                 .build();
         JsonNode node = mapper.valueToTree(statsDto);
-        Stats stats = new Stats(0, LocalDateTime.of(2011, 11, 11, 11, 11), node);
+        Stats stats = new Stats(0, "appTest", LocalDateTime.of(2011, 11, 11, 11, 11), node);
         when(mockMapper.fromDto(any()))
                 .thenReturn(stats);
         service.saveStats(node);

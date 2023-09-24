@@ -15,13 +15,14 @@ public class MarkId implements Serializable {
         this.eventId = eventId;
     }
 
+    public MarkId() {
+
+    }
+
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
     @Column(name = "event_id", nullable = false)
     private Integer eventId;
 
-    public MarkId() {
-
-    }
 }

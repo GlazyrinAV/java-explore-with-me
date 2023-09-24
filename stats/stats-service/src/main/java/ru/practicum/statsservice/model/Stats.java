@@ -26,6 +26,9 @@ public class Stats implements Serializable {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "app")
+    private String app;
+
     @Column(name = "timestamp")
     @JsonProperty("timestamp")
     private LocalDateTime timeStamp;

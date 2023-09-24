@@ -17,7 +17,7 @@ public class StatsClient extends BaseClient {
     public void sendHit(HttpServletRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Hit hit = Hit.builder()
-                .app("ewm-main")
+                .app("ewm-main-service")
                 .ip(request.getRemoteAddr())
                 .uri(request.getRequestURI())
                 .timeStamp(LocalDateTime.now().format(formatter))
