@@ -25,8 +25,8 @@ public class CategoryPublicController {
         return client.findAll(from, size);
     }
 
-    @GetMapping("{catId}")
-    public ResponseEntity<Object> findById(@Positive @PathVariable int catId) {
+    @GetMapping("/{catId}")
+    public ResponseEntity<Object> findById(@PathVariable int catId) {
         return client.findById(catId);
     }
 

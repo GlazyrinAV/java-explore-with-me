@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.requests.ParticipationRequestsPrivateClient;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -21,19 +22,19 @@ public class ParticipationRequestsPrivateController {
     private final ParticipationRequestsPrivateClient client;
 
     @PostMapping
-    public ResponseEntity<Object> save(@Positive @PathVariable int userId,
-                                       @PositiveOrZero @RequestParam int eventId) {
+    public ResponseEntity<Object> save(@Positive @NotNull @PathVariable int userId,
+                                       @PositiveOrZero @NotNull @RequestParam int eventId) {
         return client.save(userId, eventId);
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAll(@Positive @PathVariable int userId) {
+    public ResponseEntity<Object> findAll(@Positive @NotNull @PathVariable int userId) {
         return client.findAll(userId);
     }
 
     @PatchMapping("/{requestId}/cancel")
-    public ResponseEntity<Object> cancel(@Positive @PathVariable int userId,
-                                         @Positive @PathVariable int requestId) {
+    public ResponseEntity<Object> cancel(@Positive @NotNull @PathVariable int userId,
+                                         @Positive @NotNull @PathVariable int requestId) {
         return client.cancel(userId, requestId);
     }
 

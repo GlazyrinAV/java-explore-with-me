@@ -10,6 +10,8 @@ import ru.practicum.statsclient.client.StatsClient;
 import ru.practicum.statsclient.dto.StatsDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,15 +27,15 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<Object> findStats(@RequestParam String start,
-                                            @RequestParam String end,
+    public ResponseEntity<Object> findStats(@RequestParam @NotBlank String start,
+                                            @RequestParam @NotBlank String end,
                                             @RequestParam(required = false) String[] uris,
                                             @RequestParam(required = false, defaultValue = "false") boolean unique) {
         return statsClient.findStats(start, end, uris, unique);
     }
 
     @GetMapping("/stats/{eventId}")
-    public ResponseEntity<Object> findStats(@PathVariable int eventId) {
+    public ResponseEntity<Object> findStats(@PathVariable @NotNull int eventId) {
         return statsClient.findStatsForEwm(eventId);
     }
 

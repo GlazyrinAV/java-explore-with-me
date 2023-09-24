@@ -12,6 +12,7 @@ import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmclient.model.UpdateEventUserRequest;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -26,7 +27,7 @@ public class EventPrivateController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid NewEventDto dto,
-                                       @PathVariable int userId) {
+                                       @NotNull @PathVariable int userId) {
         return client.save(dto, userId);
     }
 
@@ -38,7 +39,7 @@ public class EventPrivateController {
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Object> findById(@Positive @PathVariable int userId,
+    public ResponseEntity<Object> findById(@Positive @NotNull @PathVariable int userId,
                                            @Positive @PathVariable int eventId) {
         return client.findById(userId, eventId);
     }

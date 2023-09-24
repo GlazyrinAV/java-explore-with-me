@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventPublicClient;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -37,7 +38,7 @@ public class EventPublicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@Positive @PathVariable int id, HttpServletRequest request) {
+    public ResponseEntity<Object> findById(@Positive @NotNull @PathVariable int id, HttpServletRequest request) {
         return client.findById(id, request);
     }
 
