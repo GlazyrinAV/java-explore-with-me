@@ -5,13 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import ru.practicum.ewmservice.service.event.EventPrivateService;
-import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
-
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -21,14 +16,8 @@ class EventPrivateTests {
 
     private final EventPrivateService service;
 
-    @MockBean
-    private final StatsRequestService statsRequestService;
-
     @Test
     void findAllByUserId() {
-        when(statsRequestService.getViews(anyInt()))
-                .thenReturn(0);
-
         Assertions.assertEquals("[EventDto(id=1, title=title1, annotation=annotation of event 1, " +
                         "initiator=UserDto(id=1, name=USER1, email=email1@mail.ru, mark=5.0), confirmedRequests=0, " +
                         "category=CategoryDto(id=1, name=category1), createdOn=2001-01-01 10:00:00, " +

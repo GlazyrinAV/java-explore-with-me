@@ -1,7 +1,10 @@
 package ru.practicum.ewmservice.service.statsrequest;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
+
 public interface StatsRequestService {
 
-    int getViews(int eventId);
+    void updateViews(Collection<LinkedHashMap<String, Object>> viewsData);
 
 }

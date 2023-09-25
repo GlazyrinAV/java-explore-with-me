@@ -5,15 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import ru.practicum.ewmservice.service.event.EventAdminService;
-import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
 
 import java.util.List;
-
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -23,14 +18,8 @@ class EventAdminTests {
 
     private final EventAdminService service;
 
-    @MockBean
-    private final StatsRequestService statsRequestService;
-
     @Test
     void findAll() {
-        when(statsRequestService.getViews(anyInt()))
-                .thenReturn(0);
-
         Assertions.assertEquals("[EventDto(id=3, title=title3, annotation=annotation of event 3, " +
                 "initiator=UserDto(id=3, name=USER3, email=email3@mail.ru, mark=null), confirmedRequests=0, " +
                 "category=CategoryDto(id=2, name=category2), createdOn=2001-01-03 10:00:00, " +

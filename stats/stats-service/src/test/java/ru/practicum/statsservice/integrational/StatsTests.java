@@ -21,9 +21,4 @@ class StatsTests {
         Assertions.assertEquals(3, service.findStats("2000-01-01 11:11:11", "2002-01-01 11:11:11", null, true).size());
     }
 
-    @Test
-    void findStatsForEwmNormal() {
-        Assertions.assertEquals(2, service.findStatsForEwm(1));
-    }
-
 }

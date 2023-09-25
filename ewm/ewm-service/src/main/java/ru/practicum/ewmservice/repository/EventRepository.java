@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ru.practicum.ewmservice.model.Event;
 
@@ -49,7 +50,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
             "or E.participantLimit > (SELECT count (PR.id) FROM PR WHERE PR.status = 'CONFIRMED' AND PR.event.id = E.id))) " +
             "AND (E.state = 'PUBLISHED') " +
             "AND ((:rangeStart is not null or :rangeEnd is not null) or (E.eventDate >= now()) ) " +
-            "GROUP BY E")
+            "GROUP BY E ORDER BY E.views DESC ")
     Page<Event> findAllPublicWithCriteria(Pageable page,
                                           String text,
                                           Collection<Integer> categories,
@@ -103,5 +104,9 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
                                                   String rangeStart,
                                                   String rangeEnd,
                                                   Boolean onlyAvailable);
+
+    @Modifying
+    @Query("UPDATE Event AS E SET E.views = :views WHERE E.id = :eventId")
+    void updateViews(int eventId, int views);
 
 }

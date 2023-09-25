@@ -3,8 +3,11 @@ package ru.practicum.statsservice.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.statsclient.dto.ViewDataDto;
 import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.exception.BadParameter;
 import ru.practicum.statsservice.model.Mapper;
@@ -15,11 +18,10 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
 
     private final
@@ -28,6 +30,8 @@ public class StatsServiceImpl implements StatsService {
     private final Mapper mapper;
 
     private final DateTimeFormatter formatter;
+
+    private final KafkaTemplate<String, Collection<ViewDataDto>> kafkaTemplate;
 
     @Override
     @Transactional
@@ -53,10 +57,10 @@ public class StatsServiceImpl implements StatsService {
         }
     }
 
-    @Override
-    public Integer findStatsForEwm(int eventId) {
-        Integer hits = repository.findStatsForEwm("/events/" + eventId);
-        return Objects.requireNonNullElse(hits, 0);
+    @Scheduled(fixedRate = 900)
+    public void updateViews() {
+        Collection<ViewDataDto> viewsData = repository.updateViews();
+        kafkaTemplate.send("ewm.views.update", viewsData);
     }
 
 }

@@ -47,7 +47,7 @@ class CompilationTests {
                         "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}]",
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}]",
                 result.get(0).getEvents().toString());
         Assertions.assertTrue(result.get(0).isPinned());
     }

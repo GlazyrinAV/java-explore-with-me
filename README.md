@@ -89,6 +89,7 @@ API для администратора:
 - Spring JPA / Hibernate
 - Docker
 - Kubernetes / Helm
+- Kafka
 
 [back to table of content](#explore-with-me)
 

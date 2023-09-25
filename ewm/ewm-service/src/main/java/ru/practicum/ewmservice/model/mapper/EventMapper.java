@@ -11,7 +11,6 @@ import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
 import ru.practicum.ewmservice.repository.MarkRepository;
 import ru.practicum.ewmservice.repository.ParticipationRequestsRepository;
-import ru.practicum.ewmservice.service.statsrequest.StatsRequestService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,8 +34,6 @@ public class EventMapper {
     private final ParticipationRequestsRepository requestsRepository;
 
     private final MarkRepository markRepository;
-
-    private final StatsRequestService service;
 
     private final DateTimeFormatter formatter;
 
@@ -101,7 +98,7 @@ public class EventMapper {
                 .requestModeration(event.isRequestModeration())
                 .state(event.getState().name())
                 .title(event.getTitle())
-                .views(service.getViews(event.getId()))
+                .views(event.getViews())
                 .build();
 
         Double mark = markRepository.findMarkForEvent(event.getId());
@@ -122,7 +119,7 @@ public class EventMapper {
                 .initiator(userMapper.toShortDto(event.getInitiator()))
                 .paid(event.isPaid())
                 .title(event.getTitle())
-                .views(service.getViews(event.getId()))
+                .views(event.getViews())
                 .build();
 
         Double mark = markRepository.findMarkForEvent(event.getId());

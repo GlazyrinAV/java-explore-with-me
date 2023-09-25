@@ -241,22 +241,4 @@ class StatsTests {
                 .andExpect(status().is4xxClientError());
     }
 
-    @Test
-    void findStatsForEwmNormal() throws Exception {
-        mvc.perform(get("/stats/1")
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    void findStatsForEwmIdNull() throws Exception {
-        mvc.perform(get("/stats/")
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
-    }
-
 }

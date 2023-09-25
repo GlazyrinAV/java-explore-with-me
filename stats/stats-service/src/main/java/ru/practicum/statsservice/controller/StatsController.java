@@ -41,9 +41,4 @@ public class StatsController {
         return service.findStats(startDto, endDto, urisDto, unique);
     }
 
-    @GetMapping("/stats/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
-    public Integer findStatsForEwm(@PathVariable int eventId) {
-        return service.findStatsForEwm(eventId);
-    }
 }
