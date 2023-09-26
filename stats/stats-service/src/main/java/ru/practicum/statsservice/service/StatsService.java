@@ -11,6 +11,6 @@ public interface StatsService {
 
     Collection<ViewStatsDto> findStats(String start, String end, Collection<String> uris, boolean unique);
 
-    Integer findStatsForEwm(int eventId);
+    void updateViews();
 
 }

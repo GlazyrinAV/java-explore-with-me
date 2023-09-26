@@ -45,7 +45,7 @@ class ParticipationRequestsTests {
                 "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                 "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                 "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(0).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(0).getCreated().toString());
         Assertions.assertEquals(RequestStatus.PENDING, result.get(0).getStatus());
@@ -56,7 +56,7 @@ class ParticipationRequestsTests {
                         "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(1).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(1).getCreated().toString());
         Assertions.assertEquals(RequestStatus.CONFIRMED, result.get(1).getStatus());
@@ -67,7 +67,7 @@ class ParticipationRequestsTests {
                         "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(2).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(2).getCreated().toString());
         Assertions.assertEquals(RequestStatus.CONFIRMED, result.get(2).getStatus());
@@ -92,7 +92,7 @@ class ParticipationRequestsTests {
                         "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(0).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(0).getCreated().toString());
         Assertions.assertEquals(RequestStatus.PENDING, result.get(0).getStatus());
@@ -120,7 +120,7 @@ class ParticipationRequestsTests {
                         "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
                         "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED}",
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.getCreated().toString());
         Assertions.assertEquals(RequestStatus.CONFIRMED, result.getStatus());

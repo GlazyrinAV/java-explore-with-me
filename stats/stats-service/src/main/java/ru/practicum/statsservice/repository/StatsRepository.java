@@ -2,6 +2,7 @@ package ru.practicum.statsservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import ru.practicum.statsclient.dto.ViewDataDto;
 import ru.practicum.statsclient.dto.ViewStatsDto;
 import ru.practicum.statsservice.model.Stats;
 
@@ -51,5 +52,12 @@ public interface StatsRepository extends JpaRepository<Stats, Integer> {
             "FROM Stats AS S " +
             "WHERE FUNCTION('jsonb_extract_path_text', S.additionalProps, 'uri') in (:uri) ")
     Integer findStatsForEwm(String uri);
+
+    @Query("SELECT REPLACE (FUNCTION('jsonb_extract_path_text', S.additionalProps, 'uri'), '/events/', '' ) AS uri, " +
+            "COUNT (distinct (FUNCTION('jsonb_extract_path_text', S.additionalProps, 'ip'))) AS hits " +
+            "FROM Stats AS S " +
+            "WHERE (FUNCTION('jsonb_extract_path_text', S.additionalProps, 'uri') like ('/events/%')) " +
+            "GROUP BY uri")
+    Collection<ViewDataDto> updateViews();
 
 }

@@ -1,49 +1,27 @@
 package ru.practicum.ewmservice.service.statsrequest;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewmservice.repository.EventRepository;
 
-import java.io.IOException;
+import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 @Service
+@RequiredArgsConstructor
 public class StatsRequestServiceImpl implements StatsRequestService {
 
-    @Value("${stats-client.url}")
-    private String serverUrl;
+    private final EventRepository repository;
 
-    @Override
-    public int getViews(int eventId) {
-
-        String path = "/stats/" + eventId;
-
-        HttpGet httpget = new HttpGet(serverUrl + path);
-
-        ResponseHandler<String> responseHandler = response -> {
-            int status = response.getStatusLine().getStatusCode();
-            if (status >= 200 && status < 300) {
-                HttpEntity entity = response.getEntity();
-                return entity != null ? EntityUtils.toString(entity) : null;
-            } else {
-                throw new ClientProtocolException("Unexpected response status: " + status);
-            }
-        };
-
-        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            String responseBody = httpclient.execute(httpget, responseHandler);
-            if (responseBody.isBlank()) {
-                return 0;
-            } else {
-                return Integer.parseInt(responseBody);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException();
+    @Transactional
+    @KafkaListener(topics = "ewm.views.update", groupId = "ewmGroup")
+    public void updateViews(Collection<LinkedHashMap<String, Object> > viewsData) {
+        for (LinkedHashMap<String, Object> element : viewsData) {
+                int eventId = Integer.parseInt(element.get("uri").toString());
+                int views = (Integer) element.get("hits");
+                repository.updateViews(eventId, views);
         }
     }
 

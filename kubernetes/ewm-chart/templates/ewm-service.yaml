@@ -45,6 +45,16 @@ spec:
                 configMapKeyRef:
                   name: ewm-service-config
                   key: stats_client_url
+            - name: spring_kafka_bootstrap_servers
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: spring_kafka_bootstrap_servers
+            - name: spring_kafka_consumer_group_id
+              valueFrom:
+                configMapKeyRef:
+                  name: ewm-service-config
+                  key: spring_kafka_consumer_group_id
 ---
 apiVersion: v1
 kind: Service

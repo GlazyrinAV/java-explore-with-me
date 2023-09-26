@@ -65,6 +65,9 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventState state;
 
+    @Column(name = "views")
+    private int views;
+
     @OneToMany(mappedBy = "event")
     private Collection<ParticipationRequest> requests;
 
@@ -88,6 +91,7 @@ public class Event {
                 ", publishedOn=" + publishedOn +
                 ", requestModeration=" + requestModeration +
                 ", state=" + state +
+                ", views=" + views +
                 '}';
     }
 

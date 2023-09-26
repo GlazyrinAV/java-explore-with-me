@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ewm-client
-          image: glazyrinalexey/java-explore-with-me-ewm-client:v2
+          image: glazyrinalexey/java-explore-with-me-ewm-client:v3
           ports:
             - containerPort: 8080
           env:

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.kafka.core.KafkaTemplate;
 import ru.practicum.statsclient.dto.StatsDto;
+import ru.practicum.statsclient.dto.ViewDataDto;
 import ru.practicum.statsservice.exception.BadParameter;
 import ru.practicum.statsservice.model.Mapper;
 import ru.practicum.statsservice.model.Stats;
@@ -15,6 +17,7 @@ import ru.practicum.statsservice.service.StatsServiceImpl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -27,9 +30,11 @@ class StatsTests {
 
     private final Mapper mockMapper = Mockito.mock(Mapper.class);
 
+    private final KafkaTemplate<String, Collection<ViewDataDto>> mockKafkaTemplate = Mockito.mock(KafkaTemplate.class);
+
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private final StatsService service = new StatsServiceImpl(mockStatsRepository, mockMapper, formatter);
+    private final StatsService service = new StatsServiceImpl(mockStatsRepository, mockMapper, formatter, mockKafkaTemplate);
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -92,20 +97,6 @@ class StatsTests {
         BadParameter exception = Assertions.assertThrows(BadParameter.class,
                 () -> service.findStats(end, start, null, false));
         Assertions.assertEquals("Дата начала не может быть позже конца.", exception.getMessage());
-    }
-
-    @Test
-    void findStatsForEwm() {
-        when(mockStatsRepository.findStatsForEwm(any()))
-                .thenReturn(1);
-        Assertions.assertEquals(1, service.findStatsForEwm(1));
-    }
-
-    @Test
-    void findStatsForEwmNull() {
-        when(mockStatsRepository.findStatsForEwm(any()))
-                .thenReturn(null);
-        Assertions.assertEquals(0, service.findStatsForEwm(1));
     }
 
 }

@@ -20,7 +20,6 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,7 +64,8 @@ public class EventPublicServiceImpl implements EventPublicService {
             } else {
                 return repository.findAllPublicWithCriteria(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)
                         .stream()
-                        .map(mapper::toDto).sorted(Comparator.comparing(EventDto::getViews).reversed()).collect(Collectors.toList());
+                        .map(mapper::toDto)
+                        .collect(Collectors.toList());
             }
         }
         return repository.findAllPublicWithCriteriaSortMark(page, text, categories, paid, rangeStart, rangeEnd, onlyAvailable)

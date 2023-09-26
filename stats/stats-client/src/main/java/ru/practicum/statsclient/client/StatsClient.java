@@ -31,11 +31,4 @@ public class StatsClient extends BaseClient {
         return get(path, parameters);
     }
 
-    public ResponseEntity<Object> findStatsForEwm(int eventId) {
-        Map<String, Object> parameters = Map.of(
-                "eventId", eventId
-        );
-        return get("/stats/{eventId}", parameters);
-    }
-
 }

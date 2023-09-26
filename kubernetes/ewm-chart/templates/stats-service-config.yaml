@@ -5,3 +5,4 @@ metadata:
 data:
   stats_service_url: 'http://stats-service:9091'
   ewm_service_url: 'http://ewm-service:8081'
+  spring_kafka_bootstrap_servers: "http://kafka-broker:9092"

@@ -59,7 +59,8 @@ create table if not exists event
     participant_limit  integer default 0,
     published_on       timestamp,
     request_moderation boolean default true,
-    state              varchar(255)          not null
+    state              varchar(255)          not null,
+    views              integer default 0
 );
 
 create table if not exists compilation
