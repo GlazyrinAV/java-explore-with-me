@@ -40,6 +40,11 @@ spec:
                 configMapKeyRef:
                   name: stats-db-config
                   key: SPRING_DATASOURCE_URL
+            - name: spring_kafka_bootstrap_servers
+              valueFrom:
+                configMapKeyRef:
+                  name: stats-service-config
+                  key: spring_kafka_bootstrap_servers
 ---
 apiVersion: v1
 kind: Service

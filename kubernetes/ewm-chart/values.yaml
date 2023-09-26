@@ -1,11 +1,16 @@
 ewm:
    dbImage: postgres:14-alpine
-   serviceImage: glazyrinalexey/java-explore-with-me-ewm-service:v2
-   clientImage: glazyrinalexey/java-explore-with-me-ewm-client:v2
+   serviceImage: glazyrinalexey/java-explore-with-me-ewm-service:v3
+   clientImage: glazyrinalexey/java-explore-with-me-ewm-client:v3
    replicaCount: 1
 
 stats:
    dbImage: postgres:14-alpine
-   serviceImage: glazyrinalexey/stats-service:v2
-   clientImage: glazyrinalexey/stats-client:v2
+   serviceImage: glazyrinalexey/stats-service:v3
+   clientImage: glazyrinalexey/stats-client:v3
+   replicaCount: 1
+
+kafka:
+   kafkaImage: wurstmeister/kafka
+   zookeeperImage: wurstmeister/zookeeper
    replicaCount: 1

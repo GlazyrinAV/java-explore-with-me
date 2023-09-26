@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: stats-client
-          image: glazyrinalexey/stats-client:v2
+          image: glazyrinalexey/stats-client:v3
           ports:
             - containerPort: 9090
           env:

@@ -12,6 +12,7 @@
     * [Kubernetes](#kubernetes)
     * [Helm chart](#helm-chart)
   * [Description of feature](#description-of-feature)
+  * [Tests](#tests)
 <!-- TOC -->
 
 ## Description
@@ -116,7 +117,13 @@ kubectl apply -f ewm-db-config.yaml
 
 kubectl apply -f ewm-service-config.yaml     
 
+kubectl apply -f kafka-config.yaml
+
 kubectl apply -f ewm-db-secret.yaml
+
+kubectl apply -f zookeeper.yaml
+
+kubectl apply -f kafka.yaml
 
 kubectl apply -f ewm-db.yaml
 
@@ -190,5 +197,13 @@ DELETE: /users/{userId}/events/{eventId}/like
 - если удалено - 204
 - если оценки не существует - 404
 - если ошибка в юзере, событии - 404
+
+[back to table of content](#explore-with-me)
+
+## Tests
+
+Проверка работоспособности программы осуществлялась за счет unit test, mvc test, dto test, jpa test, интеграционного тестирования.
+
+Также в паке postman выложены тесты для [Postman](https://www.postman.com/)
 
 [back to table of content](#explore-with-me)

@@ -5,3 +5,5 @@ metadata:
 data:
   ewm_service_url: 'http://ewm-service:8081'
   stats_client_url: 'http://stats-client:9090'
+  spring_kafka_bootstrap_servers: "http://kafka-broker:9092"
+  spring_kafka_consumer_group_id: "ewmGroup"
