@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "super_admin_username",
+      "type": "java.lang.String",
+      "description": "Username for super admin user."
+    },
+    {
+      "name": "super_admin_password",
+      "type": "java.lang.String",
+      "description": "Password for super admin user."
+    },
+    {
+      "name": "stats_super_admin_username",
+      "type": "java.lang.String",
+      "description": "Username for Stats super admin user."
+    },
+    {
+      "name": "stats_super_admin_password",
+      "type": "java.lang.String",
+      "description": "Password for Stats super admin user."
+    }
+  ] }
