@@ -11,7 +11,8 @@ create table if not exists users
     email varchar(254) not null
         unique
         constraint check_email
-            check (length((email)::text) > 5)
+            check (length((email)::text) > 5),
+    role varchar(255) default 'role_authorized_user'
 );
 
 create table if not exists category
