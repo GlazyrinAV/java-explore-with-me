@@ -27,6 +27,6 @@ public class User {
     private String email;
 
     @Column(name = "role")
-    private String roles;
+    private String role;
 
 }

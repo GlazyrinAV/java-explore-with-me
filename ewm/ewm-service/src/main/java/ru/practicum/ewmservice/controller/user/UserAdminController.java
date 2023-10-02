@@ -38,4 +38,10 @@ public class UserAdminController {
         service.remove(userId);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.FOUND)
+    public UserDto findByName(@RequestParam String user) {
+        return service.findRoleOfUserByName(user);
+    }
+
 }

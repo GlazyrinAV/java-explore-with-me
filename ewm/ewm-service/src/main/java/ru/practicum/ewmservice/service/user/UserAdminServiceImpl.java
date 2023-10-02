@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmclient.model.UserDto;
 import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
+import ru.practicum.ewmservice.model.User;
 import ru.practicum.ewmservice.model.mapper.UserMapper;
 import ru.practicum.ewmservice.repository.UserRepository;
 
@@ -46,6 +47,15 @@ public class UserAdminServiceImpl implements UserAdminService {
     public void remove(int userId) {
         userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId));
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDto findRoleOfUserByName(String name) {
+        User user = userRepository.findByName(name);
+        if (user == null) {
+            return null;
+        }
+        return mapper.toDtoRole(user);
     }
 
 }

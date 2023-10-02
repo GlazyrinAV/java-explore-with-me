@@ -40,4 +40,11 @@ public class UserAdminClient extends BaseClient {
         return delete("/{userId}", parameters);
     }
 
+    private ResponseEntity<Object> findRoleByUserName(String name) {
+        Map<String, Object> parameters = Map.of(
+                "user", name
+        );
+        return get("?user={user}", parameters);
+    }
+
 }

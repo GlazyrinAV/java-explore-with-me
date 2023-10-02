@@ -29,4 +29,6 @@ public class UserDto {
 
     private BigDecimal mark;
 
+    private String role;
+
 }
