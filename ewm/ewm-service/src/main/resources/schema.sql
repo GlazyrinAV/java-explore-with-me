@@ -12,7 +12,9 @@ create table if not exists users
         unique
         constraint check_email
             check (length((email)::text) > 5),
-    role varchar(255) default 'role_authorized_user'
+    role  varchar(255) default 'role_authorized_user'::character varying
+        constraint users_user_roles_role_name_fk
+            references public.user_roles
 );
 
 create table if not exists category
@@ -114,3 +116,13 @@ create table if not exists marks
     constraint marks_pk
         primary key (user_id, event_id)
 );
+
+create table if not exists user_roles
+(
+    role_name varchar not null
+        constraint "User_roles_pk2"
+            primary key
+);
+
+insert into user_roles (role_name) values ('role_admin');
+insert into user_roles (role_name) values ('role_authorized_user');
