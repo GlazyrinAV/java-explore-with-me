@@ -1,5 +1,15 @@
 drop table if exists event, users, category, event, locations, compilation,
-    compilation_events, participation_requests, marks;
+    compilation_events, participation_requests, marks, user_roles;
+
+create table if not exists user_roles
+(
+    role_name varchar not null
+        constraint "User_roles_pk2"
+            primary key
+);
+
+insert into user_roles (role_name) values ('role_admin');
+insert into user_roles (role_name) values ('role_authorized_user');
 
 create table if not exists users
 (
@@ -14,7 +24,8 @@ create table if not exists users
             check (length((email)::text) > 5),
     role  varchar(255) default 'role_authorized_user'::character varying
         constraint users_user_roles_role_name_fk
-            references public.user_roles
+            references user_roles,
+    password varchar(255) not null
 );
 
 create table if not exists category
@@ -46,10 +57,10 @@ create table if not exists event
             check (length((annotation)::text) >= 20),
     initiator_id       integer               not null
         constraint event_users_id_fk
-            references public.users,
+            references users,
     category_id        integer               not null
         constraint event_category_id_fk
-            references public.category,
+            references category,
     created_on         timestamp,
     description        varchar(7000)
         constraint check_description
@@ -57,7 +68,7 @@ create table if not exists event
     event_date         timestamp             not null,
     location_id        integer               not null
         constraint event_locations_id_fk
-            references public.locations,
+            references locations,
     paid               boolean default false not null,
     participant_limit  integer default 0,
     published_on       timestamp,
@@ -82,10 +93,10 @@ create table if not exists participation_requests
         primary key,
     event_id  integer                  not null
         constraint participation_requests_event_id_fk
-            references public.event,
+            references event,
     requester integer                  not null
         constraint participation_requests_users_id_fk
-            references public.users,
+            references users,
     created   timestamp with time zone not null,
     status    varchar(20)              not null
 );
@@ -94,10 +105,10 @@ create table if not exists compilation_events
 (
     compilation_id integer not null
         constraint compilation_events_compilation_id_fk
-            references public.compilation,
+            references compilation,
     event_id       integer not null
         constraint compilation_events_event_id_fk
-            references public.event,
+            references event,
     constraint compilation_events_pk
         primary key (event_id, compilation_id)
 );
@@ -106,10 +117,10 @@ create table if not exists marks
 (
     user_id  integer not null
         constraint marks_users_id_fk
-            references public.users,
+            references users,
     event_id integer not null
         constraint marks_event_id_fk
-            references public.event,
+            references event,
     mark     integer not null
         constraint check_mark
             check ((mark > 0) AND (mark < 6)),
@@ -117,12 +128,5 @@ create table if not exists marks
         primary key (user_id, event_id)
 );
 
-create table if not exists user_roles
-(
-    role_name varchar not null
-        constraint "User_roles_pk2"
-            primary key
-);
-
-insert into user_roles (role_name) values ('role_admin');
-insert into user_roles (role_name) values ('role_authorized_user');
+insert into users (name, email, role, password) VALUES ('admin','admin@admin.ru', 'role_admin',
+                                                        '$2a$12$jaeYh.qUvMz6WXL3Gp6hSOQNi.pRQAbe8DN4XOmP5XEcN2xB4UD6y');

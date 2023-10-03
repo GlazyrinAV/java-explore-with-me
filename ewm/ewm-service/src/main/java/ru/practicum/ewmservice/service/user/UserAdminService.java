@@ -12,6 +12,4 @@ public interface UserAdminService {
 
     void remove(int userId);
 
-    UserDto findRoleOfUserByName(String name);
-
 }

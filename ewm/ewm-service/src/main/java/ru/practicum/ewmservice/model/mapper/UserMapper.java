@@ -48,10 +48,4 @@ public class UserMapper {
         return userDto;
     }
 
-    public UserDto toDtoRole(User user) {
-        return UserDto.builder()
-                .role(user.getRole())
-                .build();
-    }
-
 }

@@ -49,13 +49,4 @@ public class UserAdminServiceImpl implements UserAdminService {
         userRepository.deleteById(userId);
     }
 
-    @Override
-    public UserDto findRoleOfUserByName(String name) {
-        User user = userRepository.findByName(name);
-        if (user == null) {
-            return null;
-        }
-        return mapper.toDtoRole(user);
-    }
-
 }
