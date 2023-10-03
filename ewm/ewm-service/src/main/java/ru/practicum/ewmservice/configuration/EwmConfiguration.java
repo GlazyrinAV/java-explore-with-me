@@ -1,5 +1,6 @@
 package ru.practicum.ewmservice.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,15 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import ru.practicum.ewmclient.model.ViewStatsDto;
+import ru.practicum.ewmservice.service.user.UserAdminService;
+import ru.practicum.ewmservice.service.user.UserAuthDetailsService;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -19,7 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class EwmConfiguration {
+
+    private final UserAuthDetailsService service;
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
@@ -49,6 +61,36 @@ public class EwmConfiguration {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .mvcMatchers("/categories", "/categories/**", "/compilations", "/compilations/**",
+                        "/events", "/events/**").permitAll()
+                .mvcMatchers("/admin/**").hasAuthority("admin")
+                .mvcMatchers("/users/**").hasAuthority("user")
+                .and()
+                .httpBasic(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
+                .formLogin().permitAll()
+                .and()
+                .logout().permitAll();
+        return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider provider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(encoder());
+        provider.setUserDetailsService(service);
+        return provider;
     }
 
 }

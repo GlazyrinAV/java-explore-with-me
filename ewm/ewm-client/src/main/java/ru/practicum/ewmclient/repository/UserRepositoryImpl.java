@@ -16,7 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserDtoAuth findByName(String name) {
-        String sqlQuery = "SELECT u.name AS name, u.role AS role, u.password AS password FROM users AS u WHERE u.name like (?)";
+        String sqlQuery = "SELECT u.name AS name, u.role AS role, u.password AS password FROM users AS u WHERE u.name = (?)";
         return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToUserDto, name);
     }
 

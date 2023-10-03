@@ -3,6 +3,7 @@ package ru.practicum.ewmservice.model.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.UserDtoAuth;
 import ru.practicum.ewmservice.model.User;
 import ru.practicum.ewmservice.repository.MarkRepository;
 
@@ -46,6 +47,14 @@ public class UserMapper {
             userDto.setMark(BigDecimal.valueOf(mark).setScale(1, RoundingMode.UP));
         }
         return userDto;
+    }
+
+    public UserDtoAuth toDtoAuth(User user) {
+        return UserDtoAuth.builder()
+                .name(user.getName())
+                .role(user.getRole())
+                .password(user.getPassword())
+                .build();
     }
 
 }

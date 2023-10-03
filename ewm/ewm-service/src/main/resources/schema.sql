@@ -8,8 +8,8 @@ create table if not exists user_roles
             primary key
 );
 
-insert into user_roles (role_name) values ('role_admin');
-insert into user_roles (role_name) values ('role_authorized_user');
+insert into user_roles (role_name) values ('admin');
+insert into user_roles (role_name) values ('user');
 
 create table if not exists users
 (
@@ -22,7 +22,7 @@ create table if not exists users
         unique
         constraint check_email
             check (length((email)::text) > 5),
-    role  varchar(255) default 'role_authorized_user'::character varying
+    role  varchar(255) default 'user'::character varying
         constraint users_user_roles_role_name_fk
             references user_roles,
     password varchar(255) not null
@@ -128,5 +128,5 @@ create table if not exists marks
         primary key (user_id, event_id)
 );
 
-insert into users (name, email, role, password) VALUES ('admin','admin@admin.ru', 'role_admin',
-                                                        '$2a$12$jaeYh.qUvMz6WXL3Gp6hSOQNi.pRQAbe8DN4XOmP5XEcN2xB4UD6y');
+insert into users (name, email, role, password) VALUES ('admin','admin@admin.ru', 'admin',
+                                                        '$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC');
