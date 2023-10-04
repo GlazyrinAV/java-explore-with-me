@@ -5,6 +5,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Collection;
@@ -23,7 +24,8 @@ public class EventAdminClient extends BaseClient {
                                           Collection<String> states,
                                           Collection<Integer> categories,
                                           String rangeStart,
-                                          String rangeEnd) {
+                                          String rangeEnd,
+                                          HttpServletRequest request) {
         HashMap<String, Object> parameters = new HashMap<>();
         StringBuilder path = new StringBuilder("?from={from}&size={size}");
         parameters.put("from", from);
@@ -56,14 +58,14 @@ public class EventAdminClient extends BaseClient {
             path.append("&rangeEnd={rangeEnd}");
             parameters.put("rangeEnd", end);
         }
-        return get(path.toString(), parameters);
+        return get(path.toString(), parameters, request);
     }
 
-    public ResponseEntity<Object> update(UpdateEventAdminRequest dto, int id) {
+    public ResponseEntity<Object> update(UpdateEventAdminRequest dto, int id, HttpServletRequest request) {
         Map<String, Object> parameters = Map.of(
                 "eventId", id
         );
-        return patch("/{eventId}", parameters, dto);
+        return patch("/{eventId}", parameters, dto, request);
     }
 
 }

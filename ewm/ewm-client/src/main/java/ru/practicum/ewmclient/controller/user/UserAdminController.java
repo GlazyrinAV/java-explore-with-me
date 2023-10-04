@@ -12,6 +12,7 @@ import ru.practicum.ewmclient.configuration.JwtAuthentication;
 import ru.practicum.ewmclient.jwt.AuthService;
 import ru.practicum.ewmclient.model.UserDto;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -27,29 +28,27 @@ public class UserAdminController {
 
     private final UserAdminClient client;
 
-    private final AuthService authService;
-
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid UserDto dto) {
-        final JwtAuthentication authInfo = authService.getAuthInfo();
-        return client.save(dto);
+    public ResponseEntity<Object> save(@RequestBody @Valid UserDto dto,
+                                       HttpServletRequest request) {
+        return client.save(dto, request);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
     public ResponseEntity<Object> findAll(@PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                           @Positive @RequestParam(defaultValue = "10") int size,
-                                          @RequestParam(required = false) Collection<Integer> ids) {
-        final JwtAuthentication authInfo = authService.getAuthInfo();
-        return client.findAll(from, size, ids);
+                                          @RequestParam(required = false) Collection<Integer> ids,
+                                          HttpServletRequest request) {
+        return client.findAll(from, size, ids, request);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> remove(@NotNull @PathVariable int userId) {
-        final JwtAuthentication authInfo = authService.getAuthInfo();
-        return client.remove(userId);
+    public ResponseEntity<Object> remove(@NotNull @PathVariable int userId,
+                                         HttpServletRequest request) {
+        return client.remove(userId, request);
     }
 
 }

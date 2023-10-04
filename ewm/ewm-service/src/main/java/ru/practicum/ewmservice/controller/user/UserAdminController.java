@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmservice.service.auth.AuthService;
 import ru.practicum.ewmservice.service.user.UserAdminService;
 
 import java.util.Collection;

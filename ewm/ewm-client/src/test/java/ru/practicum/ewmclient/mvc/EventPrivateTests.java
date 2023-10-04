@@ -590,7 +590,7 @@ class EventPrivateTests {
                 .rejectedRequests(List.of(dto2))
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(result, HttpStatus.OK);
-        when(client.updateRequests(any(), anyInt(), anyInt()))
+        when(client.updateRequests(any(), anyInt(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/users/1/events/1/requests")
                         .content(mapper.writeValueAsString(request))

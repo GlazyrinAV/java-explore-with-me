@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -17,23 +18,31 @@ public class BaseClient {
     }
 
     protected <T> ResponseEntity<Object> post(String path, @Nullable Map<String, Object> parameters, T body) {
-        return makeAndSendRequest(HttpMethod.POST, path, parameters, body);
+        return makeAndSendRequest(HttpMethod.POST, path, parameters, body, null);
     }
 
-    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters) {
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
+    protected <T> ResponseEntity<Object> post(String path, @Nullable Map<String, Object> parameters, T body, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.POST, path, parameters, body, request);
     }
 
-    protected ResponseEntity<Object> delete(String path, @Nullable Map<String, Object> parameters) {
-        return makeAndSendRequest(HttpMethod.DELETE, path, parameters, null);
+    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.GET, path, parameters, null, request);
     }
 
-    protected <T> ResponseEntity<Object> patch(String path, @Nullable Map<String, Object> parameters, T body) {
-        return makeAndSendRequest(HttpMethod.PATCH, path, parameters, body);
+    protected ResponseEntity<Object> delete(String path, @Nullable Map<String, Object> parameters, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.DELETE, path, parameters, null, request);
     }
 
-    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map<String, Object> parameters, @Nullable T body) {
-        HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders());
+    protected <T> ResponseEntity<Object> patch(String path, @Nullable Map<String, Object> parameters, T body, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.PATCH, path, parameters, body, request);
+    }
+
+    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method,
+                                                          String path,
+                                                          @Nullable Map<String, Object> parameters,
+                                                          @Nullable T body,
+                                                          HttpServletRequest request) {
+        HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders(request));
 
         ResponseEntity<Object> statsServerResponse;
         try {
@@ -48,10 +57,14 @@ public class BaseClient {
         return prepareResponse(statsServerResponse);
     }
 
-    private HttpHeaders defaultHeaders() {
+    private HttpHeaders defaultHeaders(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        if (request != null) {
+            String authorization = request.getHeader("Authorization");
+            headers.set("Authorization", authorization);
+        }
         return headers;
     }
 

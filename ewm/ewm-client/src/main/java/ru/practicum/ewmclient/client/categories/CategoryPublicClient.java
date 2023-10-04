@@ -16,7 +16,7 @@ public class CategoryPublicClient extends BaseClient {
         Map<String, Object> parameters = Map.of(
                 "catId", catId
         );
-        return get("/{catId}", parameters);
+        return get("/{catId}", parameters, null);
     }
 
     public ResponseEntity<Object> findAll(int from, int size) {
@@ -24,7 +24,7 @@ public class CategoryPublicClient extends BaseClient {
                 "from", from,
                 "size", size
         );
-        return get("?from={from}&size={size}", parameters);
+        return get("?from={from}&size={size}", parameters, null);
     }
 
 }
