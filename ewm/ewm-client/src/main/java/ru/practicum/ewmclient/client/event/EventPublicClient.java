@@ -67,7 +67,7 @@ public class EventPublicClient extends BaseClient {
         }
 
         client.sendHit(request);
-        return get(path.toString(), parameters);
+        return get(path.toString(), parameters, null);
     }
 
     public ResponseEntity<Object> findById(@PathVariable int id, HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class EventPublicClient extends BaseClient {
                 "id", id
         );
         client.sendHit(request);
-        return get("/{id}", parameters);
+        return get("/{id}", parameters, null);
     }
 
 }

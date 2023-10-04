@@ -25,7 +25,7 @@ create table if not exists users
     role  varchar(255) default 'user'::character varying
         constraint users_user_roles_role_name_fk
             references user_roles,
-    password varchar(255) not null
+    password varchar(255)
 );
 
 create table if not exists category

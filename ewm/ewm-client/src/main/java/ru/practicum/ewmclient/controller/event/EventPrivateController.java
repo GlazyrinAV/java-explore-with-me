@@ -11,6 +11,7 @@ import ru.practicum.ewmclient.model.EventRequestStatusUpdateRequest;
 import ru.practicum.ewmclient.model.NewEventDto;
 import ru.practicum.ewmclient.model.UpdateEventUserRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -27,41 +28,47 @@ public class EventPrivateController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid NewEventDto dto,
-                                       @NotNull @PathVariable int userId) {
-        return client.save(dto, userId);
+                                       @NotNull @PathVariable int userId,
+                                       HttpServletRequest request) {
+        return client.save(dto, userId, request);
     }
 
     @GetMapping
     public ResponseEntity<Object> findAllByUserId(@PathVariable int userId,
                                                   @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                                                  @Positive @RequestParam(defaultValue = "10") int size) {
-        return client.findAllByUserId(userId, from, size);
+                                                  @Positive @RequestParam(defaultValue = "10") int size,
+                                                  HttpServletRequest request) {
+        return client.findAllByUserId(userId, from, size, request);
     }
 
     @GetMapping("/{eventId}")
     public ResponseEntity<Object> findById(@Positive @NotNull @PathVariable int userId,
-                                           @Positive @PathVariable int eventId) {
-        return client.findById(userId, eventId);
+                                           @Positive @PathVariable int eventId,
+                                           HttpServletRequest request) {
+        return client.findById(userId, eventId, request);
     }
 
     @GetMapping("/{eventId}/requests")
     public ResponseEntity<Object> findRequests(@Positive @PathVariable int userId,
-                                               @Positive @PathVariable int eventId) {
-        return client.findRequests(userId, eventId);
+                                               @Positive @PathVariable int eventId,
+                                               HttpServletRequest request) {
+        return client.findRequests(userId, eventId, request);
     }
 
     @PatchMapping("/{eventId}")
     public ResponseEntity<Object> update(@RequestBody UpdateEventUserRequest dto,
                                          @Positive @PathVariable int userId,
-                                         @Positive @PathVariable int eventId) {
-        return client.update(dto, userId, eventId);
+                                         @Positive @PathVariable int eventId,
+                                         HttpServletRequest request) {
+        return client.update(dto, userId, eventId, request);
     }
 
     @PatchMapping("/{eventId}/requests")
     public ResponseEntity<Object> updateRequests(@RequestBody @Valid EventRequestStatusUpdateRequest dto,
                                                  @Positive @PathVariable int userId,
-                                                 @Positive @PathVariable int eventId) {
-        return client.updateRequests(dto, userId, eventId);
+                                                 @Positive @PathVariable int eventId,
+                                                 HttpServletRequest request) {
+        return client.updateRequests(dto, userId, eventId, request);
     }
 
 }

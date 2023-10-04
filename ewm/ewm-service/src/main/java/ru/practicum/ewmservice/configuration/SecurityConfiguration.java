@@ -28,10 +28,7 @@ public class SecurityConfiguration {
                 .mvcMatchers("/users/**").hasAuthority("user")
                 .and()
                 .httpBasic(Customizer.withDefaults())
-                .csrf().disable()
-                .formLogin().permitAll()
-                .and()
-                .logout().permitAll();
+                .csrf().disable();
         return http.build();
     }
 

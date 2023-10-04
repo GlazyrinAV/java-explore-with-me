@@ -27,6 +27,10 @@ public class UserDto {
     @JsonProperty("email")
     private String email;
 
+    private String password;
+
+    private String role;
+
     private BigDecimal mark;
 
 

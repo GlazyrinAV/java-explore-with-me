@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.requests.ParticipationRequestsPrivateClient;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -23,19 +24,22 @@ public class ParticipationRequestsPrivateController {
 
     @PostMapping
     public ResponseEntity<Object> save(@Positive @NotNull @PathVariable int userId,
-                                       @PositiveOrZero @NotNull @RequestParam int eventId) {
-        return client.save(userId, eventId);
+                                       @PositiveOrZero @NotNull @RequestParam int eventId,
+                                       HttpServletRequest request) {
+        return client.save(userId, eventId, request);
     }
 
     @GetMapping
-    public ResponseEntity<Object> findAll(@Positive @NotNull @PathVariable int userId) {
-        return client.findAll(userId);
+    public ResponseEntity<Object> findAll(@Positive @NotNull @PathVariable int userId,
+                                          HttpServletRequest request) {
+        return client.findAll(userId, request);
     }
 
     @PatchMapping("/{requestId}/cancel")
     public ResponseEntity<Object> cancel(@Positive @NotNull @PathVariable int userId,
-                                         @Positive @NotNull @PathVariable int requestId) {
-        return client.cancel(userId, requestId);
+                                         @Positive @NotNull @PathVariable int requestId,
+                                         HttpServletRequest request) {
+        return client.cancel(userId, requestId, request);
     }
 
 }
