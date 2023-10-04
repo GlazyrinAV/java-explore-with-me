@@ -2,6 +2,7 @@ package ru.practicum.ewmclient.client.user;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
 import ru.practicum.ewmclient.model.UserDto;

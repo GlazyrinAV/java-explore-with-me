@@ -20,7 +20,6 @@ public class UserAdminClientConfiguration {
     public UserAdminClient userAdminClient(RestTemplateBuilder builder) {
         var restTemplate = builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + api))
-                .basicAuthentication("admin", "admin")
                 .build();
         return new UserAdminClient(restTemplate);
     }

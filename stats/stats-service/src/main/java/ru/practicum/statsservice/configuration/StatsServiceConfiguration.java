@@ -12,6 +12,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import ru.practicum.statsclient.dto.ViewDataDto;
 
 import java.time.format.DateTimeFormatter;
@@ -21,6 +25,7 @@ import java.util.Map;
 
 @Configuration
 @EnableScheduling
+@EnableWebSecurity
 public class StatsServiceConfiguration {
 
     @Value("${spring.kafka.bootstrap-servers}")
@@ -57,6 +62,19 @@ public class StatsServiceConfiguration {
                 .partitions(1)
                 .replicas(1)
                 .build();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests(request -> request
+                        .anyRequest().permitAll())
+                .csrf().disable()
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true));
+        return http.build();
     }
 
 }

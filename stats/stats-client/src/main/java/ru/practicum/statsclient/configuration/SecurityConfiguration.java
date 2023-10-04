@@ -3,12 +3,15 @@ package ru.practicum.statsclient.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,14 +30,18 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/stats", "/hit")
-                .hasRole("admin")
+                .antMatchers("/stats", "/hit").hasRole("admin")
                 .and()
-                .formLogin()
+                .httpBasic(Customizer.withDefaults())
+                .formLogin().permitAll()
                 .and()
-                .logout(LogoutConfigurer::permitAll);
-
+                .logout().permitAll();
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -42,7 +49,7 @@ public class SecurityConfiguration {
         UserDetails user =
                 User.builder()
                         .username(username)
-                        .password("{base64}" + password)
+                        .password(password)
                         .roles("admin")
                         .build();
         return new InMemoryUserDetailsManager(user);
