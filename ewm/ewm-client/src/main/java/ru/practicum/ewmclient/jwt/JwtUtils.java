@@ -3,8 +3,8 @@ package ru.practicum.ewmclient.jwt;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import ru.practicum.ewmclient.configuration.JwtAuthentication;
-import ru.practicum.ewmclient.model.Role;
+import ru.practicum.ewmclient.configuration.authentication.JwtAuthentication;
+import ru.practicum.ewmclient.model.user.Role;
 
 import java.util.List;
 import java.util.Set;
@@ -16,8 +16,8 @@ public final class JwtUtils {
     public static JwtAuthentication generate(Claims claims) {
         final JwtAuthentication jwtInfoToken = new JwtAuthentication();
         jwtInfoToken.setRoles(getRoles(claims));
-        jwtInfoToken.setUsername(claims.get("name", String.class));
-        jwtInfoToken.setUsername(claims.getSubject());
+        jwtInfoToken.setEmail(claims.get("name", String.class));
+        jwtInfoToken.setEmail(claims.getSubject());
         return jwtInfoToken;
     }
 

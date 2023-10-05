@@ -7,8 +7,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.compilation.CompilationDto;
+import ru.practicum.ewmclient.model.compilation.NewCompilationDto;
+import ru.practicum.ewmclient.model.compilation.UpdateCompilationRequest;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 import ru.practicum.ewmservice.controller.compilation.CompilationAdminController;
-import ru.practicum.ewmclient.model.*;
 import ru.practicum.ewmservice.service.compilation.CompilationAdminService;
 
 import java.nio.charset.StandardCharsets;

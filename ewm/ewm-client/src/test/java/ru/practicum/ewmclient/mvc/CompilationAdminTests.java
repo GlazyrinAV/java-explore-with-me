@@ -11,7 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.compilation.CompilationAdminClient;
 import ru.practicum.ewmclient.controller.compilation.CompilationAdminController;
-import ru.practicum.ewmclient.model.*;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.compilation.CompilationDto;
+import ru.practicum.ewmclient.model.compilation.NewCompilationDto;
+import ru.practicum.ewmclient.model.compilation.UpdateCompilationRequest;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -82,7 +88,7 @@ class CompilationAdminTests {
                 .title("test CompilationTitle")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(compilationDto, HttpStatus.CREATED);
-        when(client.save(dto))
+        when(client.save(dto, null))
                 .thenReturn(response);
         mvc.perform(post("/admin/compilations")
                         .content(mapper.writeValueAsString(dto))
@@ -108,7 +114,7 @@ class CompilationAdminTests {
                 .title("test CompilationTitle")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(compilationDto, HttpStatus.CREATED);
-        when(client.save(dto))
+        when(client.save(dto, null))
                 .thenReturn(response);
         mvc.perform(post("/admin/compilations")
                         .content(mapper.writeValueAsString(dto))
@@ -194,7 +200,7 @@ class CompilationAdminTests {
                 .title("updateTitle")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(compilationDto, HttpStatus.CREATED);
-        when(client.update(any(), anyInt()))
+        when(client.update(any(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/admin/compilations/1")
                         .content(mapper.writeValueAsString(request))
@@ -220,7 +226,7 @@ class CompilationAdminTests {
                 .title("updateTitle")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(compilationDto, HttpStatus.CREATED);
-        when(client.update(any(), anyInt()))
+        when(client.update(any(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/admin/compilations/1")
                         .content(mapper.writeValueAsString(request))

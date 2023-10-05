@@ -12,8 +12,8 @@ import ru.practicum.statsservice.exception.BadParameter;
 import ru.practicum.statsservice.model.Mapper;
 import ru.practicum.statsservice.model.Stats;
 import ru.practicum.statsservice.repository.StatsRepository;
-import ru.practicum.statsservice.service.StatsService;
-import ru.practicum.statsservice.service.StatsServiceImpl;
+import ru.practicum.statsservice.service.stats.StatsService;
+import ru.practicum.statsservice.service.stats.StatsServiceImpl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
 import ru.practicum.ewmservice.model.Category;
 import ru.practicum.ewmservice.model.mapper.CategoryMapper;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
 import ru.practicum.ewmservice.service.categories.CategoryAdminService;
 

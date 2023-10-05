@@ -3,7 +3,7 @@ package ru.practicum.ewmclient.client.user;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;

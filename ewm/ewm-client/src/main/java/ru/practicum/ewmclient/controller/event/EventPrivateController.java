@@ -8,9 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventPrivateClient;
-import ru.practicum.ewmclient.model.EventRequestStatusUpdateRequest;
-import ru.practicum.ewmclient.model.NewEventDto;
-import ru.practicum.ewmclient.model.UpdateEventUserRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.event.NewEventDto;
+import ru.practicum.ewmclient.model.event.UpdateEventUserRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

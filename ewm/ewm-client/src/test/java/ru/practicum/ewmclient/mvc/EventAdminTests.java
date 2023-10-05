@@ -11,7 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.event.EventAdminClient;
 import ru.practicum.ewmclient.controller.event.EventAdminController;
-import ru.practicum.ewmclient.model.*;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.event.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import java.nio.charset.StandardCharsets;
 
@@ -214,7 +218,7 @@ class EventAdminTests {
                 .stateAction("PUBLISH_EVENT")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(eventDto, HttpStatus.OK);
-        when(client.update(any(), anyInt()))
+        when(client.update(any(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/admin/events/1")
                         .content(mapper.writeValueAsString(request))

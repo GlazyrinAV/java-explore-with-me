@@ -3,7 +3,7 @@ package ru.practicum.ewmservice.unit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.practicum.ewmclient.model.MarkDto;
+import ru.practicum.ewmclient.model.mark.MarkDto;
 import ru.practicum.ewmservice.exceptions.exceptions.*;
 import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.model.mapper.MarkMapper;

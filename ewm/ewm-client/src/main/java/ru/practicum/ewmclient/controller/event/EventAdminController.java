@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventAdminClient;
-import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.event.UpdateEventAdminRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;

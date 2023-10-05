@@ -1,6 +1,6 @@
 package ru.practicum.ewmservice.service.categories;
 
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 
 public interface CategoryAdminService {
 

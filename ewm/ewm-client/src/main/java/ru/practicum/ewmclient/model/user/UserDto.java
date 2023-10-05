@@ -1,0 +1,36 @@
+package ru.practicum.ewmclient.model.user;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+
+@Builder
+@Data
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class UserDto {
+
+    private Integer id;
+
+    @NotBlank
+    @JsonProperty("name")
+    private String name;
+
+    @NotBlank
+    @Email
+    @JsonProperty("email")
+    private String email;
+
+    private BigDecimal mark;
+
+    private String role;
+
+    private String password;
+
+}

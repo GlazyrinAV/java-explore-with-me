@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.model.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 import ru.practicum.ewmservice.model.Category;
 
 @Component

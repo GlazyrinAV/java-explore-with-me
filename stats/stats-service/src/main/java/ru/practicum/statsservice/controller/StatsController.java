@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.statsclient.dto.ViewStatsDto;
-import ru.practicum.statsservice.service.StatsService;
+import ru.practicum.statsservice.service.stats.StatsService;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;

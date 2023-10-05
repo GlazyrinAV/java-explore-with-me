@@ -5,7 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewmclient.model.*;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.event.NewEventDto;
+import ru.practicum.ewmclient.model.event.UpdateEventUserRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateResult;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
 import ru.practicum.ewmservice.service.event.EventPrivateService;
 
 import java.util.Collection;

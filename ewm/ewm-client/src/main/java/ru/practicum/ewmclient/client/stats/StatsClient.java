@@ -2,7 +2,7 @@ package ru.practicum.ewmclient.client.stats;
 
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmclient.model.Hit;
+import ru.practicum.ewmclient.model.stats.Hit;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;

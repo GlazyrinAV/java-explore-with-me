@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.model.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmclient.model.MarkDto;
+import ru.practicum.ewmclient.model.mark.MarkDto;
 import ru.practicum.ewmservice.model.Mark;
 
 @Component

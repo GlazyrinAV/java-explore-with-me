@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.categories.CategoryPublicClient;
 import ru.practicum.ewmclient.controller.categories.CategoryPublicController;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;

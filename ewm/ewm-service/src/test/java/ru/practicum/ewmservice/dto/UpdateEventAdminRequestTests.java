@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.ewmclient.model.LocationDto;
-import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.event.UpdateEventAdminRequest;
 
 import java.io.IOException;
 

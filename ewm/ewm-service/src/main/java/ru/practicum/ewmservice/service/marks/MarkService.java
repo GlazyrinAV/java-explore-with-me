@@ -1,6 +1,6 @@
 package ru.practicum.ewmservice.service.marks;
 
-import ru.practicum.ewmclient.model.MarkDto;
+import ru.practicum.ewmclient.model.mark.MarkDto;
 
 public interface MarkService {
 

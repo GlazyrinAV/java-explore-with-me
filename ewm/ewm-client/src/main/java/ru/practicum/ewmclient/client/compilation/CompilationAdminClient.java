@@ -3,8 +3,8 @@ package ru.practicum.ewmclient.client.compilation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmclient.model.NewCompilationDto;
-import ru.practicum.ewmclient.model.UpdateCompilationRequest;
+import ru.practicum.ewmclient.model.compilation.NewCompilationDto;
+import ru.practicum.ewmclient.model.compilation.UpdateCompilationRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmservice.controller.user.UserAdminController;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 import ru.practicum.ewmservice.service.user.UserAdminService;
 
 import java.nio.charset.StandardCharsets;

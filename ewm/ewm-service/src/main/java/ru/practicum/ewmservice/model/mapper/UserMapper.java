@@ -2,7 +2,8 @@ package ru.practicum.ewmservice.model.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.Role;
+import ru.practicum.ewmclient.model.user.UserDto;
 import ru.practicum.ewmservice.model.User;
 import ru.practicum.ewmservice.repository.MarkRepository;
 
@@ -16,9 +17,14 @@ public class UserMapper {
     private final MarkRepository markRepository;
 
     public User fromDto(UserDto dto) {
+        String role = "user";
+        if (dto.getRole() != null) {
+            role = dto.getRole();
+        }
         return User.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
+                .role(Role.valueOf(role))
                 .build();
     }
 

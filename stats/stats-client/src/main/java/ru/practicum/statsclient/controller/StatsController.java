@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.statsclient.client.StatsClient;
 import ru.practicum.statsclient.dto.StatsDto;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -21,16 +22,18 @@ public class StatsController {
     public final StatsClient statsClient;
 
     @PostMapping("/hit")
-    public ResponseEntity<Object> saveStats(@Valid @RequestBody StatsDto dto) {
-        return statsClient.saveStats(dto);
+    public ResponseEntity<Object> saveStats(@Valid @RequestBody StatsDto dto,
+                                            HttpServletRequest request) {
+        return statsClient.saveStats(dto, request);
     }
 
     @GetMapping("/stats")
     public ResponseEntity<Object> findStats(@RequestParam @NotBlank String start,
                                             @RequestParam @NotBlank String end,
                                             @RequestParam(required = false) String[] uris,
-                                            @RequestParam(required = false, defaultValue = "false") boolean unique) {
-        return statsClient.findStats(start, end, uris, unique);
+                                            @RequestParam(required = false, defaultValue = "false") boolean unique,
+                                            HttpServletRequest request) {
+        return statsClient.findStats(start, end, uris, unique, request);
     }
 
 }

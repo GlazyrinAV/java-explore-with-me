@@ -8,9 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.user.UserAdminClient;
-import ru.practicum.ewmclient.configuration.JwtAuthentication;
-import ru.practicum.ewmclient.jwt.AuthService;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

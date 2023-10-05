@@ -7,7 +7,7 @@ import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.ParticipationRequestNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
-import ru.practicum.ewmclient.model.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
 import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.model.mapper.ParticipationRequestsMapper;
 import ru.practicum.ewmservice.repository.EventRepository;

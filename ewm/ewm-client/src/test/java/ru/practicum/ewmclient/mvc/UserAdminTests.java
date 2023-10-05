@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.user.UserAdminClient;
 import ru.practicum.ewmclient.controller.user.UserAdminController;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import java.nio.charset.StandardCharsets;
 
@@ -46,7 +46,7 @@ class UserAdminTests {
                 .name(dto.getName())
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(fromDto, HttpStatus.CREATED);
-        when(client.save(any()))
+        when(client.save(any(), null))
                 .thenReturn(response);
         mvc.perform(post("/admin/users")
                         .content(mapper.writeValueAsString(dto))

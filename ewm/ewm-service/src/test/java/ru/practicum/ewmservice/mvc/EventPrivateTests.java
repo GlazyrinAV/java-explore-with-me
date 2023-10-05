@@ -7,8 +7,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.event.NewEventDto;
+import ru.practicum.ewmclient.model.event.UpdateEventUserRequest;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateResult;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 import ru.practicum.ewmservice.controller.event.EventPrivateController;
-import ru.practicum.ewmclient.model.*;
 import ru.practicum.ewmservice.service.event.EventPrivateService;
 
 import java.nio.charset.StandardCharsets;

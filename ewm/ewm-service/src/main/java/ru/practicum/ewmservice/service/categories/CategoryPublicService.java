@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.service.categories;
 
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 
 import java.util.Collection;
 

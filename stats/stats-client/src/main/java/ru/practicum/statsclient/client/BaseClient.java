@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -16,16 +17,16 @@ public class BaseClient {
         this.rest = rest;
     }
 
-    protected <T> ResponseEntity<Object> post(String path, T body) {
-        return makeAndSendRequest(HttpMethod.POST, path, null, body);
+    protected <T> ResponseEntity<Object> post(String path, T body, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.POST, path, null, body, request);
     }
 
-    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters) {
-        return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
+    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters, HttpServletRequest request) {
+        return makeAndSendRequest(HttpMethod.GET, path, parameters, null, request);
     }
 
-    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map<String, Object> parameters, @Nullable T body) {
-        HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders());
+    private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map<String, Object> parameters, @Nullable T body, HttpServletRequest request) {
+        HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders(request));
 
         ResponseEntity<Object> statsServerResponse;
         try {
@@ -40,8 +41,12 @@ public class BaseClient {
         return prepareResponse(statsServerResponse);
     }
 
-    private HttpHeaders defaultHeaders() {
+    private HttpHeaders defaultHeaders(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
+        if (request != null) {
+            String authorization = request.getHeader("Authorization");
+            headers.set("Authorization", authorization);
+        }
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         return headers;

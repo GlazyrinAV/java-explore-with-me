@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.ewmclient.model.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateRequest;
 
 import java.io.IOException;
 import java.util.List;

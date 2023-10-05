@@ -8,8 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.compilation.CompilationAdminClient;
-import ru.practicum.ewmclient.model.NewCompilationDto;
-import ru.practicum.ewmclient.model.UpdateCompilationRequest;
+import ru.practicum.ewmclient.model.compilation.NewCompilationDto;
+import ru.practicum.ewmclient.model.compilation.UpdateCompilationRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

@@ -11,7 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.event.EventPrivateClient;
 import ru.practicum.ewmclient.controller.event.EventPrivateController;
-import ru.practicum.ewmclient.model.*;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.event.NewEventDto;
+import ru.practicum.ewmclient.model.event.UpdateEventUserRequest;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateRequest;
+import ru.practicum.ewmclient.model.request.EventRequestStatusUpdateResult;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -79,7 +87,7 @@ class EventPrivateTests {
                 .state("PENDING")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(eventDto, HttpStatus.CREATED);
-        when(client.save(any(), anyInt()))
+        when(client.save(any(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(post("/users/1/events")
                         .content(mapper.writeValueAsString(toDto))
@@ -485,7 +493,7 @@ class EventPrivateTests {
                 .state("PENDING")
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(eventDto, HttpStatus.OK);
-        when(client.update(any(), anyInt(), anyInt()))
+        when(client.update(any(), anyInt(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/users/1/events/1")
                         .content(mapper.writeValueAsString(request))

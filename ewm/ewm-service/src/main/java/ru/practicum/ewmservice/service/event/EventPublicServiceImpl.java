@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmclient.model.EventDto;
+import ru.practicum.ewmclient.model.event.EventDto;
 import ru.practicum.ewmservice.exceptions.exceptions.BadParameter;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmservice.model.Event;

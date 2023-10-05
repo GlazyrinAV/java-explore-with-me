@@ -2,7 +2,7 @@ package ru.practicum.ewmservice.model.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.practicum.ewmclient.model.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
 import ru.practicum.ewmservice.model.ParticipationRequest;
 
 import java.time.format.DateTimeFormatter;

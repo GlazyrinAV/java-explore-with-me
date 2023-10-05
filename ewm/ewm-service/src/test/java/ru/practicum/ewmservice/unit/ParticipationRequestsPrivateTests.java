@@ -3,7 +3,7 @@ package ru.practicum.ewmservice.unit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.practicum.ewmclient.model.ParticipationRequestDto;
+import ru.practicum.ewmclient.model.request.ParticipationRequestDto;
 import ru.practicum.ewmservice.exceptions.exceptions.EventNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.ParticipationRequestNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;

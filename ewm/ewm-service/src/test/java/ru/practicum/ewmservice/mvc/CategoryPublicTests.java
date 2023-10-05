@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmservice.controller.categories.CategoryPublicController;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 import ru.practicum.ewmservice.service.categories.CategoryPublicService;
 
 import java.nio.charset.StandardCharsets;

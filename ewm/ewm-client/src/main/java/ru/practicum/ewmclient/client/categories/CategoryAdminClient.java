@@ -3,7 +3,7 @@ package ru.practicum.ewmclient.client.categories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.ewmclient.client.BaseClient;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

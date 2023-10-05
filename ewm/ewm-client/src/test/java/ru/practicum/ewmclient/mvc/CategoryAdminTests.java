@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.ewmclient.client.categories.CategoryAdminClient;
 import ru.practicum.ewmclient.controller.categories.CategoryAdminController;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 
 import java.nio.charset.StandardCharsets;
 
@@ -45,7 +45,7 @@ class CategoryAdminTests {
                 .name(dto.getName())
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(fromDto, HttpStatus.CREATED);
-        when(client.save(dto))
+        when(client.save(dto, null))
                 .thenReturn(response);
         mvc.perform(post("/admin/categories")
                         .content(mapper.writeValueAsString(dto))
@@ -92,7 +92,7 @@ class CategoryAdminTests {
                 .name(dto.getName())
                 .build();
         ResponseEntity<Object> response = new ResponseEntity<>(fromDto, HttpStatus.OK);
-        when(client.update(any(), anyInt()))
+        when(client.update(any(), anyInt(), null))
                 .thenReturn(response);
         mvc.perform(patch("/admin/categories/1")
                         .content(mapper.writeValueAsString(dto))

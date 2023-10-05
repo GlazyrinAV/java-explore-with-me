@@ -3,7 +3,7 @@ package ru.practicum.ewmservice.unit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.practicum.ewmclient.model.CategoryDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
 import ru.practicum.ewmservice.exceptions.exceptions.CategoryNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
 import ru.practicum.ewmservice.model.Category;

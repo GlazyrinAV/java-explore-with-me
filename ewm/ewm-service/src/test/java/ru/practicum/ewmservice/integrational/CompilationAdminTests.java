@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import ru.practicum.ewmclient.model.NewCompilationDto;
+import ru.practicum.ewmclient.model.compilation.NewCompilationDto;
 import ru.practicum.ewmservice.service.compilation.CompilationAdminService;
 
 import javax.transaction.Transactional;

@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.statsservice.controller.StatsController;
 import ru.practicum.statsclient.dto.StatsDto;
-import ru.practicum.statsservice.service.StatsService;
+import ru.practicum.statsservice.service.stats.StatsService;
 
 import java.nio.charset.StandardCharsets;
 

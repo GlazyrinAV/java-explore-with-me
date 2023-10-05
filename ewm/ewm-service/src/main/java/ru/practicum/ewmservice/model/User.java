@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ru.practicum.ewmclient.model.Role;
+import ru.practicum.ewmclient.model.user.Role;
 
 import javax.persistence.*;
 

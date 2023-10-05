@@ -11,7 +11,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import ru.practicum.ewmclient.model.ViewStatsDto;
+import ru.practicum.ewmclient.model.stats.ViewStatsDto;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;

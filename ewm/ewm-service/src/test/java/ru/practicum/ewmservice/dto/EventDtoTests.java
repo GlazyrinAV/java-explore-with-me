@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.ewmclient.model.CategoryDto;
-import ru.practicum.ewmclient.model.EventDto;
-import ru.practicum.ewmclient.model.LocationDto;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.category.CategoryDto;
+import ru.practicum.ewmclient.model.event.EventDto;
+import ru.practicum.ewmclient.model.location.LocationDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 
 import java.io.IOException;
 

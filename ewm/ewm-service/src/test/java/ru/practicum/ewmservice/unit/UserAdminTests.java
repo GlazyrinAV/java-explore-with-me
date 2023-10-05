@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import ru.practicum.ewmclient.model.UserDto;
+import ru.practicum.ewmclient.model.user.UserDto;
 import ru.practicum.ewmservice.exceptions.exceptions.UserNotFound;
 import ru.practicum.ewmservice.exceptions.exceptions.WrongParameter;
 import ru.practicum.ewmservice.model.User;
