@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmclient.client.event.EventAdminClient;
 import ru.practicum.ewmclient.model.UpdateEventAdminRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -29,14 +30,16 @@ public class EventAdminController {
                                           @RequestParam(required = false) Collection<String> states,
                                           @RequestParam(required = false) Collection<Integer> categories,
                                           @RequestParam(required = false) String rangeStart,
-                                          @RequestParam(required = false) String rangeEnd) {
-        return client.findAll(from, size, users, states, categories, rangeStart, rangeEnd);
+                                          @RequestParam(required = false) String rangeEnd,
+                                          HttpServletRequest request) {
+        return client.findAll(from, size, users, states, categories, rangeStart, rangeEnd, request);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody UpdateEventAdminRequest dto,
-                                         @Positive @PathVariable int id) {
-        return client.update(dto, id);
+                                         @Positive @PathVariable int id,
+                                         HttpServletRequest request) {
+        return client.update(dto, id, request);
     }
 
 }

@@ -22,14 +22,14 @@ public class CompilationPublicClient extends BaseClient {
             path = path + "&pinned={pinned}";
             parameters.put("pinned", pinned);
         }
-        return get(path, parameters);
+        return get(path, parameters, null);
     }
 
     public ResponseEntity<Object> findById(int compId) {
         Map<String, Object> parameters = Map.of(
                 "compId", compId
         );
-        return get("/{compId}", parameters);
+        return get("/{compId}", parameters, null);
     }
 
 }

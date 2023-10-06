@@ -17,9 +17,15 @@ public class UserMapper {
     private final MarkRepository markRepository;
 
     public User fromDto(UserDto dto) {
+        String role = "user";
+        if (dto.getRole() != null) {
+            role = dto.getRole();
+        }
         return User.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
+                .role(role)
+                .password(dto.getPassword())
                 .build();
     }
 
