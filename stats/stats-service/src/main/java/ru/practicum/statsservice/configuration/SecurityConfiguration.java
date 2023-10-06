@@ -1,4 +1,4 @@
-package ru.practicum.statsclient.configuration;
+package ru.practicum.statsservice.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,10 +31,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/stats", "/hit").hasRole("admin")
                 .and()
-                .httpBasic(Customizer.withDefaults())
-                .formLogin().permitAll()
-                .and()
-                .logout().permitAll();
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
@@ -53,5 +50,6 @@ public class SecurityConfiguration {
                         .build();
         return new InMemoryUserDetailsManager(user);
     }
+
 
 }

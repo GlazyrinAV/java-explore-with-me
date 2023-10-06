@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.practicum.statsclient.dto.StatsDto;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,11 +14,11 @@ public class StatsClient extends BaseClient {
         super(rest);
     }
 
-    public ResponseEntity<Object> saveStats(StatsDto dto) {
-        return post("/hit", dto);
+    public ResponseEntity<Object> saveStats(StatsDto dto, HttpServletRequest request) {
+        return post("/hit", dto, request);
     }
 
-    public ResponseEntity<Object> findStats(String start, String end, String[] uris, boolean unique) {
+    public ResponseEntity<Object> findStats(String start, String end, String[] uris, boolean unique, HttpServletRequest request) {
         String path = "/stats?start={start}&end={end}&unique={unique}";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("start", start);
@@ -28,7 +29,7 @@ public class StatsClient extends BaseClient {
             path = path + "&uris={uris}";
         }
 
-        return get(path, parameters);
+        return get(path, parameters, request);
     }
 
 }
