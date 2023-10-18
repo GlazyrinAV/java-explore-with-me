@@ -19,13 +19,13 @@ class EventPrivateTests {
     @Test
     void findAllByUserId() {
         Assertions.assertEquals("[EventDto(id=1, title=title1, annotation=annotation of event 1, " +
-                        "initiator=UserDto(id=1, name=USER1, email=email1@mail.ru, mark=5.0), confirmedRequests=0, " +
-                        "category=CategoryDto(id=1, name=category1), createdOn=2001-01-01 10:00:00, " +
+                        "initiator=UserDto(id=1, name=admin, email=admin@admin.ru, password=null, role=null, mark=5.0), " +
+                        "confirmedRequests=0, category=CategoryDto(id=1, name=category1), createdOn=2001-01-01 10:00:00, " +
                         "description=description of event1, eventDate=2001-10-01 10:00:00, " +
                         "location=LocationDto(id=0, lat=10.1, lon=20.2), paid=false, participantLimit=100, " +
                         "publishedOn=null, requestModeration=true, state=PENDING, stateAction=null, views=0, mark=null), " +
-                        "EventDto(id=2, title=title2, annotation=annotation of event 2, " +
-                        "initiator=UserDto(id=1, name=USER1, email=email1@mail.ru, mark=5.0), confirmedRequests=2, " +
+                        "EventDto(id=2, title=title2, annotation=annotation of event 2, initiator=UserDto(id=1, " +
+                        "name=admin, email=admin@admin.ru, password=null, role=null, mark=5.0), confirmedRequests=2, " +
                         "category=CategoryDto(id=1, name=category1), createdOn=2001-01-02 10:00:00, " +
                         "description=description of event2, eventDate=2001-10-02 10:00:00, " +
                         "location=LocationDto(id=0, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +

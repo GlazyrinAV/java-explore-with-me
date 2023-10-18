@@ -40,16 +40,20 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=1, title='title1', annotation='annotation of event 1', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-01T10:00, description='description of event1', eventDate=2001-10-01T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=100, publishedOn=null, " +
-                "requestModeration=true, state=PENDING, views=0}", result.get(0).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-01T10:00, description='description of event1', " +
+                "eventDate=2001-10-01T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=100, publishedOn=null, requestModeration=true, state=PENDING, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(1).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-02T10:00, description='description of event2', " +
+                "eventDate=2001-10-02T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=50, publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
     @Test
@@ -59,16 +63,20 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=3, title='title3', annotation='annotation of event 3', " +
-                "initiator=User(id=3, name=USER3, email=email3@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-03T10:00, description='description of event3', eventDate=2001-10-03T10:00, " +
+                "initiator=User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-03T10:00, " +
+                "description='description of event3', eventDate=2001-10-03T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=false, participantLimit=0, " +
-                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(0).toString());
+                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=4, title='title4', annotation='annotation of event 4', " +
-                "initiator=User(id=4, name=USER4, email=email4@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-04T10:00, description='description of event4', eventDate=2024-10-04T10:00, " +
+                "initiator=User(id=4, name=USER3, email=email3@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-04T10:00, " +
+                "description='description of event4', eventDate=2024-10-04T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=true, participantLimit=10, " +
-                "publishedOn=2001-01-04T11:00, requestModeration=false, state=PUBLISHED, views=0}", result.get(1).toString());
+                "publishedOn=2001-01-04T11:00, requestModeration=false, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
     @Test
@@ -78,16 +86,20 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=1, title='title1', annotation='annotation of event 1', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-01T10:00, description='description of event1', eventDate=2001-10-01T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=100, publishedOn=null, " +
-                "requestModeration=true, state=PENDING, views=0}", result.get(0).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-01T10:00, description='description of event1', " +
+                "eventDate=2001-10-01T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=100, publishedOn=null, requestModeration=true, state=PENDING, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=3, title='title3', annotation='annotation of event 3', " +
-                "initiator=User(id=3, name=USER3, email=email3@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-03T10:00, description='description of event3', eventDate=2001-10-03T10:00, " +
+                "initiator=User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-03T10:00, " +
+                "description='description of event3', eventDate=2001-10-03T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=false, participantLimit=0, " +
-                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(1).toString());
+                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
     @Test
@@ -99,10 +111,12 @@ class EventTests {
         Assertions.assertEquals(1, result.size());
 
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(0).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-02T10:00, description='description of event2', " +
+                "eventDate=2001-10-02T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=50, publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(0).toString());
     }
 
     @Test
@@ -114,16 +128,20 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(0).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-02T10:00, description='description of event2', " +
+                "eventDate=2001-10-02T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=50, publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=3, title='title3', annotation='annotation of event 3', " +
-                "initiator=User(id=3, name=USER3, email=email3@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-03T10:00, description='description of event3', eventDate=2001-10-03T10:00, " +
+                "initiator=User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-03T10:00, " +
+                "description='description of event3', eventDate=2001-10-03T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=false, participantLimit=0, " +
-                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(1).toString());
+                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
     @Test
@@ -135,16 +153,20 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=3, title='title3', annotation='annotation of event 3', " +
-                "initiator=User(id=3, name=USER3, email=email3@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-03T10:00, description='description of event3', eventDate=2001-10-03T10:00, " +
+                "initiator=User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-03T10:00, " +
+                "description='description of event3', eventDate=2001-10-03T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=false, participantLimit=0, " +
-                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(0).toString());
+                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(1).toString());
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), category=Category(id=1, " +
+                "name=category1), createdOn=2001-01-02T10:00, description='description of event2', " +
+                "eventDate=2001-10-02T10:00, location=Location(id=1, lat=10.1, lon=20.2), paid=false, " +
+                "participantLimit=50, publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
     @Test
@@ -156,16 +178,21 @@ class EventTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                "description='description of event2', eventDate=2001-10-02T10:00, " +
                 "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(0).toString());
+                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(0).toString());
 
         Assertions.assertEquals("Event{id=3, title='title3', annotation='annotation of event 3', " +
-                "initiator=User(id=3, name=USER3, email=email3@mail.ru), category=Category(id=2, name=category2), " +
-                "createdOn=2001-01-03T10:00, description='description of event3', eventDate=2001-10-03T10:00, " +
+                "initiator=User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null), " +
+                "category=Category(id=2, name=category2), createdOn=2001-01-03T10:00, " +
+                "description='description of event3', eventDate=2001-10-03T10:00, " +
                 "location=Location(id=2, lat=20.2, lon=30.3), paid=false, participantLimit=0, " +
-                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}", result.get(1).toString());
+                "publishedOn=2001-01-03T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                result.get(1).toString());
     }
 
 }

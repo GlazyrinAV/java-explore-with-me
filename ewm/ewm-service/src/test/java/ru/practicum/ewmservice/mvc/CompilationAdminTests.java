@@ -3,15 +3,17 @@ package ru.practicum.ewmservice.mvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.ewmservice.controller.compilation.CompilationAdminController;
 import ru.practicum.ewmclient.model.*;
 import ru.practicum.ewmservice.service.compilation.CompilationAdminService;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -22,7 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = CompilationAdminController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class CompilationAdminTests {
 
     @Autowired
@@ -35,7 +38,10 @@ class CompilationAdminTests {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void saveNormal() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         CategoryDto categoryDto = CategoryDto.builder()
                 .id(1)
                 .name("testCategory")
@@ -85,6 +91,7 @@ class CompilationAdminTests {
                         .content(mapper.writeValueAsString(dto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(compilationDto.getId())))
@@ -94,7 +101,10 @@ class CompilationAdminTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void saveEventNull() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         CompilationDto compilationDto = CompilationDto.builder()
                 .id(1)
                 .pinned(true)
@@ -110,6 +120,7 @@ class CompilationAdminTests {
                         .content(mapper.writeValueAsString(dto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(compilationDto.getId())))
@@ -118,7 +129,10 @@ class CompilationAdminTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void updateNormal() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         UpdateCompilationRequest request = UpdateCompilationRequest.builder()
                 .events(List.of(1))
                 .pinned(true)
@@ -168,6 +182,7 @@ class CompilationAdminTests {
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(compilationDto.getId())))
@@ -177,7 +192,10 @@ class CompilationAdminTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void updateEventNull() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         UpdateCompilationRequest request = UpdateCompilationRequest.builder()
                 .pinned(true)
                 .title("updateTitle")
@@ -193,6 +211,7 @@ class CompilationAdminTests {
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(compilationDto.getId())))
@@ -201,10 +220,14 @@ class CompilationAdminTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void removeNormal() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(delete("/admin/compilations/1")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }

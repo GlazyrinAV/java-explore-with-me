@@ -20,9 +20,9 @@ class UserAdminTests {
 
     @Test
     void findAll() {
-        Assertions.assertEquals("[UserDto(id=4, name=USER4, email=email4@mail.ru, mark=null), " +
-                        "UserDto(id=5, name=USER5, email=email5@mail.ru, mark=null), " +
-                        "UserDto(id=6, name=USER6, email=email6@mail.ru, mark=null)]",
+        Assertions.assertEquals("[UserDto(id=4, name=USER3, email=email3@mail.ru, password=null, role=null, mark=null), " +
+                        "UserDto(id=5, name=USER4, email=email4@mail.ru, password=null, role=null, mark=null), " +
+                        "UserDto(id=6, name=USER5, email=email5@mail.ru, password=null, role=null, mark=null)]",
                 service.findAll(0, 10, List.of(4, 5, 6)).toString());
     }
 

@@ -3,15 +3,17 @@ package ru.practicum.ewmservice.mvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.ewmservice.controller.event.EventAdminController;
 import ru.practicum.ewmclient.model.*;
 import ru.practicum.ewmservice.service.event.EventAdminService;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,7 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = EventAdminController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class EventAdminTests {
 
     @Autowired
@@ -35,7 +38,10 @@ class EventAdminTests {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormal() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -46,12 +52,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutFrom() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("size", "2")
                         .param("users", "1")
@@ -61,12 +71,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutSize() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("users", "1")
@@ -76,12 +90,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutUsers() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -91,12 +109,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutStates() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -106,12 +128,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutCategories() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -121,12 +147,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutRangeStart() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -137,12 +167,16 @@ class EventAdminTests {
                         .param("rangeEnd", "2012-12-12 12:12")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutRangeEnd() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .param("from", "1")
                         .param("size", "2")
@@ -152,21 +186,29 @@ class EventAdminTests {
                         .param("rangeStart", "2011-11-11 11:11")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void findAllNormalWithoutAll() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/admin/events")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = "admin")
     void updateNormal() throws Exception {
+        String cred = "admin:admin";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         LocationDto locationDto = LocationDto.builder()
                 .id(1)
                 .lat(11.11)
@@ -217,6 +259,7 @@ class EventAdminTests {
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.title", is(eventDto.getTitle())))

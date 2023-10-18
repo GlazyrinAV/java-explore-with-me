@@ -44,8 +44,10 @@ class CompilationTests {
         Assertions.assertEquals("Compilation title 1", result.get(0).getTitle());
         Assertions.assertEquals(1, result.get(0).getId());
         Assertions.assertEquals("[Event{id=2, title='title2', annotation='annotation of event 2', " +
-                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}]",
                 result.get(0).getEvents().toString());

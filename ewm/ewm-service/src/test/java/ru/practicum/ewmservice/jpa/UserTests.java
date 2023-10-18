@@ -36,7 +36,7 @@ class UserTests {
     @Test
     void findByName() {
         User user = repository.findByName("USER5");
-        Assertions.assertEquals(5, user.getId());
+        Assertions.assertEquals(6, user.getId());
         Assertions.assertEquals("USER5", user.getName());
         Assertions.assertEquals("email5@mail.ru", user.getEmail());
     }
@@ -56,12 +56,12 @@ class UserTests {
         Assertions.assertEquals(2, result.size());
 
         Assertions.assertEquals(1, result.get(0).getId());
-        Assertions.assertEquals("USER1", result.get(0).getName());
-        Assertions.assertEquals("email1@mail.ru", result.get(0).getEmail());
+        Assertions.assertEquals("admin", result.get(0).getName());
+        Assertions.assertEquals("admin@admin.ru", result.get(0).getEmail());
 
         Assertions.assertEquals(2, result.get(1).getId());
-        Assertions.assertEquals("USER2", result.get(1).getName());
-        Assertions.assertEquals("email2@mail.ru", result.get(1).getEmail());
+        Assertions.assertEquals("USER1", result.get(1).getName());
+        Assertions.assertEquals("email1@mail.ru", result.get(1).getEmail());
     }
 
     @Test
@@ -70,31 +70,31 @@ class UserTests {
         Collection<User> users = repository.findAllAdminWithCriteria(page, null).getContent();
         List<User> result = new ArrayList<>(users);
 
-        Assertions.assertEquals(6, result.size());
+        Assertions.assertEquals(7, result.size());
 
         Assertions.assertEquals(1, result.get(0).getId());
-        Assertions.assertEquals("USER1", result.get(0).getName());
-        Assertions.assertEquals("email1@mail.ru", result.get(0).getEmail());
+        Assertions.assertEquals("admin", result.get(0).getName());
+        Assertions.assertEquals("admin@admin.ru", result.get(0).getEmail());
 
         Assertions.assertEquals(2, result.get(1).getId());
-        Assertions.assertEquals("USER2", result.get(1).getName());
-        Assertions.assertEquals("email2@mail.ru", result.get(1).getEmail());
+        Assertions.assertEquals("USER1", result.get(1).getName());
+        Assertions.assertEquals("email1@mail.ru", result.get(1).getEmail());
 
         Assertions.assertEquals(3, result.get(2).getId());
-        Assertions.assertEquals("USER3", result.get(2).getName());
-        Assertions.assertEquals("email3@mail.ru", result.get(2).getEmail());
+        Assertions.assertEquals("USER2", result.get(2).getName());
+        Assertions.assertEquals("email2@mail.ru", result.get(2).getEmail());
 
         Assertions.assertEquals(4, result.get(3).getId());
-        Assertions.assertEquals("USER4", result.get(3).getName());
-        Assertions.assertEquals("email4@mail.ru", result.get(3).getEmail());
+        Assertions.assertEquals("USER3", result.get(3).getName());
+        Assertions.assertEquals("email3@mail.ru", result.get(3).getEmail());
 
         Assertions.assertEquals(5, result.get(4).getId());
-        Assertions.assertEquals("USER5", result.get(4).getName());
-        Assertions.assertEquals("email5@mail.ru", result.get(4).getEmail());
+        Assertions.assertEquals("USER4", result.get(4).getName());
+        Assertions.assertEquals("email4@mail.ru", result.get(4).getEmail());
 
         Assertions.assertEquals(6, result.get(5).getId());
-        Assertions.assertEquals("USER6", result.get(5).getName());
-        Assertions.assertEquals("email6@mail.ru", result.get(5).getEmail());
+        Assertions.assertEquals("USER5", result.get(5).getName());
+        Assertions.assertEquals("email5@mail.ru", result.get(5).getEmail());
     }
 
 }

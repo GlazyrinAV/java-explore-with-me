@@ -3,15 +3,17 @@ package ru.practicum.ewmservice.mvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.ewmservice.controller.event.EventPrivateController;
 import ru.practicum.ewmclient.model.*;
 import ru.practicum.ewmservice.service.event.EventPrivateService;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -22,7 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = EventPrivateController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class EventPrivateTests {
 
     @Autowired
@@ -35,7 +38,10 @@ class EventPrivateTests {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void saveNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         LocationDto locationDto = LocationDto.builder()
                 .id(1)
                 .lat(11.11)
@@ -82,6 +88,7 @@ class EventPrivateTests {
                         .content(mapper.writeValueAsString(toDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(eventDto.getId())))
@@ -129,50 +136,70 @@ class EventPrivateTests {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findAllByUserIdNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events")
                         .param("from", "1")
                         .param("size", "2")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findAllByUserIdNormalWithoutFrom() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events")
                         .param("size", "2")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findAllByUserIdNormalWithoutSize() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events")
                         .param("from", "1")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findAllByUserIdNormalWithoutAll() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findByIdNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events/1")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -187,10 +214,14 @@ class EventPrivateTests {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void findRequestsNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         mvc.perform(get("/users/1/events/1/requests")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -214,7 +245,10 @@ class EventPrivateTests {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void updateNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         LocationDto locationDto = LocationDto.builder()
                 .id(1)
                 .lat(11.11)
@@ -262,6 +296,7 @@ class EventPrivateTests {
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id", is(eventDto.getId())))
@@ -337,7 +372,10 @@ class EventPrivateTests {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "user", authorities = "user")
     void updateRequestsNormal() throws Exception {
+        String cred = "user:user";
+        String auth = "Basic " + Base64.getEncoder().encodeToString(cred.getBytes());
         EventRequestStatusUpdateRequest request = EventRequestStatusUpdateRequest.builder()
                 .requestIds(List.of(1, 2))
                 .status("CONFIRMED")
@@ -366,6 +404,7 @@ class EventPrivateTests {
                         .content(mapper.writeValueAsString(request))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", auth)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.rejectedRequests.size()", is(result.getRejectedRequests().size())))

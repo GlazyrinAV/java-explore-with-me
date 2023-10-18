@@ -40,21 +40,25 @@ class ParticipationRequestsTests {
         Assertions.assertEquals(3, result.size());
 
         Assertions.assertEquals(1, result.get(0).getId());
-        Assertions.assertEquals("User(id=2, name=USER2, email=email2@mail.ru)", result.get(0).getRequester().toString());
+        Assertions.assertEquals("User(id=2, name=USER1, email=email1@mail.ru, role=user, password=null)", result.get(0).getRequester().toString());
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
-                "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
-                "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
+                        "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(0).getEvent().toString());
         Assertions.assertEquals("2001-01-04T10:00", result.get(0).getCreated().toString());
         Assertions.assertEquals(RequestStatus.PENDING, result.get(0).getStatus());
 
         Assertions.assertEquals(2, result.get(1).getId());
-        Assertions.assertEquals("User(id=3, name=USER3, email=email3@mail.ru)", result.get(1).getRequester().toString());
+        Assertions.assertEquals("User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null)", result.get(1).getRequester().toString());
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(1).getEvent().toString());
@@ -62,10 +66,12 @@ class ParticipationRequestsTests {
         Assertions.assertEquals(RequestStatus.CONFIRMED, result.get(1).getStatus());
 
         Assertions.assertEquals(3, result.get(2).getId());
-        Assertions.assertEquals("User(id=6, name=USER6, email=email6@mail.ru)", result.get(2).getRequester().toString());
+        Assertions.assertEquals("User(id=6, name=USER5, email=email5@mail.ru, role=user, password=null)", result.get(2).getRequester().toString());
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(2).getEvent().toString());
@@ -87,10 +93,12 @@ class ParticipationRequestsTests {
         Assertions.assertEquals(1, result.size());
 
         Assertions.assertEquals(1, result.get(0).getId());
-        Assertions.assertEquals("User(id=2, name=USER2, email=email2@mail.ru)", result.get(0).getRequester().toString());
+        Assertions.assertEquals("User(id=2, name=USER1, email=email1@mail.ru, role=user, password=null)", result.get(0).getRequester().toString());
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.get(0).getEvent().toString());
@@ -115,10 +123,12 @@ class ParticipationRequestsTests {
         ParticipationRequest result = repository.findRequestByUserForMarks(3, 2);
 
         Assertions.assertEquals(2, result.getId());
-        Assertions.assertEquals("User(id=3, name=USER3, email=email3@mail.ru)", result.getRequester().toString());
+        Assertions.assertEquals("User(id=3, name=USER2, email=email2@mail.ru, role=user, password=null)", result.getRequester().toString());
         Assertions.assertEquals("Event{id=2, title='title2', annotation='annotation of event 2', " +
-                        "initiator=User(id=1, name=USER1, email=email1@mail.ru), category=Category(id=1, name=category1), " +
-                        "createdOn=2001-01-02T10:00, description='description of event2', eventDate=2001-10-02T10:00, " +
+                        "initiator=User(id=1, name=admin, email=admin@admin.ru, role=admin, " +
+                        "password=$2y$10$df2iys6d9EKkj6UneWI34egpQdvKYI8G77OvZE6FeKC07fYsG/pmC), " +
+                        "category=Category(id=1, name=category1), createdOn=2001-01-02T10:00, " +
+                        "description='description of event2', eventDate=2001-10-02T10:00, " +
                         "location=Location(id=1, lat=10.1, lon=20.2), paid=false, participantLimit=50, " +
                         "publishedOn=2001-01-02T11:00, requestModeration=true, state=PUBLISHED, views=0}",
                 result.getEvent().toString());

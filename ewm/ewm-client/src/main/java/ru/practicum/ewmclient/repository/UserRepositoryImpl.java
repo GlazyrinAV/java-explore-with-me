@@ -19,8 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDtoAuth findByName(String name) {
         String sqlQuery = "SELECT u.name AS name, u.role AS role, u.password AS password FROM users AS u WHERE u.name = (?)";
         try {
-            UserDtoAuth user = jdbcTemplate.queryForObject(sqlQuery, this::mapRowToUserDto, name);
-            return user;
+            return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToUserDto, name);
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
